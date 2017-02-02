@@ -4,7 +4,7 @@ import './header.css';
 
 export default class Header extends Component {
     render() {
-        const isLoggedIn = false;//this.state.isLoggedIn;
+        const isLoggedIn = true;//this.state.isLoggedIn;
         return (
             <section className="moo-nav-bar">
                 <div className="container">
