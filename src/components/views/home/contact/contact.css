@@ -1,0 +1,12 @@
+/* Contato */
+.moo-home-contact {
+  background-color: rgba(90, 95, 190, 0.7) !important;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  padding: 60px 0 40px;
+  margin: 0 !important;
+}
+
+.moo-home-contact .btn {
+  margin-top: 18%;
+}

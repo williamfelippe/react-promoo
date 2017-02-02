@@ -1,0 +1,34 @@
+/* RODAPÉ */
+footer.page-footer {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+footer.page-footer .moo-logo-text h4 {
+  color: rgba(255, 255, 255, 1);
+}
+
+footer.page-footer .footer-copyright {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+footer.page-footer ul {
+  margin: 0;
+}
+
+footer.page-footer strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+footer.page-footer ul > li {
+  margin-bottom: 7px;
+}
+
+footer.page-footer a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+footer.page-footer a:hover {
+  color: rgba(255, 83, 83, 0.8);
+}

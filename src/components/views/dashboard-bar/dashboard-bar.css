@@ -1,0 +1,36 @@
+/* DASHBOARD */
+
+/* Barra de navegação */
+.moo-dashboard-bar {
+  font-family: 'Roboto Slab', serif;
+  font-size: 20px;
+  background-color: rgba(255, 83, 83, 1);
+}
+
+.moo-dashboard-bar .row {
+  margin: 0;
+}
+
+.moo-dashboard-bar ul {
+  list-style: none;
+  text-align: center;
+  margin: 15px 0 !important;
+}
+
+.moo-dashboard-bar ul li {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+.moo-dashboard-bar ul li a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.moo-dashboard-bar ul li a:hover,
+.moo-dashboard-bar ul li a.active {
+  color: rgba(255, 255, 255, 1);
+}
+
+.moo-dashboard-bar ul li a.active {
+  font-weight: 500;
+}

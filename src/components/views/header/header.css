@@ -1,0 +1,78 @@
+/* NAVBAR */
+.moo-nav-bar {
+  width: 100%;
+  padding: 10px 0;
+  overflow-y: hidden;
+  border-bottom: solid thin rgba(90, 95, 190, 0.1) !important;
+}
+
+.moo-nav-bar div {
+  height: 100%;
+}
+
+.moo-nav-bar .btn,
+.moo-nav-bar .btn:hover {
+  background-color: rgba(255, 83, 83, 1) !important;
+  color: white !important;
+  display: inline-block !important;
+}
+
+/* MENU */
+.moo-menu {
+  float: right;
+  list-style: none;
+}
+
+.moo-menu > li {
+  display: inline-block;
+  margin: 0 15px;
+  font-size: 16px;
+}
+
+.moo-menu > li a {
+  color: rgba(0, 0, 0, 0.7);
+  display: block;
+}
+
+.moo-menu > li a:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+.moo-menu > li:last-child a,
+.moo-menu > li:last-child a:hover {
+  padding-bottom: 0 !important;
+  color: white;
+  display: inline-block;
+}
+
+.moo-menu > li a:after {
+  display: block;
+  content: '';
+  padding-top: 7px !important;
+  border-bottom: solid 3px rgba(27, 28, 57, 1);
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+}
+
+.moo-menu > li a:hover:after,
+.moo-menu > li a.active:after {
+  transform: scaleX(1.5);
+}
+
+/* MENU MOBILE */
+.moo-mobile-menu .content {
+  width: auto !important;
+  max-width: 130px !important;
+  right: 20px !important;
+}
+
+.moo-mobile-menu button,
+.moo-mobile-menu button:hover {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.moo-mobile-menu button i {
+  color: rgba(0, 0, 0, 0.7);
+}

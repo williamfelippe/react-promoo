@@ -1,0 +1,21 @@
+/* Destaque/Chamada da página inicial  */
+.moo-home-banner {
+  padding: 70px 0 70px !important;
+  background-color: rgba(90, 95, 190, 0.3) !important;
+}
+
+.moo-home-banner h1 {
+  margin-bottom: 20px;
+}
+
+.moo-home-banner .logo {
+  width: auto;
+  height: 200px !important;
+  margin: 10px auto 30px;
+  display: block;
+}
+
+.moo-home-banner .btn {
+  font-size: 18px;
+  margin-top: 20px;
+}
