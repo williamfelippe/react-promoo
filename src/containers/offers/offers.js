@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import OfferFilter from '../../partials/offer-filter/offer-filter';
-import OfferItem from '../../partials/offer-item/offer-item';
-import * as offerService from '../../../service/offer-service';
+import OfferFilter from '../../components/offer-filter/offer-filter';
+import OfferItem from '../../components/offer-item/offer-item';
+import * as offerService from '../../service/offer-service';
 
 export default class Offers extends Component {
     constructor() {
@@ -12,7 +12,7 @@ export default class Offers extends Component {
             categories: [],
             offset: 0,
             limit: 30
-        }
+        };
 
         this.moreOffers = this
             .moreOffers

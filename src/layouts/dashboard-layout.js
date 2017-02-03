@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DashboardBar from '../views/dashboard-bar/dashboard-bar';
+import DashboardBar from '../components/dashboard-bar/dashboard-bar';
 
 export default class Dashboard extends Component {
     render() {

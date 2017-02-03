@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import SigninForm from '../../../partials/signin-form/signin-form';
-import logo from '../../../../../public/images/logo.png';
+import SigninForm from '../../../components/signin-form/signin-form';
+import logo from '../../../../public/images/logo.png';
 import '../auth.css';
 
 export default class Signin extends Component {

@@ -4,7 +4,7 @@ export default class ForgotPasswordForm extends Component {
     constructor() {
         super();
 
-        this.state = { email: ''}
+        this.state = { email: ''};
 
         this.submit = this.submit.bind(this);
     }

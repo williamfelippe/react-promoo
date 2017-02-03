@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Banner from '../../views/home/banner/banner';
-import Contact from '../../views/home/contact/contact';
-import Apps from '../../views/home/apps/apps';
+import Banner from '../../components/home/banner/banner';
+import Contact from '../../components/home/contact/contact';
+import Apps from '../../components/home/apps/apps';
 
 export default class Home extends Component {
     render() {
@@ -12,7 +12,7 @@ export default class Home extends Component {
                 <Contact />
 
                 <Apps />
-            </div >
+            </div>
         )
     }
 }

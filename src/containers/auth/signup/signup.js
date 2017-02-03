@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import SignupForm from '../../../partials/signup-form/signup-form';
-import logo from '../../../../../public/images/logo.png';
+import SignupForm from '../../../components/signup-form/signup-form';
+import logo from '../../../../public/images/logo.png';
 import '../auth.css';
 
 export default class Signup extends Component {

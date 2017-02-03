@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Header from '../views/header/header'
-import Footer from '../views/footer/footer'
+import Header from '../components/header/header'
+import Footer from '../components/footer/footer'
 
 export default class MainLayout extends Component {
     render() {

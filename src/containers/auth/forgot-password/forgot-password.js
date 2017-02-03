@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import ForgotPasswordForm from '../../../partials/forgot-password-form/forgot-password-form';
-import logo from '../../../../../public/images/logo.png';
+import ForgotPasswordForm from '../../../components/forgot-password-form/forgot-password-form';
+import logo from '../../../../public/images/logo.png';
 
 export default class ForgotPassword extends Component {
     render() {
