@@ -41,7 +41,7 @@ export default class Header extends Component {
                             </ul>
                         </div>
 
-                        <div className="col s12 l3">
+                        <div className="col s12 m5 l3">
                             <div className="valign-wrapper">
                                 <Link to="/" className="moo-logo-text">
                                     <h4 className="center-align valign">
@@ -50,7 +50,7 @@ export default class Header extends Component {
                                 </Link>
                             </div>
                         </div>
-                        <div className="col m12 l9 hide-on-small-and-down">
+                        <div className="col s12 m7 l9 hide-on-small-and-down">
                             <ul className="moo-menu">
                                 <li className={!isLoggedIn ? 'hide' : ''}>
                                     <Link to="/dashboard">Meu Promoo</Link>

@@ -14,15 +14,16 @@ export default class ContactForm extends Component {
             responseCaptcha: ''
         };
 
-        this.submit = this
-            .submit
-            .bind(this);
+        this.submit = this.submit.bind(this);
     }
 
     componentDidMount() {
         const element = ReactDOM.findDOMNode(this.refs.subject)
 
+        console.log(element);
+
         $(element).ready(function () {
+            console.log('Chamei o select');
             $('select').material_select();
         });
     }

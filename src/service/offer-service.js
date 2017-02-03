@@ -43,7 +43,7 @@ export function postOffer(data) {
         .post('offer')
         .send(data)
         .set('Accept', 'application/json')
-    //.set('Authorization', this.userStore.getToken());
+        //.set('Authorization', this.userStore.getToken());
 }
 
 /**

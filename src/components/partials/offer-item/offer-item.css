@@ -1,0 +1,82 @@
+/* ITEM DE OFERTA */
+.moo-card-offer .date {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.moo-card-offer .date:after {
+  content: '';
+  clear: both;
+  margin-bottom: 5px;
+}
+
+.moo-card-offer .avatar {
+  text-transform: none !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.moo-card-offer .avatar > div:not(:last-child) {
+  height: 50px;
+  vertical-align: middle;
+}
+
+.moo-card-offer .avatar img {
+  height: 30px;
+  width: 30px;
+  margin: 0 10px;
+}
+
+.moo-card-offer .price {
+  font-family: 'Roboto Slab', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: rgba(255, 83, 83, 0.8) !important;
+}
+
+.moo-card-offer .category {
+  font-size: 14px;
+}
+
+.moo-card-offer a {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.moo-card-offer a:hover,
+.moo-card-offer a.active {
+  color: rgba(90, 95, 190, 1) !important;
+}
+
+.moo-card-offer .report {
+  color: rgba(255, 83, 83, 0.75) !important;
+}
+
+.moo-card-offer .report:hover {
+  color: rgba(255, 83, 83, 1) !important;
+}
+
+.moo-card-offer ul {
+  list-style: none;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.moo-card-offer ul li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.moo-card-offer a i {
+  font-size: 16px !important;
+}
+
+.moo-card-offer .card-action,
+.moo-card-store .card-action {
+  padding: 5px 15px !important;
+}
+
+.moo-card-offer .card-content,
+.moo-card-store .card-content {
+  padding: 10px !important;
+}
