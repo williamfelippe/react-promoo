@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
+import UserBar from '../components/user-bar/user-bar';
 
 export default class UserLayout extends Component {
     render() {
         return (
-            <div>
+            <section>
+                <UserBar />
+
                 {this.props.children}
-            </div>
+            </section>
         )
     }
 }

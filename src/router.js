@@ -13,7 +13,7 @@ import Contact from './containers/contact/contact';
 import Signup from './containers/auth/signup/signup';
 import Signin from './containers/auth/signin/signin';
 import ForgotPassword from './containers/auth/forgot-password/forgot-password';
-import Terms from './containers/auth/terms/terms';
+import Terms from './containers/terms/terms';
 
 // SubPages
 import Offers from './containers/offers/offers';

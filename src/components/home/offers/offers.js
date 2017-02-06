@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
+import Loader from 'react-loaders'
 import OfferItem from '../../offer-item/offer-item';
 import * as offerService from '../../../services/offer-service';
 import './offers.css';
@@ -7,7 +8,7 @@ import './offers.css';
 export default class Offers extends Component {
     constructor(props) {
         super(props);
-        this.state = {offers: []};
+        this.state = {offers: [], loading: false};
     }
 
     componentDidMount() {
@@ -16,6 +17,8 @@ export default class Offers extends Component {
 
     getOffers() {
         const offset = 0, limit = 12;
+
+        this.setState({loading: true});
 
         offerService
             .getOffers(limit, offset)
@@ -31,9 +34,12 @@ export default class Offers extends Component {
                 else {
 
                 }
+
+                this.setState({loading: false});
             })
             .catch((error) => {
                 console.log(error);
+                this.setState({loading: false});
             });
     }
 
@@ -57,7 +63,11 @@ export default class Offers extends Component {
                         </p>
 
                         <Row>
-                            {listOffers}
+                            {
+                                this.state.loading
+                                    ? <Loader type="ball-grid-pulse"/>
+                                    : {listOffers}
+                            }
                         </Row>
                     </div>
                 </Col>

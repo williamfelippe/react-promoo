@@ -25,8 +25,8 @@ export default class SigninForm extends Component {
         this.setState({password: event.target.value});
     }
 
-    submit(e) {
-        e.preventDefault();
+    submit(event) {
+        event.preventDefault();
         
         console.log('Login realizado com sucesso');
         console.log(this.state);

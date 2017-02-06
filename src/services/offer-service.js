@@ -31,11 +31,7 @@ export function getOffersByUser(user, limit, offset) {
  */
 
 export function postOffer(data) {
-    axios.post(baseUrl + 'offer', data, {
-        headers: {
-            'Authorization': ''
-        }
-    });
+    axios.post(baseUrl + 'offer', data, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -43,11 +39,7 @@ export function postOffer(data) {
  */
 
 export function getOfferComments(_id) {
-    axios.get(baseUrl + 'offer_comment/' + _id, {
-        headers: {
-            'Authorization': ''
-        }
-    });
+    axios.get(baseUrl + 'offer_comment/' + _id, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -55,11 +47,7 @@ export function getOfferComments(_id) {
  */
 
 export function postOfferComment(data) {
-    axios.post(baseUrl + 'offer_comment', data, {
-        headers: {
-            'Authorization': ''
-        }
-    });
+    axios.post(baseUrl + 'offer_comment', data, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -67,11 +55,7 @@ export function postOfferComment(data) {
  */
 
 export function postOfferReport(data) {
-    axios.post(baseUrl + 'offer/report', data, {
-        headers: {
-            'Authorization': ''
-        }
-    });
+    axios.post(baseUrl + 'offer/report', data, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -79,11 +63,7 @@ export function postOfferReport(data) {
  */
 
 export function postOfferEvaluation(data) {
-    axios.post(baseUrl + 'offer_evaluation', data, {
-        headers: {
-            'Authorization': ''
-        }
-    });
+    axios.post(baseUrl + 'offer_evaluation', data, {headers: {'Authorization': ''}});
 }
 
 export function getOfferCategories() {

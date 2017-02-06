@@ -3,8 +3,8 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import {Row, Col, Input, Button} from 'react-materialize';
 
 export default class ContactForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             name: '',
@@ -42,8 +42,8 @@ export default class ContactForm extends Component {
         this.setState({responseCaptcha: value});
     }
 
-    submit(e) {
-        e.preventDefault();
+    submit(event) {
+        event.preventDefault();
         console.log('Mensagem enviada com sucesso');
         console.log(this.state);
     }

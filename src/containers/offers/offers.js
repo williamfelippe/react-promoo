@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
+import Loader from 'react-loaders';
 import OfferFilter from '../../components/offer-filter/offer-filter';
 import OfferItem from '../../components/offer-item/offer-item';
 import * as offerService from '../../services/offer-service';
@@ -8,7 +9,13 @@ export default class Offers extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {offers: [], categories: [], offset: 0, limit: 30};
+        this.state = {
+            offers: [],
+            categories: [],
+            offset: 0,
+            limit: 30,
+            loading: false
+        };
 
         this.moreOffers = this.moreOffers.bind(this);
     }
@@ -18,6 +25,8 @@ export default class Offers extends Component {
     }
 
     getOffers() {
+        this.setState({loading: true});
+
         offerService
             .getOffers(this.state.limit, this.state.offset)
             .then((response) => {
@@ -37,9 +46,12 @@ export default class Offers extends Component {
                 else {
 
                 }
+
+                this.setState({loading: false});
             })
             .catch((error) => {
                 console.log(error);
+                this.setState({loading: false});
             });
     }
 
@@ -69,7 +81,11 @@ export default class Offers extends Component {
                     {/* Listagem das ofertas */}
                     <Col s={12} m={9}>
                         <Row>
-                            {listOffers}
+                            {
+                                this.state.loading
+                                    ? <Loader type="ball-grid-pulse"/>
+                                    : {listOffers}
+                            }
                         </Row>
                     </Col>
 
