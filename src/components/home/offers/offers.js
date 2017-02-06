@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
+import OfferItem from '../../offer-item/offer-item';
+import * as offerService from '../../../services/offer-service';
 import './offers.css';
 
 export default class Offers extends Component {
@@ -37,21 +39,20 @@ export default class Offers extends Component {
 
     render() {
         const listOffers = this.state.offers.map((offer) =>
-            <Col s={12} m={6} l={4} key={offer._id}>
+            <Col s={12} m={4} l={3} key={offer._id}>
                 <OfferItem offer={offer}/>
             </Col>
         );
 
         return (
-            <!-- Últimas ofertas postadas -->
             <Row className="moo-home-last-offers">
                 <Col s={12}>
-                    <div class="container">
-                        <h2 class="center-align">
+                    <div className="container">
+                        <h2 className="center-align">
                             Economize
                         </h2>
 
-                        <p class="center-align">
+                        <p className="center-align">
                             Encontre promoções nos estabelecimentos mais próximos de você
                         </p>
 

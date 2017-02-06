@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Row, Col} from 'react-materialize';
 
 export default class Terms extends Component {
     render() {
