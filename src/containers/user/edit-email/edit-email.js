@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-export default class OfferFilter extends Component {
+export default class EditEmail extends Component {
     render() {
-        return(
+        return (
             <div></div>
         )
     }

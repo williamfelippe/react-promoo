@@ -4,8 +4,8 @@ export default class Terms extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col s8 offset-s2 center-align">
+                <Row>
+                    <Col s={8} offset="s2" className="center-align">
                         <h2>Termos de uso</h2>
 
                         <p>
@@ -57,8 +57,8 @@ export default class Terms extends Component {
                             dui a vulputate vehicula. Fusce viverra mattis nisl, vitae malesuada nisl dictum
                             sed. Nulla ut laoreet lacus.
                         </p>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
         )
     }

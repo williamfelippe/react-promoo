@@ -1,33 +1,66 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Row, Col} from 'react-materialize';
 import './offers.css';
 
 export default class Offers extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {offers: []};
+    }
+
+    componentDidMount() {
+        this.getOffers();
+    }
+
+    getOffers() {
+        const offset = 0, limit = 12;
+
+        offerService
+            .getOffers(limit, offset)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === 200) {
+                    console.log('Ofertas');
+                    console.log(response.data);
+
+                    this.setState({offers: response.data});
+                }
+                else {
+
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     render() {
+        const listOffers = this.state.offers.map((offer) =>
+            <Col s={12} m={6} l={4} key={offer._id}>
+                <OfferItem offer={offer}/>
+            </Col>
+        );
+
         return (
-            <div className="row moo-home-contact">
-                <div className="col s12">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col s12 m8">
-                                <p>
-                                    Tem alguma dúvida? Viu algum bug em nossos aplicativos? Quer ser nosso parceiro?
-                                    Quer apenas parabenizar pelo trabalho?
-                                </p>
-                                <p>
-                                    Clica aí do lado e deixa um recado.<br/>
-                                    Responderemos prontamente ;)
-                                </p>
-                            </div>
-                            <div className="col s12 m4">
-                                <Link to="/contact" className="waves-effect waves-light btn btn-large">
-                                    Fale conosco
-                                </Link>
-                            </div>
-                        </div>
+            <!-- Últimas ofertas postadas -->
+            <Row className="moo-home-last-offers">
+                <Col s={12}>
+                    <div class="container">
+                        <h2 class="center-align">
+                            Economize
+                        </h2>
+
+                        <p class="center-align">
+                            Encontre promoções nos estabelecimentos mais próximos de você
+                        </p>
+
+                        <Row>
+                            {listOffers}
+                        </Row>
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }

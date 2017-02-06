@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import logo from '../../../../../public/images/logo.png';
+import {Row, Col} from 'react-materialize';
+import logo from '../../../../public/images/logo.png';
 import './banner.css';
 
 export default class Banner extends Component {
     render() {
         return (
             <header>
-                <div className="row moo-home-banner">
-                    <div className="col s12 center-align">
+                <Row className="moo-home-banner">
+                    <Col s={12} className="center-align">
 
                         <img alt="Promoo" src={logo} className="responsive-img logo"/>
 
@@ -19,8 +20,8 @@ export default class Banner extends Component {
                                 Indique aqui
                             </Link>
                         </p>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </header>
         )
     }

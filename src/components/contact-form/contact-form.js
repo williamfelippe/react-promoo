@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import ReCAPTCHA from 'react-google-recaptcha';
+import {Row, Col, Input, Button} from 'react-materialize';
 
 export default class ContactForm extends Component {
     constructor() {
@@ -14,18 +14,32 @@ export default class ContactForm extends Component {
             responseCaptcha: ''
         };
 
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeSubject = this.onChangeSubject.bind(this);
+        this.onChangeMessage = this.onChangeMessage.bind(this);
+        this.onChangeCaptcha = this.onChangeCaptcha.bind(this);
         this.submit = this.submit.bind(this);
     }
 
-    componentDidMount() {
-        const element = ReactDOM.findDOMNode(this.refs.subject)
+    onChangeName(event) {
+        this.setState({name: event.target.value});
+    }
 
-        console.log(element);
+    onChangeEmail(event) {
+        this.setState({email: event.target.value});
+    }
 
-        $(element).ready(function () {
-            console.log('Chamei o select');
-            $('select').material_select();
-        });
+    onChangeSubject(event) {
+        this.setState({subject: event.target.value});
+    }
+
+    onChangeMessage(event) {
+        this.setState({message: event.target.value});
+    }
+
+    onChangeCaptcha(value) {
+        this.setState({responseCaptcha: value});
     }
 
     submit(e) {
@@ -35,53 +49,38 @@ export default class ContactForm extends Component {
     }
 
     render() {
+        const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
         return (
             <form onSubmit={this.submit} className="col s12">
-                <div className="row">
-                    <div className="input-field col s12">
-                        <input type="text" id="name" name="name" value={this.state.name}/>
-                        <label htmlFor="name">Nome</label>
-                    </div>
-                </div>
+                <Row>
+                    <Input s={12} label="Nome" onChange={this.onChangeName}/>
+                </Row>
 
-                <div className="row">
-                    <div className="input-field col s12">
-                        <input id="email" type="email" value={this.state.email}/>
-                        <label htmlFor="email">E-mail</label>
-                    </div>
-                </div>
+                <Row>
+                    <Input s={12} type="email" label="E-mail" onChange={this.onChangeEmail}/>
+                </Row>
 
-                <div className="row">
-                    <div className="input-field col s12">
-                        <select ref="subject" value={this.state.subject}>
-                            <option value="" disabled>Escolha um assunto</option>
-                            <option value="Dúvida">Dúvida</option>
-                            <option value="Bug">Bug</option>
-                            <option value="Parceria">Parceria</option>
-                            <option value="Outro">Outro</option>
-                        </select>
-                        <label>Assunto</label>
-                    </div>
-                </div>
+                <Row>
+                    <Input s={12} type="select" label="Assunto" defaultValue="Dúvida" onChange={this.onChangeSubject}>
+                        <option value="Dúvida">Dúvida</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Parceria">Parceria</option>
+                        <option value="Outro">Outro</option>
+                    </Input>
+                </Row>
 
-                <div className="row">
-                    <div className="input-field col s12">
-                        <textarea
-                            id="message"
-                            value={this.state.message}
-                            className="materialize-textarea"></textarea>
-                        <label htmlFor="message">Mensagem</label>
-                    </div>
-                </div >
+                <Row>
+                    <Input s={12} type="textarea" label="Mensagem" onChange={this.onChangeMessage}/>
+                </Row>
 
-                <div className="row">
-                    <div className="col s12"></div>
-                </div>
+                <Row>
+                    <Col s={12}>
+                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey} onChange={this.onChangeCaptcha} className="right"/>
+                    </Col>
+                </Row>
 
-                <button type="submit" className="waves-effect waves-light btn">
-                    Enviar
-                </button>
-            </form >
+                <Button type='submit' waves='light'>Enviar</Button>
+            </form>
         )
     }
 }

@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import {Row, Col} from 'react-materialize';
 import './dashboard-bar.css';
 
 export default class DashboardBar extends Component {
     render() {
         return (
-            <div className="row moo-dashboard-bar">
-                <div className="col s12">
+            <Row className="moo-dashboard-bar">
+                <Col s={12}>
                     <div className="container">
-                        <div className="row">
-                            <div className="col s12">
+                        <Row>
+                            <Col s={12}>
                                 <ul>
                                     <li>
                                         <Link to="/">
@@ -42,11 +43,11 @@ export default class DashboardBar extends Component {
                                         </Link>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
+                            </Col>
+                        </Row>
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }

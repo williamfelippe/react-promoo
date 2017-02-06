@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import * as dateFormat from '../../../utils/date-format';
-import * as currencyFormat from '../../../utils/currency-format';
+import * as dateFormat from '../../utils/date-format';
+import * as currencyFormat from '../../utils/currency-format';
 //import * as offerApi from '../../../api/offer-api';
 import './offer-item.css';
 
@@ -14,7 +14,7 @@ export default class OfferItem extends Component {
             dislikes: 0,
             liked: false,
             disliked: false
-        }
+        };
     }
 
     likeOffer() {}

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {Row, Col} from 'react-materialize';
 
 export default class About extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col s10 offset-s1 m8 offset-m2 center-align">
+                <Row>
+                    <Col s={10} m={8} offset="s1 m2" className="center-align">
                         <h2>Sobre</h2>
 
                         <p>
@@ -29,8 +30,8 @@ export default class About extends Component {
                             quis. Etiam tristique nibh nec odio ullamcorper, pellentesque sodales justo
                             scelerisque.
                         </p>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
         )
     }

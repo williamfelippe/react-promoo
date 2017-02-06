@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import {Row, Col} from 'react-materialize';
 import './footer.css';
 
 export default class Footer extends Component {
@@ -8,8 +9,8 @@ export default class Footer extends Component {
         return (
             <footer className="page-footer">
                 <div className="container">
-                    <div className="row">
-                        <div className="col s5 m3">
+                    <Row>
+                        <Col s={5} m={3}>
                             <div className="valign-wrapper">
                                 <Link to="/" className="moo-logo-text">
                                     <h4 className="center-align valign">
@@ -17,16 +18,15 @@ export default class Footer extends Component {
                                     </h4>
                                 </Link>
                             </div>
-                        </div>
+                        </Col>
 
-                        <div className="col s7 m9">
-                            <div className="row">
-                                <div className="col s12 m4 l3 offset-l3">
+                        <Col s={7} m={9}>
+                            <Row className="row">
+                                <Col s={12} m={4} l={3} offset="l3">
                                     <strong className="white-text">Links</strong>
                                     <ul>
                                         <li>
-                                            <Link to="/about">
-                                                Sobre nós</Link>
+                                            <Link to="/about">Sobre nós</Link>
                                         </li>
                                         <li>
                                             <Link to="/contact">Fale conosco</Link>
@@ -41,9 +41,9 @@ export default class Footer extends Component {
                                             <Link to="/signin">Entrar</Link>
                                         </li>
                                     </ul>
-                                </div>
+                                </Col>
 
-                                <div className="col s12 m4 l3">
+                                <Col s={12} m={4} l={3}>
                                     <strong className="white-text">Apps</strong>
                                     <ul>
                                         <li>
@@ -53,9 +53,9 @@ export default class Footer extends Component {
                                             <a href="#">IOS</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </Col>
 
-                                <div className="col s12 m4 l3">
+                                <Col s={12} m={4} l={3}>
                                     <strong className="white-text">Redes sociais</strong>
                                     <ul className="moo-social-media">
                                         <li>
@@ -74,10 +74,10 @@ export default class Footer extends Component {
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
 
                 <div className="footer-copyright">

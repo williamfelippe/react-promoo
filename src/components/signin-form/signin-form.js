@@ -1,19 +1,28 @@
 import React, {Component} from 'react';
 import CryptoJS from "crypto-js";
-import * as loginService from '../../../service/login-service';
+import {Row, Input, Button} from 'react-materialize';
+import * as loginService from '../../services/login-service';
 
 export default class SigninForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             email: '',
             password: ''
-        }
+        };
 
-        this.submit = this
-            .submit
-            .bind(this);
+        this.submit = this.submit.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+    }
+
+    onChangeEmail(event) {
+        this.setState({email: event.target.value});
+    }
+
+    onChangePassword(event) {
+        this.setState({password: event.target.value});
     }
 
     submit(e) {
@@ -57,23 +66,17 @@ export default class SigninForm extends Component {
     render() {
         return (
             <form onSubmit={this.submit} className="col s12">
-                <div className="row n-margin-bottom">
-                    <div className="input-field col s12">
-                        <input type="email" id="email" value={this.state.email}/>
-                        <label htmlFor="email">E-mail</label>
-                    </div>
-                </div>
+                <Row className="n-margin-bottom">
+                    <Input s={12} type="email" onChange={this.onChangeEmail} label="E-mail" />
+                </Row>
 
-                <div className="row">
-                    <div className="input-field col s12">
-                        <input type="password" id="password" value={this.state.password}/>
-                        <label htmlFor="password">Senha</label>
-                    </div>
-                </div>
+                <Row>
+                    <Input s={12} type="password" onChange={this.onChangePassword} label="Senha" />
+                </Row>
 
-                <button type="submit" className="waves-effect waves-light btn w-100">
+                <Button type="submit" waves="light" className="w-100">
                     Faça parte!
-                </button>
+                </Button>
             </form>
         )
     }

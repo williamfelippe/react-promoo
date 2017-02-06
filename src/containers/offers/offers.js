@@ -1,22 +1,16 @@
 import React, {Component} from 'react';
+import {Row, Col} from 'react-materialize';
 import OfferFilter from '../../components/offer-filter/offer-filter';
 import OfferItem from '../../components/offer-item/offer-item';
-import * as offerService from '../../service/offer-service';
+import * as offerService from '../../services/offer-service';
 
 export default class Offers extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        this.state = {
-            offers: [],
-            categories: [],
-            offset: 0,
-            limit: 30
-        };
+        this.state = {offers: [], categories: [], offset: 0, limit: 30};
 
-        this.moreOffers = this
-            .moreOffers
-            .bind(this);
+        this.moreOffers = this.moreOffers.bind(this);
     }
 
     componentDidMount() {
@@ -26,18 +20,26 @@ export default class Offers extends Component {
     getOffers() {
         offerService
             .getOffers(this.state.limit, this.state.offset)
-            .end((err, res) => {
-                if (err) {
-                    console.log('Error: ' + err);
-                } else {
-                    if (res.statusCode === 200) {
-                        console.log('Ofertas');
-                        console.log(res.body);
-                        this.setState({offers: res.body});
-                    } else {
-                        //this.threatHttpErrors();
-                    }
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === 200) {
+                    console.log('Ofertas');
+                    console.log(response.data);
+
+                    let offers = this.state.offers;
+                    response.data.forEach((item) => {
+                        offers.push(item);
+                    });
+
+                    this.setState({offers: offers});
                 }
+                else {
+
+                }
+            })
+            .catch((error) => {
+                console.log(error);
             });
     }
 
@@ -51,33 +53,33 @@ export default class Offers extends Component {
     }
 
     render() {
-        const listOffers = this
-            .state
-            .offers
-            .map((offer) => <div className="col s6 m3 l2" key={offer._id}>
+        const listOffers = this.state.offers.map((offer) =>
+            <Col s={12} m={6} l={4} key={offer._id}>
                 <OfferItem offer={offer}/>
-            </div>);
+            </Col>
+        );
 
         return (
-            <div className="row">
+            <div className="container">
+                <Row>
+                    <Col s={12} m={3}>
+                        <OfferFilter/>
+                    </Col>
 
-                <div className="col s12">
-                    <OfferFilter/>
-                </div>
+                    {/* Listagem das ofertas */}
+                    <Col s={12} m={9}>
+                        <Row>
+                            {listOffers}
+                        </Row>
+                    </Col>
 
-                {/* Listagem das ofertas */}
-                <div className="col s12">
-                    <div className="row">
-                        {listOffers}
-                    </div>
-                </div>
-
-                {/* Permite a busca de mais ofertas */}
-                <div className="col s12">
-                    <p className="center-align">
-                        <a onClick={this.moreOffers} className="moo-loader-more"></a>
-                    </p>
-                </div>
+                    {/* Permite a busca de mais ofertas */}
+                    <Col s={12}>
+                        <p className="center-align">
+                            <a onClick={this.moreOffers} className="moo-loader-more"></a>
+                        </p>
+                    </Col>
+                </Row>
             </div>
         )
     }

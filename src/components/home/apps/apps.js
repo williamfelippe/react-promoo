@@ -1,22 +1,21 @@
 import React, {Component} from 'react';
+import {Row, Col} from 'react-materialize';
 import './apps.css';
 
 export default class Apps extends Component {
     render() {
         return (
-            <div className="row moo-home-apps">
-                <div className="col s12">
+            <Row className="moo-home-apps">
+                <Col s={12}>
                     <div className="container">
                         <h3 className="center-align">
                             promoo<b>app</b>
                         </h3>
 
-                        <div className="row n-margin-bottom">
-                            <div className="col s12 m5">
+                        <Row className="n-margin-bottom">
+                            <Col s={12} m={5}>
                                 <p className="highlight">
-                                    Acesse o
-                                    <strong>Promoo</strong>
-                                    de qualquer lugar. Baixe para IOS e Android
+                                    Acesse o <strong>Promoo</strong> de qualquer lugar. Baixe para IOS e Android
                                 </p>
 
                                 <ul>
@@ -31,14 +30,14 @@ export default class Apps extends Component {
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
-                            <div className="col s12 m7">
+                            </Col>
+                            <Col s={12} m={7}>
                                 <div className="phone"></div>
-                            </div>
-                        </div>
+                            </Col>
+                        </Row>
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }

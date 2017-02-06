@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import {Row, Col} from 'react-materialize';
 import ContactForm from '../../components/contact-form/contact-form';
 
 export default class Contact extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col s12 m8 offset-m2">
+                <Row>
+                    <Col s={12} m={8} offset="m2">
                         <h2 className="center-align">
                             Contato
                         </h2>
@@ -19,10 +20,9 @@ export default class Contact extends Component {
                         </p>
 
                         <ContactForm/>
-
-                    </div >
-                </div >
-            </div >
+                    </Col>
+                </Row>
+            </div>
         )
     }
 }

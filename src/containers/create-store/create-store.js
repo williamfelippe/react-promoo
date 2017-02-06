@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class OfferFilter extends Component {
+export default class CreateStore extends Component {
     render() {
         return(
             <div></div>

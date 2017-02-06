@@ -56,7 +56,7 @@
 
 .moo-menu > li a:hover:after,
 .moo-menu > li a.active:after {
-  transform: scaleX(1.5);
+  transform: scaleX(1.1);
 }
 
 /* MENU MOBILE */

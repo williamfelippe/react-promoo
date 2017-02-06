@@ -5,7 +5,7 @@ import Footer from '../components/footer/footer'
 export default class MainLayout extends Component {
     render() {
         return (
-            <div className="app">
+            <div className="moo-app">
                 <Header/>
 
                 <main>

@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import {Row, Col} from 'react-materialize';
 import './contact.css';
 
 export default class Contact extends Component {
     render() {
         return (
-            <div className="row moo-home-contact">
-                <div className="col s12">
+            <Row className="moo-home-contact">
+                <Col s={12}>
                     <div className="container">
-                        <div className="row">
-                            <div className="col s12 m8">
+                        <Row>
+                            <Col s={12} m={8}>
                                 <p>
                                     Tem alguma dúvida? Viu algum bug em nossos aplicativos? Quer ser nosso parceiro?
                                     Quer apenas parabenizar pelo trabalho?
@@ -18,16 +19,16 @@ export default class Contact extends Component {
                                     Clica aí do lado e deixa um recado.<br/>
                                     Responderemos prontamente ;)
                                 </p>
-                            </div>
-                            <div className="col s12 m4">
+                            </Col>
+                            <Col s={12} m={4}>
                                 <Link to="/contact" className="waves-effect waves-light btn btn-large">
                                     Fale conosco
                                 </Link>
-                            </div>
-                        </div>
+                            </Col>
+                        </Row>
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }
