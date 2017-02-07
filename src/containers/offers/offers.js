@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
-import Loader from 'react-loaders';
-import OfferFilter from '../../components/offer-filter/offer-filter';
-import OfferItem from '../../components/offer-item/offer-item';
+import OfferFilter from '../../components/offers/offer-filter/offer-filter';
+import OfferItem from '../../components/offers/offer-item/offer-item';
 import * as offerService from '../../services/offer-service';
 
 export default class Offers extends Component {
@@ -81,11 +80,7 @@ export default class Offers extends Component {
                     {/* Listagem das ofertas */}
                     <Col s={12} m={9}>
                         <Row>
-                            {
-                                this.state.loading
-                                    ? <Loader type="ball-grid-pulse"/>
-                                    : {listOffers}
-                            }
+                            {listOffers}
                         </Row>
                     </Col>
 

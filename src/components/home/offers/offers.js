@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
-import Loader from 'react-loaders'
-import OfferItem from '../../offer-item/offer-item';
+import OfferItem from '../../offers/offer-item/offer-item';
 import * as offerService from '../../../services/offer-service';
 import './offers.css';
 
@@ -63,11 +62,7 @@ export default class Offers extends Component {
                         </p>
 
                         <Row>
-                            {
-                                this.state.loading
-                                    ? <Loader type="ball-grid-pulse"/>
-                                    : {listOffers}
-                            }
+                            {listOffers}
                         </Row>
                     </div>
                 </Col>

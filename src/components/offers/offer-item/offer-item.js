@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import * as dateFormat from '../../utils/date-format';
-import * as currencyFormat from '../../utils/currency-format';
-//import * as offerApi from '../../../api/offer-api';
+import OfferReportButton from '../../../components/offers/offer-report-button/offer-report-button';
+import * as dateFormat from '../../../utils/date-format';
+import * as currencyFormat from '../../../utils/currency-format';
+import * as offerService from '../../../services/offer-service';
 import './offer-item.css';
 
 export default class OfferItem extends Component {
@@ -15,11 +16,40 @@ export default class OfferItem extends Component {
             liked: false,
             disliked: false
         };
+
+        this.likeOffer = this.likeOffer.bind(this);
     }
 
-    likeOffer() {}
+    likeOffer() {
+        if (!this.state.liked) {
+            this.setState({liked: true, disliked: false});
+            this.evaluate();
+        }
+    }
 
-    dislikeOffer() {}
+    dislikeOffer() {
+        if (!this.state.disliked) {
+            this.setState({liked: false, disliked: true});
+            this.evaluate();
+        }
+    }
+
+    evaluate() {
+        const data = {
+            like: this.state.liked,
+            dislike: this.state.disliked,
+            user_id: 1,//this.userStore.getId(),
+            offer_id: this.props.offer._id
+        };
+
+        offerService.postOfferEvaluation(data)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     render() {
         const offer = this.props.offer;
@@ -50,11 +80,7 @@ export default class OfferItem extends Component {
 
                     <ul>
                         <li>
-                            <a
-                                onClick={this.likeOffer}
-                                className={this.state.like
-                                ? 'active'
-                                : ''}>
+                            <a onClick={this.likeOffer} className={this.state.like ? 'active' : ''}>
                                 <i className="material-icons">thumb_up</i>
                                 <small>
                                     {this.state.likes}
@@ -63,11 +89,7 @@ export default class OfferItem extends Component {
                         </li>
 
                         <li>
-                            <a
-                                onClick={this.dislikeOffer}
-                                className={this.state.dislike
-                                ? 'active'
-                                : ''}>
+                            <a onClick={this.dislikeOffer} className={this.state.dislike ? 'active' : ''}>
                                 <i className="material-icons">thumb_down</i>
                                 <small>
                                     {this.state.dislikes}
@@ -82,9 +104,7 @@ export default class OfferItem extends Component {
                         </li>
 
                         <li>
-                            <a onClick={this.indicateExpiredOffer} className="report">
-                                <i className="material-icons">block</i>
-                            </a>
+                            <OfferReportButton offer={offer}/>
                         </li>
                     </ul>
                 </div>
@@ -92,10 +112,7 @@ export default class OfferItem extends Component {
                 <div className="card-action">
                     <Link to="/user-detail" className="avatar">
                         <div className="right valign-wrapper">
-                            <img
-                                src={offer.user.photo}
-                                alt={offer.user.name}
-                                className="circle responsive-img right"/>
+                            <img src={offer.user.photo} alt={offer.user.name} className="circle responsive-img right"/>
                             <span className="right">
                                 {offer.user.name}
                             </span>
