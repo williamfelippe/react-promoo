@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {Row, Col} from 'react-materialize';
-import SignupForm from '../../../components/signup-form/signup-form';
+import SignupForm from '../../../components/auth/signup-form/signup-form';
 import logo from '../../../../public/images/logo.png';
 import '../auth.css';
 

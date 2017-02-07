@@ -61,6 +61,10 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     height: 100%;
 }
 
+.n-padding {
+    padding: 0 !important;
+}
+
 .n-margin {
     margin: 0 !important;
 }
@@ -125,6 +129,7 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 /* GENERAL CONFIGURATION OF APP */
 html {
     color: rgba(27, 28, 57, 0.8) !important;
+    font-size: 14px;
 }
 
 .moo-app {
@@ -195,4 +200,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .moo-loader-more.active:before {
     content: 'Carregando';
+}
+
+.moo-add-bar {
+    background-color: rgba(90, 95, 190, 0.05) !important;
+    border: rgba(90, 95, 190, 1) solid thin;
+    margin-bottom: 15px;
+}
+
+.moo-add-bar b {
+    font-weight: 700;
+    color: rgba(90, 95, 190, 0.2);
+    font-size: 17px;
+    margin-top: 10px;
 }

@@ -40,20 +40,20 @@ export default class OfferReportButton extends Component {
 
         console.log(this.state);
 
-        /*offerService.postOfferReport(data)
-         .then((response) => {
-         console.log(response);
-         })
-         .catch((error) => {
-         console.log(error);
-         })*/
+        offerService.postOfferReport(data)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     render() {
         const blockLink = <a className="report"><i className="material-icons">block</i></a>;
         return (
             <Modal header='Algum problema?' trigger={blockLink}
-                   actions={<Button waves='light' modal='close' flat>Voltar</Button>}>
+                   actions="&nbsp;">
                 <p className="m-t-40">
                     Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et
                     eleifend.
@@ -62,7 +62,8 @@ export default class OfferReportButton extends Component {
                     <Row>
                         <Col s={12} m={8} offset="m2">
                             <Row>
-                                <Input s={12} type="select" label="Assunto" onChange={this.onChangeSubject} defaultValue="Expirou">
+                                <Input s={12} type="select" label="Assunto" onChange={this.onChangeSubject}
+                                       defaultValue="Expirou">
                                     <option value="Expirou">Expirou</option>
                                     <option value="Não existe">Não existe</option>
                                     <option value="Outro">Outro</option>

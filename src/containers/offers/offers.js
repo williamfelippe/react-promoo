@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
+import {Row, Col, Button} from 'react-materialize';
+import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
 import OfferItem from '../../components/offers/offer-item/offer-item';
 import * as offerService from '../../services/offer-service';
@@ -17,6 +18,7 @@ export default class Offers extends Component {
         };
 
         this.moreOffers = this.moreOffers.bind(this);
+        this.openCreateOfferScreen = this.openCreateOfferScreen.bind(this);
     }
 
     componentDidMount() {
@@ -26,32 +28,56 @@ export default class Offers extends Component {
     getOffers() {
         this.setState({loading: true});
 
-        offerService
-            .getOffers(this.state.limit, this.state.offset)
-            .then((response) => {
-                const statusCode = response.status;
+        const requests = [
+            offerService.getOffers(this.state.limit, this.state.offset),
+            offerService.getOfferCategories()
+        ];
 
-                if (statusCode === 200) {
-                    console.log('Ofertas');
-                    console.log(response.data);
-
-                    let offers = this.state.offers;
-                    response.data.forEach((item) => {
-                        offers.push(item);
-                    });
-
-                    this.setState({offers: offers});
-                }
-                else {
-
-                }
+        axios
+            .all(requests)
+            .then(axios.spread((offerResponse, categoryResponse) => {
+                this.treatOffersResponse(offerResponse);
+                this.treatOfferCategoriesResponse(categoryResponse);
 
                 this.setState({loading: false});
-            })
+            }))
             .catch((error) => {
                 console.log(error);
                 this.setState({loading: false});
             });
+    }
+
+    treatOffersResponse(response) {
+        const statusCode = response.status;
+
+        if (statusCode === 200) {
+            console.log('Ofertas');
+            console.log(response.data);
+
+            let offers = this.state.offers;
+            response.data.forEach((item) => {
+                offers.push(item);
+            });
+
+            this.setState({offers: offers});
+        }
+        else {
+
+        }
+    }
+
+    treatOfferCategoriesResponse(response) {
+        const statusCode = response.status;
+
+        if (statusCode === 200) {
+            console.log('Categorias de Ofertas');
+            console.log(response.data);
+
+            this.setState({categories: response.data});
+        }
+        else {
+
+        }
     }
 
     moreOffers() {
@@ -63,6 +89,10 @@ export default class Offers extends Component {
         this.getOffers();
     }
 
+    openCreateOfferScreen() {
+        console.log('Abrir');
+    }
+
     render() {
         const listOffers = this.state.offers.map((offer) =>
             <Col s={12} m={6} l={4} key={offer._id}>
@@ -71,27 +101,52 @@ export default class Offers extends Component {
         );
 
         return (
-            <div className="container">
-                <Row>
-                    <Col s={12} m={3}>
-                        <OfferFilter/>
-                    </Col>
+            <Row>
+                <Col s={12} className="n-padding">
+                    <Row className="moo-add-bar">
+                        <div className="container">
+                            <Col s={6}>
+                                <p>
+                                    <b>
+                                        { this.state.offers.length } ofertas
+                                    </b>
+                                </p>
+                            </Col>
+                            <Col s={6} className="right-align">
+                                <p>
+                                    <Button onClick={this.openCreateOfferScreen} waves='light'>
+                                        Indicar
+                                    </Button>
+                                </p>
+                            </Col>
+                        </div>
+                    </Row>
+                </Col>
 
-                    {/* Listagem das ofertas */}
-                    <Col s={12} m={9}>
-                        <Row>
-                            {listOffers}
-                        </Row>
-                    </Col>
+                <Col s={12}>
+                    <Row>
+                        <div className="container">
+                            <Col s={12} m={3}>
+                                <OfferFilter categories={this.state.categories}/>
+                            </Col>
 
-                    {/* Permite a busca de mais ofertas */}
-                    <Col s={12}>
-                        <p className="center-align">
-                            <a onClick={this.moreOffers} className="moo-loader-more"></a>
-                        </p>
-                    </Col>
-                </Row>
-            </div>
+                            {/* Listagem das ofertas */}
+                            <Col s={12} m={9}>
+                                <Row>
+                                    {listOffers}
+                                </Row>
+                            </Col>
+
+                            {/* Permite a busca de mais ofertas */}
+                            <Col s={12}>
+                                <p className="center-align">
+                                    <a onClick={this.moreOffers} className="moo-loader-more"></a>
+                                </p>
+                            </Col>
+                        </div>
+                    </Row>
+                </Col>
+            </Row>
         )
     }
 }

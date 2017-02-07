@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CryptoJS from "crypto-js";
 import {Row, Input, Button} from 'react-materialize';
-import * as loginService from '../../services/login-service';
+import * as loginService from '../../../services/login-service';
 
 export default class SignupForm extends Component {
     constructor(props) {

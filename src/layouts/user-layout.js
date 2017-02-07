@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import UserBar from '../components/user-bar/user-bar';
+import UserBar from '../components/user/user-bar/user-bar';
 
 export default class UserLayout extends Component {
     render() {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CryptoJS from "crypto-js";
 import {Row, Input, Button} from 'react-materialize';
-import * as userService from '../../services/user-service';
+import * as userService from '../../../services/user-service';
 
 export default class ChangePasswordForm extends Component {
     constructor(props) {

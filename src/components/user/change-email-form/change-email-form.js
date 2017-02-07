@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Input, Button} from 'react-materialize';
-import * as userService from '../../services/user-service';
+import * as userService from '../../../services/user-service';
 
 export default class ChangeEmailForm extends Component {
     constructor(props) {
