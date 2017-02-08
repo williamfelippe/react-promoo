@@ -23,7 +23,7 @@ export default class DashboardBar extends Component {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="stores">
+                                        <Link to="dashboard/stores">
                                             <div className="hide-on-med-and-down">
                                                 Lojas
                                             </div>

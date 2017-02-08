@@ -3,6 +3,7 @@ import {Row, Col, Button} from 'react-materialize';
 import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
 import OfferItem from '../../components/offers/offer-item/offer-item';
+import Loader from '../../components/loader/loader';
 import * as offerService from '../../services/offer-service';
 
 export default class Offers extends Component {
@@ -95,11 +96,7 @@ export default class Offers extends Component {
     }
 
     moreOffers() {
-        this.setState({
-            offset: this.state.limit,
-            limit: this.state.limit + 30
-        });
-
+        this.setState({ offset: this.state.limit });
         this.getOffers();
     }
 
@@ -146,14 +143,14 @@ export default class Offers extends Component {
 
                             <Col s={12} m={9}>
                                 <Row>
-
                                     {/* Listagem das ofertas */}
                                     {listOffers}
                                 </Row>
+
                                 <Row>
                                     {/* Permite a busca de mais ofertas */}
                                     <p className="center-align">
-                                        <a onClick={this.moreOffers} className="moo-loader-more"></a>
+                                        <Loader onClick={this.moreOffers} loading={this.state.loading} />
                                     </p>
                                 </Row>
                             </Col>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button} from 'react-materialize';
-import PlacesAutocomplete from 'react-places-autocomplete';
+import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
 import './offer-filter.css';
 
 export default class OfferFilter extends Component {
@@ -59,10 +59,20 @@ export default class OfferFilter extends Component {
             maxPrice: Number.POSITIVE_INFINITY,
             address: ''
         };
+
+        // Descobrir como desmarcar os itens
     }
 
     filter() {
+        const address = this.state.address;
+        geocodeByAddress(address, (err, {lat, lng}, results) => {
+            if (err) {
+                console.log('Oh no!', err);
+            }
 
+            console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng});
+            console.log('Entire payload from Google API', results);
+        });
     }
 
     render() {
@@ -85,7 +95,7 @@ export default class OfferFilter extends Component {
         </Row>;
 
         const options = {
-            types: ['address'],
+            types: ['address, establishment'],
             componentRestrictions: {'country': 'br'}
         };
 

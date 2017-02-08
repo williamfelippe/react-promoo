@@ -48,12 +48,13 @@ export default class CreateOfferForm extends Component {
         event.preventDefault();
 
         const address = this.state.address;
-        geocodeByAddress(address, (err, {lat, lng}) => {
+        geocodeByAddress(address, (err, {lat, lng}, results) => {
             if (err) {
-                console.log('Oh no!', err)
+                console.log('Oh no!', err);
             }
 
-            console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng})
+            console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng});
+            console.log('Entire payload from Google API', results);
         });
     }
 

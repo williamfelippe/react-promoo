@@ -46,7 +46,7 @@ export default class Header extends Component {
                                 </li>
 
                                 <li className={!isLoggedIn ? 'hide' : ''}>
-                                    <a href="" onClick={this.signout}>
+                                    <a onClick={this.signout}>
                                         Sair
                                     </a>
                                 </li>

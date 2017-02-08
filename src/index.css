@@ -85,6 +85,14 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     margin-bottom: 20px !important;
 }
 
+.m-l-20 {
+    margin-left: 20px !important;
+}
+
+.m-r-20 {
+    margin-right: 20px !important;
+}
+
 .m-40 {
     margin: 40px !important;
 }
@@ -95,6 +103,14 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 
 .m-b-40 {
     margin-bottom: 40px !important;
+}
+
+.m-l-40 {
+    margin-left: 40px !important;
+}
+
+.m-r-40 {
+    margin-right: 40px !important;
 }
 
 .d-table {
@@ -167,39 +183,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .moo-logo-text h4:hover span {
     color: rgba(255, 83, 83, 1);
-}
-
-/* LOADER MORE */
-.moo-loader-more {
-    font-family: 'Roboto Slab', serif;
-    font-size: 17px;
-    font-weight: 700;
-    text-align: center;
-    color: rgba(255, 83, 83, 0.8);
-    cursor: pointer;
-}
-
-.moo-loader-more:before {
-    content: 'Carregar mais';
-}
-
-.moo-loader-more:hover,
-.moo-loader-more.active {
-    cursor: pointer;
-    display: inline-block;
-    color: rgba(255, 83, 83, 1);
-
-    animation: bounce 1s infinite;
-    -webkit-animation: bounce 1s infinite;
-}
-
-.moo-loader-more.active {
-    animation: bounce 1s infinite;
-    -webkit-animation: bounce 1s infinite;
-}
-
-.moo-loader-more.active:before {
-    content: 'Carregando';
 }
 
 .moo-add-bar {
