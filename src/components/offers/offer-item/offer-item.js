@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import {Icon} from 'react-materialize';
 import OfferReportButton from '../../../components/offers/offer-report-button/offer-report-button';
 import * as dateFormat from '../../../utils/date-format';
 import * as currencyFormat from '../../../utils/currency-format';
@@ -81,7 +82,7 @@ export default class OfferItem extends Component {
                     <ul>
                         <li>
                             <a onClick={this.likeOffer} className={this.state.like ? 'active' : ''}>
-                                <i className="material-icons">thumb_up</i>
+                                <Icon>thumb_up</Icon>
                                 <small>
                                     {this.state.likes}
                                 </small>
@@ -90,7 +91,7 @@ export default class OfferItem extends Component {
 
                         <li>
                             <a onClick={this.dislikeOffer} className={this.state.dislike ? 'active' : ''}>
-                                <i className="material-icons">thumb_down</i>
+                                <Icon>thumb_down</Icon>
                                 <small>
                                     {this.state.dislikes}
                                 </small>
@@ -99,7 +100,7 @@ export default class OfferItem extends Component {
 
                         <li>
                             <a onClick={this.openComments}>
-                                <i className="material-icons">chat_bubble</i>
+                                <Icon>chat_bubble</Icon>
                             </a>
                         </li>
 
@@ -110,7 +111,7 @@ export default class OfferItem extends Component {
                 </div>
 
                 <div className="card-action">
-                    <Link to="/user-detail" className="avatar">
+                    <Link to="user-detail" className="avatar">
                         <div className="right valign-wrapper">
                             <img src={offer.user.photo} alt={offer.user.name} className="circle responsive-img right"/>
                             <span className="right">

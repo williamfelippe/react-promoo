@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Modal} from 'react-materialize';
-import {Row, Col, Input, Button} from 'react-materialize';
+import {Row, Col, Input, Button, Icon} from 'react-materialize';
 import * as offerService from '../../../services/offer-service';
 import './offer-report-button.css';
 
@@ -50,7 +50,8 @@ export default class OfferReportButton extends Component {
     }
 
     render() {
-        const blockLink = <a className="report"><i className="material-icons">block</i></a>;
+        const blockLink = <a className="report"><Icon>block</Icon></a>;
+
         return (
             <Modal header='Algum problema?' trigger={blockLink}
                    actions="&nbsp;">

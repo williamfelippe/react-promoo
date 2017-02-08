@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Input, Button} from 'react-materialize';
-import * as loginService from '../../../services/login-service';
+import * as loginService from '../../../services/auth-service';
 
 export default class ForgotPasswordForm extends Component {
     constructor(props) {

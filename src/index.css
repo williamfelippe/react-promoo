@@ -203,14 +203,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .moo-add-bar {
-    background-color: rgba(90, 95, 190, 0.05) !important;
-    border: rgba(90, 95, 190, 1) solid thin;
-    margin-bottom: 15px;
+    background-color: rgba(0, 0, 0, 0.002) !important;
+    border: rgba(0, 0, 0, 0.1) solid thin;
+    margin-bottom: 50px;
 }
 
 .moo-add-bar b {
     font-weight: 700;
-    color: rgba(90, 95, 190, 0.2);
+    color: rgba(0, 0, 0, 1);
     font-size: 17px;
-    margin-top: 10px;
+    margin-top: 5px;
+    display: inline-block;
 }

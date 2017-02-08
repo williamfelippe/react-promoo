@@ -26,19 +26,19 @@ export default class Footer extends Component {
                                     <strong className="white-text">Links</strong>
                                     <ul>
                                         <li>
-                                            <Link to="/about">Sobre nós</Link>
+                                            <Link to="about">Sobre nós</Link>
                                         </li>
                                         <li>
-                                            <Link to="/contact">Fale conosco</Link>
+                                            <Link to="contact">Fale conosco</Link>
                                         </li>
                                         <li>
-                                            <Link to="/terms">Termos de uso</Link>
+                                            <Link to="terms">Termos de uso</Link>
                                         </li>
                                         <li className={isLoggedIn ? 'hide' : ''}>
-                                            <Link to="/signup">Registrar</Link>
+                                            <Link to="signup">Registrar</Link>
                                         </li>
                                         <li className={isLoggedIn ? 'hide' : ''}>
-                                            <Link to="/signin">Entrar</Link>
+                                            <Link to="signin">Entrar</Link>
                                         </li>
                                     </ul>
                                 </Col>

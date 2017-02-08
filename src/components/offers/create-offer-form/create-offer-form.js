@@ -54,7 +54,7 @@ export default class CreateOfferForm extends Component {
             }
 
             console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng})
-        })
+        });
     }
 
     render() {
@@ -72,11 +72,11 @@ export default class CreateOfferForm extends Component {
         return (
             <form onSubmit={this.submit} className="col s12 m8 offset-m2">
                 <Row>
-                    <Input s={12} label="Nome do produto" onChange={this.onChangeName}/>
+                    <Input s={12} label="Nome do produto" onChange={this.onChangeName} />
                 </Row>
 
                 <Row>
-                    <Input s={12} type="number" label="Preço" onChange={this.onChangePrice} min="0" step="0.01"/>
+                    <Input s={12} type="number" label="Preço" onChange={this.onChangePrice} min="0" step="0.01" />
                 </Row>
 
                 <Row>

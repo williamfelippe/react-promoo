@@ -33,7 +33,7 @@ export default class ForgotPassword extends Component {
                             <Row>
                                 <Col s={12}>
                                     <p className="messages">
-                                        Lembrou a senha? <Link to="/signin">Entre</Link>
+                                        Lembrou a senha? <Link to="signin">Entre</Link>
                                     </p>
                                 </Col>
                             </Row>

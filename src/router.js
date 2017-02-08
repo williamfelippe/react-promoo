@@ -42,16 +42,26 @@ export default(
 
             <Route path="dashboard">
                 <Route component={DashboardLayout}>
+
                     <IndexRoute component={Offers}/>
-                </Route>
-                <Route path="stores" component={Stores}/>
-                <Route path="user">
-                    <Route component={UserLayout}>
-                        <IndexRoute component={UserProfile}/>
+
+                    <Route path="offers" component={Offers}/>
+
+                    <Route path="stores" component={Stores}/>
+
+                    <Route path="user">
+                        <Route component={UserLayout}>
+                            <IndexRoute component={UserProfile}/>
+
+                            <Route path="user-profile" component={UserProfile}/>
+
+                            <Route path="edit-avatar" component={EditAvatar}/>
+
+                            <Route path="edit-email" component={EditEmail}/>
+
+                            <Route path="edit-password" component={EditPassword}/>
+                        </Route>
                     </Route>
-                    <Route path="edit-avatar" component={EditAvatar}/>
-                    <Route path="edit-email" component={EditEmail}/>
-                    <Route path="edit-password" component={EditPassword}/>
                 </Route>
             </Route>
         </Route>

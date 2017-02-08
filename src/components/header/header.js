@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {Row, Col, Button} from 'react-materialize';
+import {Row, Col, Button, Icon} from 'react-materialize';
 import './header.css';
 
 export default class Header extends Component {
@@ -21,28 +21,28 @@ export default class Header extends Component {
                     <Row className="n-margin-bottom">
                         <Col s={12} className="hide-on-med-and-up moo-mobile-menu">
                             <button className='dropdown-button' data-activates='menu'>
-                                <i className="material-icons">menu</i>
+                                <Icon>menu</Icon>
                             </button>
 
                             <ul id='menu' className='dropdown-content content'>
                                 <li className={!isLoggedIn ? 'hide' : ''}>
-                                    <Link to="/dashboard">Meu Promoo</Link>
+                                    <Link to="dashboard">Meu Promoo</Link>
                                 </li>
 
                                 <li>
-                                    <Link to="/about">Sobre</Link>
+                                    <Link to="about">Sobre</Link>
                                 </li>
 
                                 <li>
-                                    <Link to="/contact">Fale conosco</Link>
+                                    <Link to="contact">Fale conosco</Link>
                                 </li>
 
                                 <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="/signup">Registrar</Link>
+                                    <Link to="signup">Registrar</Link>
                                 </li>
 
                                 <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="/signin">Entrar</Link>
+                                    <Link to="signin">Entrar</Link>
                                 </li>
 
                                 <li className={!isLoggedIn ? 'hide' : ''}>
@@ -66,19 +66,19 @@ export default class Header extends Component {
                         <Col s={12} m={7} l={9} className="hide-on-small-and-down">
                             <ul className="moo-menu">
                                 <li className={!isLoggedIn ? 'hide' : ''}>
-                                    <Link to="/dashboard">Meu Promoo</Link>
+                                    <Link to="dashboard">Meu Promoo</Link>
                                 </li>
                                 <li>
-                                    <Link to="/about">Sobre</Link>
+                                    <Link to="about">Sobre</Link>
                                 </li>
                                 <li>
-                                    <Link to="/contact">Contato</Link>
+                                    <Link to="contact">Contato</Link>
                                 </li>
                                 <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="/signup" className="signup-button">Registrar</Link>
+                                    <Link to="signup" className="signup-button">Registrar</Link>
                                 </li>
                                 <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="/signin" className="waves-effect waves-light btn">Entrar</Link>
+                                    <Link to="signin" className="waves-effect waves-light btn">Entrar</Link>
                                 </li>
                                 <li className={!isLoggedIn ? 'hide' : ''}>
                                     <Button onClick={this.signout} waves="light" className="btn">

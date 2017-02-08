@@ -1,0 +1,28 @@
+.moo-user-bar {
+    list-style: none;
+}
+
+.moo-user-bar li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.moo-user-bar li:not(:last-child) {
+    margin-right: 10px;
+}
+
+.moo-user-bar li i {
+    font-size: 30px;
+}
+
+.moo-user-bar li a {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.moo-user-bar li a:hover {
+    color: rgba(90, 95, 190, 0.8);
+}
+
+.moo-user-bar li a.active {
+    color: rgba(90, 95, 190, 1);
+}

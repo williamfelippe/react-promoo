@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import {Row, Col, Input, Button} from 'react-materialize';
+import * as systemService from '../../services/system-service';
 
 export default class ContactForm extends Component {
     constructor(props) {
@@ -44,14 +45,24 @@ export default class ContactForm extends Component {
 
     submit(event) {
         event.preventDefault();
-        console.log('Mensagem enviada com sucesso');
+
         console.log(this.state);
+
+        systemService.sendMessage(this.state)
+            .then((response) => {
+                console.log(response.data);
+                console.log('Mensagem enviada com sucesso');
+            })
+            .catch((error) => {
+                console.log('CONTACT');
+                console.log(error);
+            })
     }
 
     render() {
         const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
         return (
-            <form onSubmit={this.submit} className="col s12">
+            <form onSubmit={this.submit} className="col s12 m-b-20">
                 <Row>
                     <Input s={12} label="Nome" onChange={this.onChangeName}/>
                 </Row>
@@ -75,7 +86,8 @@ export default class ContactForm extends Component {
 
                 <Row>
                     <Col s={12}>
-                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey} onChange={this.onChangeCaptcha} className="right"/>
+                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey} onChange={this.onChangeCaptcha}
+                                   className="right"/>
                     </Col>
                 </Row>
 

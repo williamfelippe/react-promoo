@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Link, Icon} from 'react-router';
+import {Link} from 'react-router';
+import {Icon} from 'react-materialize';
 import './user-bar.css';
 
 export default class UserBar extends Component {
@@ -7,22 +8,22 @@ export default class UserBar extends Component {
         return (
             <ul className="right moo-user-bar">
                 <li>
-                    <Link to="/">
+                    <Link to="user-profile">
                         <Icon>dashboard</Icon>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/edit-avatar">
+                    <Link to="edit-avatar">
                         <Icon>insert_photo</Icon>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/edit-email">
+                    <Link to="edit-email">
                         <Icon>email</Icon>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/edit-password">
+                    <Link to="edit-password">
                         <Icon>vpn_key</Icon>
                     </Link>
                 </li>

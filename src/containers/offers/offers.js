@@ -22,10 +22,24 @@ export default class Offers extends Component {
     }
 
     componentDidMount() {
-        this.getOffers();
+        this.getOffersAndCategories();
     }
 
     getOffers() {
+        this.setState({loading: true});
+
+        offerService.getOffers(this.state.limit, this.state.offset)
+            .then((response) => {
+                this.treatOffersResponse(response);
+                this.setState({loading: false});
+            })
+            .catch((error) => {
+                console.log(error);
+                this.setState({loading: false});
+            })
+    }
+
+    getOffersAndCategories() {
         this.setState({loading: true});
 
         const requests = [
@@ -101,14 +115,14 @@ export default class Offers extends Component {
         );
 
         return (
-            <Row>
+            <Row className="m-b-40">
                 <Col s={12} className="n-padding">
                     <Row className="moo-add-bar">
                         <div className="container">
                             <Col s={6}>
                                 <p>
                                     <b>
-                                        { this.state.offers.length } ofertas
+                                        { this.state.offers.length } ofertas encontradas
                                     </b>
                                 </p>
                             </Col>
@@ -130,18 +144,18 @@ export default class Offers extends Component {
                                 <OfferFilter categories={this.state.categories}/>
                             </Col>
 
-                            {/* Listagem das ofertas */}
                             <Col s={12} m={9}>
                                 <Row>
+
+                                    {/* Listagem das ofertas */}
                                     {listOffers}
                                 </Row>
-                            </Col>
-
-                            {/* Permite a busca de mais ofertas */}
-                            <Col s={12}>
-                                <p className="center-align">
-                                    <a onClick={this.moreOffers} className="moo-loader-more"></a>
-                                </p>
+                                <Row>
+                                    {/* Permite a busca de mais ofertas */}
+                                    <p className="center-align">
+                                        <a onClick={this.moreOffers} className="moo-loader-more"></a>
+                                    </p>
+                                </Row>
                             </Col>
                         </div>
                     </Row>

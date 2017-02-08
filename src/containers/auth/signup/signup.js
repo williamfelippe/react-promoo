@@ -25,7 +25,7 @@ export default class Signup extends Component {
                             <Row>
                                 <Col s={12}>
                                     <p className="messages">
-                                        Já é um membro? <Link to="/signin">Entre</Link>
+                                        Já é um membro? <Link to="signin">Entre</Link>
                                     </p>
                                 </Col>
                             </Row>

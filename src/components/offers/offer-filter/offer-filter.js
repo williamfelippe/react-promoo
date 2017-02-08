@@ -1,23 +1,42 @@
 import React, {Component} from 'react';
-import {Row, Col, Input} from 'react-materialize';
+import {Row, Col, Input, Button} from 'react-materialize';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import './offer-filter.css';
 
 export default class OfferFilter extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            name: '',
             checkedCategories: [],
             minPrice: 0,
-            maxPrice: Number.POSITIVE_INFINITY
+            maxPrice: Number.POSITIVE_INFINITY,
+            address: ''
         };
 
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCheck = this.onChangeCheck.bind(this);
         this.onChangeMinPrice = this.onChangeMinPrice.bind(this);
         this.onChangeMaxPrice = this.onChangeMaxPrice.bind(this);
+        this.onChangePlace = this.onChangePlace.bind(this);
+        this.cleanFilter = this.cleanFilter.bind(this);
+        this.filter = this.filter.bind(this);
+    }
+
+    onChangeName(event) {
+        this.setState({name: event.target.value});
     }
 
     onChangeCheck(event) {
-        console.log(event.target.value);
+        let checkedCategories = this.state.checkedCategories;
+
+        const value = event.target.value;
+        const index = checkedCategories.indexOf(value);
+
+        (index) === -1 ? checkedCategories.push(value) : checkedCategories.splice(index, 1);
+
+        this.setState({checkedCategories: checkedCategories});
     }
 
     onChangeMinPrice() {
@@ -28,22 +47,63 @@ export default class OfferFilter extends Component {
         this.setState({maxPrice: event.target.value});
     }
 
+    onChangePlace(address) {
+        this.setState({address: address});
+    }
+
+    cleanFilter() {
+        this.setState = {
+            name: '',
+            checkedCategories: [],
+            minPrice: 0,
+            maxPrice: Number.POSITIVE_INFINITY,
+            address: ''
+        };
+    }
+
+    filter() {
+
+    }
+
     render() {
+        const nameFilter = <Row className="n-margin-bottom">
+            <Input s={12} label="Nome" onChange={this.onChangeName}/>
+        </Row>;
+
         const listCategoriesFilter =
             this.props.categories.map((category) =>
-                <p s={12} key={category._id}>
-                    <Input type='checkbox' value={category._id} label={category.name} onChange={this.onChangeCheck}/>
-                </p>
+                <Row key={category._id}>
+                    <Input type='checkbox' s={12} value={category._id} label={category.name}
+                           onChange={this.onChangeCheck}/>
+                </Row>
             );
 
-        const priceFilter = <p>
-            <Input s={6} type="number" label="Mínimo" onChange={this.onChangeMinPrice}/>
-            <Input s={6} type="number" label="Máximo" onChange={this.onChangeMaxPrice}/>
-        </p>;
+        const priceFilter = <Row>
+            <Input s={12} m={5} type="number" label="Min" onChange={this.onChangeMinPrice} min="0" step="5"/>
+
+            <Input s={12} m={5} type="number" label="Máx" onChange={this.onChangeMaxPrice} min="0" step="5"/>
+        </Row>;
+
+        const options = {
+            types: ['address'],
+            componentRestrictions: {'country': 'br'}
+        };
+
+        const placeFilter =
+            <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace}
+                                options={options} hideLabel>
+                <Input s={12} label="Procurar por endereço" />
+            </PlacesAutocomplete>;
 
         return (
             <Row>
                 <Col s={12}>
+                    <b>Nome da oferta</b>
+
+                    {nameFilter}
+                </Col>
+
+                <Col s={12} className="m-b-20">
                     <p>
                         <b>Categorias</b>
                     </p>
@@ -51,12 +111,26 @@ export default class OfferFilter extends Component {
                     {listCategoriesFilter}
                 </Col>
 
-                <Col s={12} className="n-padding">
-                    <p>
-                        <b>Preço</b>
-                    </p>
+                <Col s={12}>
+                    <b>Preço</b>
 
                     {priceFilter}
+                </Col>
+
+                <Col s={12} className="n-padding">
+                    <b className="place">Endereço</b>
+
+                    {placeFilter}
+                </Col>
+
+                <Col s={12}>
+                    <Button waves='light' className="w-100 m-b-20" onClick={this.filter}>
+                        Filtrar
+                    </Button>
+
+                    <Button flat waves='light' className="w-100" onClick={this.cleanFilter}>
+                        Limpar filtro
+                    </Button>
                 </Col>
             </Row>
         )

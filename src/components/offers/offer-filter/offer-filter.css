@@ -1,0 +1,8 @@
+.btn-flat {
+    background-color: transparent !important;
+    border: rgba(0, 0, 0, 0.2) solid thin;
+}
+
+.place {
+    padding: 10px;
+}
