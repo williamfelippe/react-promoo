@@ -1,4 +1,4 @@
-/* ITEM DE OFERTA */
+/* ITEM DE OFERTA
 .moo-card-offer .date {
   font-size: 11px;
   color: rgba(0, 0, 0, 0.4);
@@ -79,4 +79,33 @@
 .moo-card-offer .card-content,
 .moo-card-store .card-content {
   padding: 10px !important;
+}
+*/
+
+.moo-offer-card-test {
+
+}
+
+.moo-offer-card-test .avatar {
+    text-transform: none !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+.moo-offer-card-test .avatar > div:not(:last-child) {
+    height: 50px;
+    vertical-align: middle;
+}
+
+.moo-offer-card-test .avatar img {
+    height: 30px;
+    width: 30px;
+    margin: 0 10px;
+}
+
+.moo-offer-card-test .price {
+    font-family: 'Roboto Slab', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: rgba(255, 83, 83, 0.8) !important;
 }

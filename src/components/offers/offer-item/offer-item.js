@@ -57,74 +57,66 @@ export default class OfferItem extends Component {
         const offer = this.props.offer;
 
         return (
-            <div className="card moo-card-offer hoverable">
-                <div className="card-content">
-                    <small className="date right">
-                        {dateFormat.format(offer.created_at)}
-                    </small>
-                    <div className="clearfix"></div>
+            <Col s={this.props.s} m={this.props.m} l={this.props.l}>
+                <CardPanel className="moo-offer-card-test">
+                    <div className="right-align category">
+                        {/* Categoria */}
+                    </div>
 
-                    <span className="card-title truncate">
-                        {offer.name}
-                    </span>
+                    <div className="name center-align">
+                        {/* Nome */}
+                    </div>
 
-                    <p className="category">
-                        {offer.category.name}
-                    </p>
+                    <div className="store right-align">
+                        {/* Loja */}
+                    </div>
 
-                    <p className="price">
-                        {currencyFormat.format(offer.price)}
-                    </p>
+                    <div className="price center-align">
+                        {/* Preço */}
+                    </div>
 
-                    <p className="description">
-                        {offer.description}
-                    </p>
-
-                    <ul>
-                        <li>
-                            <a onClick={this.likeOffer} className={this.state.like ? 'active' : ''}>
-                                <Icon>thumb_up</Icon>
-                                <small>
+                    <div className="actions center-align">
+                        <ul>
+                            <li>
+                                <a>
+                                    <Icon>thumb_up</Icon>
                                     {this.state.likes}
-                                </small>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a onClick={this.dislikeOffer} className={this.state.dislike ? 'active' : ''}>
-                                <Icon>thumb_down</Icon>
-                                <small>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <Icon>thumb_down</Icon>
                                     {this.state.dislikes}
-                                </small>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <Icon>mode_comment</Icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a className="report">
+                                    <Icon>block</Icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-                        <li>
-                            <a onClick={this.openComments}>
-                                <Icon>chat_bubble</Icon>
-                            </a>
-                        </li>
+                    <div>
+                        <Link to="user-detail" className="avatar">
+                            <div className="right valign-wrapper">
+                                <ImageLoader src={offer.user.photo} alt={offer.user.name}
+                                             className="circle responsive-img right"/>
 
-                        <li>
-                            <OfferReportButton offer={offer}/>
-                        </li>
-                    </ul>
-                </div>
-
-                <div className="card-action">
-                    <Link to="user-detail" className="avatar">
-                        <div className="right valign-wrapper">
-                            <ImageLoader src={offer.user.photo} alt={offer.user.name}
-                                         className="circle responsive-img right"/>
-
-                            <span className="right">
+                                <span className="right">
                                 {offer.user.name}
                             </span>
-                        </div>
-                        <div className="clearfix"></div>
-                    </Link>
-                </div>
-            </div>
+                            </div>
+                            <div className="clearfix"></div>
+                        </Link>
+                    </div>
+                </CardPanel>
+            </Col>
         )
     }
 }

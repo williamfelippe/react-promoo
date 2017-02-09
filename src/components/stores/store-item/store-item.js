@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
+import "./store-item.css";
 
 export default class StoreItem extends Component {
     render() {
