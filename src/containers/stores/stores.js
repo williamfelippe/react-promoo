@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {Row, Col, Button} from "react-materialize";
 import axios from "axios";
 import StoreItem from "../../components/stores/store-item/store-item";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/util/loader/loader";
 import * as storeService from "../../services/store-service";
 
 export default class Stores extends Component {

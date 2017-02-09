@@ -16,7 +16,7 @@ export default class Banner extends Component {
                         <h1>Viu uma promoção?</h1>
                         <p>Ajude outras pessoas a realizar uma compra mais barata.</p>
                         <p>
-                            <Link to="dashboard" className="waves-effect waves-light btn btn-large">
+                            <Link to="dashboard/create-offer" className="waves-effect waves-light btn btn-large">
                                 Indique aqui
                             </Link>
                         </p>

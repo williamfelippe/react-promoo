@@ -6,14 +6,16 @@ export default class CreateOffer extends Component {
     render() {
         return (
             <div className="container">
-                <Row>
+                <Row className="m-b-40">
                     <Col s={12}>
                         <h4 className="center-align">
                             Divulgue uma oferta
                         </h4>
                     </Col>
 
-                    <CreateOfferForm/>
+                    <Col s={12} m={8} offset="m2" className="m-t-40">
+                        <CreateOfferForm/>
+                    </Col>
                 </Row>
             </div>
         )

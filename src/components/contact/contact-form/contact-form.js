@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import {Row, Col, Input, Button} from 'react-materialize';
-import * as systemService from '../../services/system-service';
+import * as systemService from '../../../services/system-service';
 
 export default class ContactForm extends Component {
     constructor(props) {

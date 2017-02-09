@@ -18,6 +18,8 @@ import Terms from './containers/terms/terms';
 // SubPages
 import Offers from './containers/offers/offers';
 import Stores from './containers/stores/stores';
+import CreateOffer from './containers/create-offer/create-offer';
+import CreateStore from './containers/create-store/create-store';
 import UserProfile from './containers/user/user-profile/user-profile';
 import EditAvatar from './containers/user/edit-avatar/edit-avatar';
 import EditEmail from './containers/user/edit-email/edit-email';
@@ -46,8 +48,9 @@ export default(
                     <IndexRoute component={Offers}/>
 
                     <Route path="offers" component={Offers}/>
-
                     <Route path="stores" component={Stores}/>
+                    <Route path="create-offer" component={CreateOffer}/>
+                    <Route path="create-store" component={CreateStore}/>
 
                     <Route path="user">
                         <Route component={UserLayout}>

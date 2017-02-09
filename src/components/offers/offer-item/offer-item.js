@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {Icon} from 'react-materialize';
+import ImageLoader from '../../util/image-loader/image-loader';
 import OfferReportButton from '../../../components/offers/offer-report-button/offer-report-button';
 import * as dateFormat from '../../../utils/date-format';
 import * as currencyFormat from '../../../utils/currency-format';
@@ -113,7 +114,9 @@ export default class OfferItem extends Component {
                 <div className="card-action">
                     <Link to="user-detail" className="avatar">
                         <div className="right valign-wrapper">
-                            <img src={offer.user.photo} alt={offer.user.name} className="circle responsive-img right"/>
+                            <ImageLoader src={offer.user.photo} alt={offer.user.name}
+                                         className="circle responsive-img right"/>
+
                             <span className="right">
                                 {offer.user.name}
                             </span>

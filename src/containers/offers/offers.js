@@ -3,7 +3,7 @@ import {Row, Col, Button} from 'react-materialize';
 import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
 import OfferItem from '../../components/offers/offer-item/offer-item';
-import Loader from '../../components/loader/loader';
+import Loader from '../../components/util/loader/loader';
 import * as offerService from '../../services/offer-service';
 
 export default class Offers extends Component {
@@ -70,9 +70,13 @@ export default class Offers extends Component {
             console.log(response.data);
 
             let offers = this.state.offers;
+            console.log(offers);
+
             response.data.forEach((item) => {
                 offers.push(item);
             });
+
+            console.log(offers);
 
             this.setState({offers: offers});
         }
@@ -96,7 +100,7 @@ export default class Offers extends Component {
     }
 
     moreOffers() {
-        this.setState({ offset: this.state.limit });
+        this.setState({offset: this.state.limit});
         this.getOffers();
     }
 
@@ -126,7 +130,7 @@ export default class Offers extends Component {
                             <Col s={6} className="right-align">
                                 <p>
                                     <Button onClick={this.openCreateOfferScreen} waves='light'>
-                                        Indicar
+                                        Divulgar
                                     </Button>
                                 </p>
                             </Col>
@@ -134,29 +138,32 @@ export default class Offers extends Component {
                     </Row>
                 </Col>
 
-                <Col s={12}>
-                    <Row>
-                        <div className="container">
-                            <Col s={12} m={3}>
-                                <OfferFilter categories={this.state.categories}/>
-                            </Col>
+                {
+                    (this.state.offers.length && this.state.categories.length) &&
+                    <Col s={12}>
+                        <Row>
+                            <div className="container">
+                                <Col s={12} m={3}>
+                                    <OfferFilter categories={this.state.categories}/>
+                                </Col>
 
-                            <Col s={12} m={9}>
-                                <Row>
-                                    {/* Listagem das ofertas */}
-                                    {listOffers}
-                                </Row>
+                                <Col s={12} m={9}>
+                                    <Row>
+                                        {/* Listagem das ofertas */}
+                                        {listOffers}
+                                    </Row>
 
-                                <Row>
-                                    {/* Permite a busca de mais ofertas */}
-                                    <p className="center-align">
-                                        <Loader onClick={this.moreOffers} loading={this.state.loading} />
-                                    </p>
-                                </Row>
-                            </Col>
-                        </div>
-                    </Row>
-                </Col>
+                                    <Row>
+                                        {/* Permite a busca de mais ofertas */}
+                                        <p className="center-align">
+                                            <Loader onClick={this.moreOffers} loading={this.state.loading}/>
+                                        </p>
+                                    </Row>
+                                </Col>
+                            </div>
+                        </Row>
+                    </Col>
+                }
             </Row>
         )
     }
