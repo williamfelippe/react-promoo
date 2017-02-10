@@ -50,10 +50,10 @@ export default class OfferReportButton extends Component {
     }
 
     render() {
-        const blockLink = <a className="report"><Icon>block</Icon></a>;
+        const reportLink = <a className="report"><Icon>block</Icon></a>;
 
         return (
-            <Modal header='Algum problema?' trigger={blockLink}
+            <Modal header='Algum problema?' trigger={reportLink}
                    actions="&nbsp;">
                 <p className="m-t-40">
                     Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et

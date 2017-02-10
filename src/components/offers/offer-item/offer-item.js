@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {Icon} from 'react-materialize';
+import {Icon, Col, CardPanel} from 'react-materialize';
 import ImageLoader from '../../util/image-loader/image-loader';
 import OfferReportButton from '../../../components/offers/offer-report-button/offer-report-button';
 import * as dateFormat from '../../../utils/date-format';
 import * as currencyFormat from '../../../utils/currency-format';
 import * as offerService from '../../../services/offer-service';
+import * as userInformationStore from '../../../utils/user-information-store';
 import './offer-item.css';
 
 export default class OfferItem extends Component {
@@ -20,6 +21,10 @@ export default class OfferItem extends Component {
         };
 
         this.likeOffer = this.likeOffer.bind(this);
+    }
+
+    componentDidMount() {
+        this.countEvaluations();
     }
 
     likeOffer() {
@@ -40,7 +45,7 @@ export default class OfferItem extends Component {
         const data = {
             like: this.state.liked,
             dislike: this.state.disliked,
-            user_id: 1,//this.userStore.getId(),
+            user_id: userInformationStore.getLoggedUserId(),
             offer_id: this.props.offer._id
         };
 
@@ -53,51 +58,83 @@ export default class OfferItem extends Component {
             });
     }
 
+    countEvaluations() {
+        const evaluations = this.props.offer.evaluations;
+
+        let likes = 0, dislikes = 0;
+        evaluations.forEach((evaluation) => {
+            if (userInformationStore.isLoggedIn()) {
+                if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.like) {
+                    this.setState({liked: true});
+                }
+                else if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.dislike) {
+                    this.setState({disliked: true});
+                }
+            }
+
+            if (evaluation.like) {
+                likes++;
+            }
+            else if (evaluation.dislike) {
+                dislikes++;
+            }
+        });
+
+        this.setState({likes: likes, dislikes: dislikes});
+    }
+
     render() {
         const offer = this.props.offer;
 
         return (
             <Col s={this.props.s} m={this.props.m} l={this.props.l}>
-                <CardPanel className="moo-offer-card-test">
+                <CardPanel className="moo-offer-card">
                     <div className="right-align category">
                         {/* Categoria */}
+                        { offer.category.name }
                     </div>
 
-                    <div className="name center-align">
+                    <div className="name center-align truncate">
                         {/* Nome */}
+                        { offer.name }
                     </div>
 
-                    <div className="store right-align">
+                    <div className="store center-align">
                         {/* Loja */}
+                        { offer.store.name }
                     </div>
 
                     <div className="price center-align">
                         {/* Preço */}
+                        { currencyFormat.format(offer.price) }
+                    </div>
+
+                    <div className="date center-align">
+                        {/* Data */}
+                        <small>{ dateFormat.format(offer.created_at) }</small>
                     </div>
 
                     <div className="actions center-align">
                         <ul>
                             <li>
-                                <a>
-                                    <Icon>thumb_up</Icon>
-                                    {this.state.likes}
+                                <a className={this.state.liked ? 'active' : ''}>
+                                    <Icon className="thumbs_up">thumb_up</Icon> {this.state.likes}
+                                </a>
+                            </li>
+                            <li>
+                                <a className={this.state.disliked ? 'active' : ''}>
+                                    <Icon className="thumbs_down">thumb_down</Icon> {this.state.dislikes}
                                 </a>
                             </li>
                             <li>
                                 <a>
-                                    <Icon>thumb_down</Icon>
-                                    {this.state.dislikes}
+                                    <Icon className="comment">
+                                        mode_comment
+                                    </Icon>
                                 </a>
                             </li>
                             <li>
-                                <a>
-                                    <Icon>mode_comment</Icon>
-                                </a>
-                            </li>
-                            <li>
-                                <a className="report">
-                                    <Icon>block</Icon>
-                                </a>
+                                <OfferReportButton/>
                             </li>
                         </ul>
                     </div>

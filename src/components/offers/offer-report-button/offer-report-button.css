@@ -5,3 +5,11 @@
 h4 {
     text-align: center;
 }
+
+.report {
+    color: rgba(255, 83, 83, 0.7) !important;
+}
+
+.report:hover {
+    color: rgba(255, 83, 83, 1) !important;
+}

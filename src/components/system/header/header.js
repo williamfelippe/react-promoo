@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {Row, Col, Button, Icon} from 'react-materialize';
+import * as userInformationStore from '../../../utils/user-information-store';
 import './header.css';
 
 export default class Header extends Component {
@@ -10,11 +11,12 @@ export default class Header extends Component {
     }
 
     signout() {
-        console.log('Sair');
+        userInformationStore.clear();
+        console.log('Saiu');
     }
 
     render() {
-        const isLoggedIn = true;//this.state.isLoggedIn;
+        const isLoggedIn = userInformationStore.isLoggedIn();
         return (
             <section className="moo-nav-bar">
                 <div className="container">
@@ -65,7 +67,7 @@ export default class Header extends Component {
 
                         <Col s={12} m={7} l={9} className="hide-on-small-and-down">
                             <ul className="moo-menu">
-                                <li className={!isLoggedIn ? 'hide' : ''}>
+                                <li>
                                     <Link to="dashboard">Meu Promoo</Link>
                                 </li>
                                 <li>

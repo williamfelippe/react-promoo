@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {Row, Input, Button, Preloader} from 'react-materialize';
+import {browserHistory} from 'react-router';
 import CryptoJS from "crypto-js";
-import {Row, Input, Button} from 'react-materialize';
 import * as loginService from '../../../services/auth-service';
+import * as userInformationStore from '../../../utils/user-information-store';
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -10,7 +12,8 @@ export default class SignupForm extends Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            loading: false
         };
 
         this.submit = this.submit.bind(this);
@@ -33,7 +36,7 @@ export default class SignupForm extends Component {
 
     submit(event) {
         event.preventDefault();
-        
+
         console.log('Registro enviado com sucesso');
         console.log(this.state);
 
@@ -44,7 +47,7 @@ export default class SignupForm extends Component {
             device_type: 'web',
             device_token: ''
         };
-        
+
         this.signup(data);
     }
 
@@ -52,21 +55,26 @@ export default class SignupForm extends Component {
         console.log('Signup');
         console.log(data);
 
-        loginService
-            .signup(data)
-            .end((err, res) => {
-                if (err) {
-                    console.log('Error: ' + err);
-                } else {
-                    if (res.statusCode === 200) {
-                        console.log('Signup');
-                        console.log(res.body);
+        this.setState({loading: true});
+        loginService.signup(data)
+            .then((response) => {
+                const statusCode = response.status;
 
-                        // Salvar as informações do usuário no localStorage
-                    } else {
-                        //this.threatHttpErrors();
-                    }
+                if (statusCode === 200) {
+                    const userInformations = response.data;
+
+                    const token = userInformations.token;
+                    const user = userInformations.user;
+
+                    userInformationStore.createUserStore(user._id, user.name, user.email, user.photo, token, user.settings);
+                    browserHistory.push('/');
                 }
+
+                this.setState({loading: false});
+            })
+            .catch((error) => {
+                console.log(error);
+                this.setState({loading: false});
             });
     }
 
@@ -74,19 +82,23 @@ export default class SignupForm extends Component {
         return (
             <form onSubmit={this.submit} className="col s12">
                 <Row className="n-margin-bottom">
-                    <Input s={12} label="Nome" onChange={this.onChangeName} />
+                    <Input s={12} label="Nome" onChange={this.onChangeName}/>
                 </Row>
 
                 <Row className="n-margin-bottom">
-                    <Input s={12} type="email" label="E-mail" onChange={this.onChangeEmail} />
+                    <Input s={12} type="email" label="E-mail"
+                           onChange={this.onChangeEmail}/>
                 </Row>
 
                 <Row className="n-margin-bottom">
-                    <Input s={12} type="password" label="Senha" onChange={this.onChangePassword} />
+                    <Input s={12} type="password" label="Senha"
+                           onChange={this.onChangePassword}/>
                 </Row>
 
                 <Button type="submit" waves="light" className="w-100">
-                    Cadastrar
+                    {
+                        this.state.loading ? (<Preloader size="small" color="yellow"/>) : (<div>Cadastrar</div>)
+                    }
                 </Button>
             </form>
         )

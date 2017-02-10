@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Button} from 'react-materialize';
+import {browserHistory} from 'react-router';
 import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
 import OfferItem from '../../components/offers/offer-item/offer-item';
@@ -105,14 +106,12 @@ export default class Offers extends Component {
     }
 
     openCreateOfferScreen() {
-        console.log('Abrir');
+        browserHistory.push('dashboard/create-offer');
     }
 
     render() {
         const listOffers = this.state.offers.map((offer) =>
-            <Col s={12} m={6} l={4} key={offer._id}>
-                <OfferItem offer={offer}/>
-            </Col>
+            <OfferItem offer={offer} s={12} m={6} l={4} key={offer._id}/>
         );
 
         return (

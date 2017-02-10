@@ -1,18 +1,18 @@
 {
   "name": "promoo",
   "version": "0.1.0",
-  "description": "An application to help people to find promotions shared by other users.",
+  "description": "Uma aplicação colaborativa para ajudar pessoas a encontrar promoções pelo país.",
   "keywords": [
     "promoo",
     "promoção",
     "promoções"
   ],
-  "homepage": "http://promoo.io",
+  "homepage": "http://app.promoo.com.br",
   "license": "ISC",
   "author": "William Felippe F. da Silva",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/william_silva/promoo-app"
+    "url": "https://github.com/williamfelippe/react-promoo"
   },
   "private": true,
   "devDependencies": {

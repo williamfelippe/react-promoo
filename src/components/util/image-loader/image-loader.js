@@ -6,12 +6,10 @@ export default class ImageLoader extends Component {
         super(props);
 
         this.state = { src: this.props.src };
-
         this.onError = this.onError.bind(this);
     }
 
     onError() {
-        //const type = this.props.type;
         this.setState({ src: avatar });
     }
 

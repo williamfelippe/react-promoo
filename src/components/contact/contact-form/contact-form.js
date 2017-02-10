@@ -91,7 +91,9 @@ export default class ContactForm extends Component {
                     </Col>
                 </Row>
 
-                <Button type='submit' waves='light'>Enviar</Button>
+                <Button type='submit' waves='light' className="m-t-20 w-100">
+                    Enviar
+                </Button>
             </form>
         )
     }

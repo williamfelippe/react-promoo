@@ -1,0 +1,39 @@
+/* Usuário */
+.moo-user-header {
+    margin: 0;
+    padding: 20px 0 !important;
+    text-align: center;
+    background-color: rgba(90, 95, 190, 0.02);
+}
+
+/*.moo-user-header .btn {
+    display: table;
+    margin: 15px auto;
+    font-size: 14px;
+    padding: 0 10px;
+}*/
+
+.moo-user-header .user-photo-container {
+    width: 125px;
+    height: 125px;
+
+    padding: 5px;
+    margin: 0 auto 20px;
+
+    border: rgba(255, 83, 83, 1) solid medium;
+    background: transparent;
+}
+
+.moo-user-header .user-photo-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.moo-user-header h2 {
+    font-weight: 300;
+}
+
+.moo-user-header .email {
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+}

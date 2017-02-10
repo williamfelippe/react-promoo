@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {Row, Col} from 'react-materialize';
+import * as userInformationStore from '../../../utils/user-information-store';
 import './footer.css';
 
 export default class Footer extends Component {
     render() {
-        const isLoggedIn = false;//this.state.isLoggedIn;
+        const isLoggedIn = userInformationStore.isLoggedIn();
         return (
             <footer className="page-footer">
                 <div className="container">

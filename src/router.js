@@ -29,17 +29,11 @@ export default(
     <Router history={browserHistory}>
         <Route component={MainLayout}>
             <Route path="/" component={Home}/>
-
             <Route path="about" component={About}/>
-
             <Route path="contact" component={Contact}/>
-
             <Route path="signup" component={Signup}/>
-
             <Route path="signin" component={Signin}/>
-
             <Route path="forgot-password" component={ForgotPassword}/>
-
             <Route path="terms" component={Terms}/>
 
             <Route path="dashboard">
@@ -57,11 +51,8 @@ export default(
                             <IndexRoute component={UserProfile}/>
 
                             <Route path="user-profile" component={UserProfile}/>
-
                             <Route path="edit-avatar" component={EditAvatar}/>
-
                             <Route path="edit-email" component={EditEmail}/>
-
                             <Route path="edit-password" component={EditPassword}/>
                         </Route>
                     </Route>

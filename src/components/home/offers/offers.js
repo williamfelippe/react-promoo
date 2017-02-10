@@ -44,9 +44,7 @@ export default class Offers extends Component {
 
     render() {
         const listOffers = this.state.offers.map((offer) =>
-            <Col s={12} m={4} l={3} key={offer._id}>
-                <OfferItem offer={offer}/>
-            </Col>
+            <OfferItem offer={offer} s={12} m={4} l={3} key={offer._id}/>
         );
 
         return (

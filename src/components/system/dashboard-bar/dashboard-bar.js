@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {Row, Col, Icon} from 'react-materialize';
+import * as userInformationStore from '../../../utils/user-information-store';
 import './dashboard-bar.css';
 
 export default class DashboardBar extends Component {
     render() {
+        const isLoggedIn = userInformationStore.isLoggedIn();
         return (
             <Row className="moo-dashboard-bar">
                 <Col s={12}>
@@ -32,7 +34,7 @@ export default class DashboardBar extends Component {
                                             </div>
                                         </Link>
                                     </li>
-                                    <li>
+                                    <li className={!isLoggedIn ? 'hide' : ''}>
                                         <Link to="dashboard/user">
                                             <div className="hide-on-med-and-down">
                                                 Para mim
