@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Row} from 'react-materialize';
 import axios from 'axios';
 import UserInfoHeader from '../../../components/user/user-info-header/user-info-header';
+import OfferItem from '../../../components/offers/offer-item/offer-item';
+import StoreItem from '../../../components/stores/store-item/store-item';
 import * as userInformationStore from '../../../utils/user-information-store';
 import * as userService from '../../../services/user-service';
 import * as offerService from '../../../services/offer-service';
@@ -75,11 +77,26 @@ export default class UserProfile extends Component {
     }
 
     render() {
+        const listOffers = this.state.offers.map((offer) =>
+            <OfferItem offer={offer} s={12} m={4} l={3} key={offer._id}/>
+        );
+
+        const listStores = this.state.stores.map((store) =>
+            <StoreItem store={store} s={12} m={4} l={3} key={store._id}/>
+        );
         return (
             <Row>
                 {
                     this.state.user && <UserInfoHeader user={this.state.user}/>
                 }
+
+                <Row>
+                    {listOffers}
+                </Row>
+
+                <Row>
+                    {listStores}
+                </Row>
             </Row>
         )
     }

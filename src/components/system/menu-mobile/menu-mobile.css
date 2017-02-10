@@ -1,0 +1,52 @@
+/*
+<Col s={12} className="hide-on-med-and-up moo-mobile-menu">
+                <button className='dropdown-button' data-activates='menu'>
+                    <Icon>menu</Icon>
+                </button>
+
+                <ul id='menu' className='dropdown-content content'>
+                    <li>
+                        <Link to="dashboard">Meu Promoo</Link>
+                    </li>
+
+                    <li>
+                        <Link to="about">Sobre</Link>
+                    </li>
+
+                    <li>
+                        <Link to="contact">Fale conosco</Link>
+                    </li>
+
+                    <li className={this.props.isLoggedIn ? 'hide' : ''}>
+                        <Link to="signup">Registrar</Link>
+                    </li>
+
+                    <li className={this.props.isLoggedIn ? 'hide' : ''}>
+                        <Link to="signin">Entrar</Link>
+                    </li>
+
+                    <li className={!this.props.isLoggedIn ? 'hide' : ''}>
+                        <a onClick={this.props.signout}>
+                            Sair
+                        </a>
+                    </li>
+                </ul>
+            </Col>
+*/
+
+.moo-mobile-menu .content {
+    width: auto !important;
+    max-width: 130px !important;
+    right: 20px !important;
+}
+
+.moo-mobile-menu button,
+.moo-mobile-menu button:hover {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.moo-mobile-menu button i {
+    color: rgba(0, 0, 0, 0.7);
+}

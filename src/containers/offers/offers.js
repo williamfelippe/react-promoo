@@ -5,6 +5,7 @@ import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
 import OfferItem from '../../components/offers/offer-item/offer-item';
 import Loader from '../../components/util/loader/loader';
+import * as userInformationStore from '../../utils/user-information-store';
 import * as offerService from '../../services/offer-service';
 
 export default class Offers extends Component {
@@ -20,7 +21,7 @@ export default class Offers extends Component {
         };
 
         this.moreOffers = this.moreOffers.bind(this);
-        this.openCreateOfferScreen = this.openCreateOfferScreen.bind(this);
+        this.redirectToCreateOffer = this.redirectToCreateOffer.bind(this);
     }
 
     componentDidMount() {
@@ -105,8 +106,8 @@ export default class Offers extends Component {
         this.getOffers();
     }
 
-    openCreateOfferScreen() {
-        browserHistory.push('dashboard/create-offer');
+    redirectToCreateOffer() {
+        browserHistory.push((userInformationStore.isLoggedIn()) ? 'dashboard/create-offer' : 'signin');
     }
 
     render() {
@@ -128,7 +129,7 @@ export default class Offers extends Component {
                             </Col>
                             <Col s={6} className="right-align">
                                 <p>
-                                    <Button onClick={this.openCreateOfferScreen} waves='light'>
+                                    <Button onClick={this.redirectToCreateOffer} waves='light'>
                                         Divulgar
                                     </Button>
                                 </p>

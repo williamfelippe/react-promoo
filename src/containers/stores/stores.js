@@ -2,8 +2,10 @@ import React, {Component} from "react";
 import _ from 'lodash';
 import {Row, Col, Button} from "react-materialize";
 import axios from "axios";
+import {browserHistory} from 'react-router';
 import StoreItem from "../../components/stores/store-item/store-item";
 import Loader from "../../components/util/loader/loader";
+import * as userInformationStore from '../../utils/user-information-store';
 import * as storeService from "../../services/store-service";
 
 export default class Stores extends Component {
@@ -20,7 +22,7 @@ export default class Stores extends Component {
         };
 
         this.moreStores = this.moreStores.bind(this);
-        this.openCreateStoreScreen = this.openCreateStoreScreen.bind(this);
+        this.redirectToCreateOffer = this.redirectToCreateOffer.bind(this);
         this.sortStores = this.sortStores.bind(this);
     }
 
@@ -102,8 +104,8 @@ export default class Stores extends Component {
         this.getStores();
     }
 
-    openCreateStoreScreen() {
-
+    redirectToCreateOffer() {
+        browserHistory.push((userInformationStore.isLoggedIn()) ? 'dashboard/create-store' : 'signin');
     }
 
     sortStores() {
@@ -138,7 +140,7 @@ export default class Stores extends Component {
                             </Col>
                             <Col s={6} className="right-align">
                                 <p>
-                                    <Button onClick={this.openCreateStoreScreen} waves='light'>
+                                    <Button onClick={this.redirectToCreateOffer} waves='light'>
                                         Indicar
                                     </Button>
 

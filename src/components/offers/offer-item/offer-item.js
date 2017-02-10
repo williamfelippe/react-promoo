@@ -21,6 +21,7 @@ export default class OfferItem extends Component {
         };
 
         this.likeOffer = this.likeOffer.bind(this);
+        this.dislikeOffer = this.dislikeOffer.bind(this);
     }
 
     componentDidMount() {

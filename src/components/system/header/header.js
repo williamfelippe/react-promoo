@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {Row, Col, Button, Icon} from 'react-materialize';
-import * as userInformationStore from '../../../utils/user-information-store';
-import './header.css';
+import React, {Component} from "react";
+import {Link} from "react-router";
+import {Row, Col, Button} from "react-materialize";
+import MenuMobile from "../menu-mobile/menu-mobile";
+import * as userInformationStore from "../../../utils/user-information-store";
+import "./header.css";
 
 export default class Header extends Component {
     constructor() {
@@ -21,41 +22,9 @@ export default class Header extends Component {
             <section className="moo-nav-bar">
                 <div className="container">
                     <Row className="n-margin-bottom">
-                        <Col s={12} className="hide-on-med-and-up moo-mobile-menu">
-                            <button className='dropdown-button' data-activates='menu'>
-                                <Icon>menu</Icon>
-                            </button>
+                        <MenuMobile signout={this.signout} isLoggedIn={isLoggedIn} />
 
-                            <ul id='menu' className='dropdown-content content'>
-                                <li className={!isLoggedIn ? 'hide' : ''}>
-                                    <Link to="dashboard">Meu Promoo</Link>
-                                </li>
-
-                                <li>
-                                    <Link to="about">Sobre</Link>
-                                </li>
-
-                                <li>
-                                    <Link to="contact">Fale conosco</Link>
-                                </li>
-
-                                <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="signup">Registrar</Link>
-                                </li>
-
-                                <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="signin">Entrar</Link>
-                                </li>
-
-                                <li className={!isLoggedIn ? 'hide' : ''}>
-                                    <a onClick={this.signout}>
-                                        Sair
-                                    </a>
-                                </li>
-                            </ul>
-                        </Col>
-
-                        <Col s={12} m={5} l={3}>
+                        <Col s={12} m={4} l={3}>
                             <div className="valign-wrapper">
                                 <Link to="/" className="moo-logo-text">
                                     <h4 className="center-align valign">
@@ -65,22 +34,24 @@ export default class Header extends Component {
                             </div>
                         </Col>
 
-                        <Col s={12} m={7} l={9} className="hide-on-small-and-down">
+                        <Col s={12} m={8} l={9} className="hide-on-small-and-down">
                             <ul className="moo-menu">
                                 <li>
-                                    <Link to="dashboard">Meu Promoo</Link>
+                                    <Link activeClassName="active" to="dashboard">Meu Promoo</Link>
                                 </li>
                                 <li>
-                                    <Link to="about">Sobre</Link>
+                                    <Link activeClassName="active" to="about">Sobre</Link>
                                 </li>
                                 <li>
-                                    <Link to="contact">Contato</Link>
+                                    <Link activeClassName="active" to="contact">Contato</Link>
                                 </li>
                                 <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="signup" className="signup-button">Registrar</Link>
+                                    <Link activeClassName="active" to="signup" className="signup-button">Registrar</Link>
                                 </li>
                                 <li className={isLoggedIn ? 'hide' : ''}>
-                                    <Link to="signin" className="waves-effect waves-light btn">Entrar</Link>
+                                    <Link to="signin" className="waves-effect waves-light btn">
+                                        Entrar
+                                    </Link>
                                 </li>
                                 <li className={!isLoggedIn ? 'hide' : ''}>
                                     <Button onClick={this.signout} waves="light" className="btn">

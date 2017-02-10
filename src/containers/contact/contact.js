@@ -7,7 +7,7 @@ export default class Contact extends Component {
         return (
             <div className="container">
                 <Row>
-                    <Col s={12} m={8} offset="m2">
+                    <Col s={10} m={8} l={6} offset="s1 m2 l3">
                         <h2 className="center-align">
                             Contato
                         </h2>
