@@ -1,3 +1,22 @@
 .moo-store-card {
+    padding: 15px !important;
+}
 
+.moo-store-card .image {
+    width: 100px;
+    height: auto;
+    margin: 15px auto;
+}
+
+.moo-store-card .category {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(90, 95, 190, 0.6) !important;
+    margin-bottom: 5px;
+}
+
+.moo-store-card .name {
+    font-size: 32px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.5);
 }

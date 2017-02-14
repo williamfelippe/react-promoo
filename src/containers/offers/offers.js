@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Row, Col, Button} from 'react-materialize';
+import {Row, Col, Button, Dropdown} from 'react-materialize';
 import {browserHistory} from 'react-router';
 import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
-import OfferItem from '../../components/offers/offer-item/offer-item';
+import OfferList from '../../components/offers/offer-list/offer-list';
 import Loader from '../../components/util/loader/loader';
 import * as userInformationStore from '../../utils/user-information-store';
 import * as offerService from '../../services/offer-service';
@@ -20,8 +20,12 @@ export default class Offers extends Component {
             loading: false
         };
 
-        this.moreOffers = this.moreOffers.bind(this);
-        this.redirectToCreateOffer = this.redirectToCreateOffer.bind(this);
+        this.moreOffers = this
+            .moreOffers
+            .bind(this);
+        this.redirectToCreateOffer = this
+            .redirectToCreateOffer
+            .bind(this);
     }
 
     componentDidMount() {
@@ -31,7 +35,8 @@ export default class Offers extends Component {
     getOffers() {
         this.setState({loading: true});
 
-        offerService.getOffers(this.state.limit, this.state.offset)
+        offerService
+            .getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loading: false});
@@ -74,17 +79,16 @@ export default class Offers extends Component {
             let offers = this.state.offers;
             console.log(offers);
 
-            response.data.forEach((item) => {
-                offers.push(item);
-            });
+            response
+                .data
+                .forEach((item) => {
+                    offers.push(item);
+                });
 
             console.log(offers);
 
             this.setState({offers: offers});
-        }
-        else {
-
-        }
+        } else {}
     }
 
     treatOfferCategoriesResponse(response) {
@@ -95,10 +99,7 @@ export default class Offers extends Component {
             console.log(response.data);
 
             this.setState({categories: response.data});
-        }
-        else {
-
-        }
+        } else {}
     }
 
     moreOffers() {
@@ -107,14 +108,12 @@ export default class Offers extends Component {
     }
 
     redirectToCreateOffer() {
-        browserHistory.push((userInformationStore.isLoggedIn()) ? 'dashboard/create-offer' : 'signin');
+        browserHistory.push((userInformationStore.isLoggedIn())
+            ? 'dashboard/create-offer'
+            : 'signin');
     }
 
     render() {
-        const listOffers = this.state.offers.map((offer) =>
-            <OfferItem offer={offer} s={12} m={6} l={4} key={offer._id}/>
-        );
-
         return (
             <Row className="m-b-40">
                 <Col s={12} className="n-padding">
@@ -123,7 +122,8 @@ export default class Offers extends Component {
                             <Col s={6}>
                                 <p>
                                     <b>
-                                        { this.state.offers.length } ofertas encontradas
+                                        {this.state.offers.length}
+                                        ofertas encontradas
                                     </b>
                                 </p>
                             </Col>
@@ -132,38 +132,41 @@ export default class Offers extends Component {
                                     <Button onClick={this.redirectToCreateOffer} waves='light'>
                                         Divulgar
                                     </Button>
+                                    <Dropdown trigger={<Button flat waves="light">Ordenar</Button>}>
+                                        <NavItem>Nome</NavItem>
+                                        <NavItem>Categoria</NavItem>
+                                        <NavItem>Preço</NavItem>
+                                    </Dropdown>;
                                 </p>
                             </Col>
                         </div>
                     </Row>
                 </Col>
 
-                {
-                    (this.state.offers.length && this.state.categories.length) &&
-                    <Col s={12}>
-                        <Row>
-                            <div className="container">
-                                <Col s={12} m={3}>
-                                    <OfferFilter categories={this.state.categories}/>
-                                </Col>
+                {(this.state.offers.length && this.state.categories.length) && <Col s={12}>
+                    <Row>
+                        <div className="container">
+                            <Col s={12} m={3}>
+                                <OfferFilter categories={this.state.categories}/>
+                            </Col>
 
-                                <Col s={12} m={9}>
-                                    <Row>
-                                        {/* Listagem das ofertas */}
-                                        {listOffers}
-                                    </Row>
+                            <Col s={12} m={9}>
+                                <Row>
+                                    {/* Listagem das ofertas */}
+                                    <OfferList offers={this.state.offers}/>
+                                </Row>
 
-                                    <Row>
-                                        {/* Permite a busca de mais ofertas */}
-                                        <p className="center-align">
-                                            <Loader onClick={this.moreOffers} loading={this.state.loading}/>
-                                        </p>
-                                    </Row>
-                                </Col>
-                            </div>
-                        </Row>
-                    </Col>
-                }
+                                <Row>
+                                    {/* Permite a busca de mais ofertas */}
+                                    <p className="center-align">
+                                        <Loader onClick={this.moreOffers} loading={this.state.loading}/>
+                                    </p>
+                                </Row>
+                            </Col>
+                        </div>
+                    </Row>
+                </Col>
+}
             </Row>
         )
     }

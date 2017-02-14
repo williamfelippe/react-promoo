@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {Row, Col, Button} from "react-materialize";
 import axios from "axios";
 import {browserHistory} from 'react-router';
-import StoreItem from "../../components/stores/store-item/store-item";
+import StoreList from "../../components/stores/store-list/store-list";
 import Loader from "../../components/util/loader/loader";
 import * as userInformationStore from '../../utils/user-information-store';
 import * as storeService from "../../services/store-service";
@@ -109,23 +109,17 @@ export default class Stores extends Component {
     }
 
     sortStores() {
-        const sortBy = this.state.sortBy;
+        const {sortBy} = this.state;
 
         if(sortBy !== '' || sortBy !== undefined) {
             let stores = this.state.stores;
-            stores = _.sortBy(stores, 'createdon');
+            stores = _.sortBy(stores, ['created_at']);
 
             this.setState({stores: stores});
         }
     }
 
     render() {
-        const listStores = this.state.stores.map((store) =>
-            <Col s={12} m={6} l={4} key={store._id}>
-                <StoreItem store={store}/>
-            </Col>
-        );
-
         return (
             <Row className="m-b-40">
                 <Col s={12} className="n-padding">
@@ -163,7 +157,7 @@ export default class Stores extends Component {
                             <Col s={12} m={9}>
                                 <Row>
                                     {/* Listagem das ofertas */}
-                                    {listStores}
+                                    <StoreList stores={this.state.stores} />
                                 </Row>
 
                                 <Row>
