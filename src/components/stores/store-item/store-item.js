@@ -1,10 +1,6 @@
 import React, {Component} from "react";
-import {Icon, Col, CardPanel, Button} from 'react-materialize';
-import ImageLoader from '../../util/image-loader/image-loader';
-import * as dateFormat from '../../../utils/date-format';
-import * as currencyFormat from '../../../utils/currency-format';
-import * as offerService from '../../../services/offer-service';
-import * as userInformationStore from '../../../utils/user-information-store';
+import {Col, CardPanel, Button} from "react-materialize";
+import ImageLoader from "../../util/image-loader/image-loader";
 import "./store-item.css";
 
 export default class StoreItem extends Component {

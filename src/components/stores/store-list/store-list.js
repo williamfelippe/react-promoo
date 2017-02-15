@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import StoreItem from "../components/stores/store-item/store-item";
+import StoreItem from "../store-item/store-item";
+import {Col} from "react-materialize";
 
 export default class StoreList extends Component {
     render() {

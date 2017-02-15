@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import OfferItem from '../components/offers/offer-item/offer-item';
+import OfferItem from '../offer-item/offer-item';
 
 export default class OfferList extends Component {
     render() {
@@ -7,8 +7,10 @@ export default class OfferList extends Component {
             <OfferItem offer={offer} s={12} m={6} l={4} key={offer._id}/>
         );
 
-        return(
-            {listOffers}    
+        return (
+            <div>
+                {listOffers}
+            </div>
         )
     }
 }

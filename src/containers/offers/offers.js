@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col, Button, Dropdown} from 'react-materialize';
+import {Row, Col, Button, Dropdown, NavItem} from 'react-materialize';
 import {browserHistory} from 'react-router';
 import axios from 'axios';
 import OfferFilter from '../../components/offers/offer-filter/offer-filter';
@@ -79,16 +79,16 @@ export default class Offers extends Component {
             let offers = this.state.offers;
             console.log(offers);
 
-            response
-                .data
-                .forEach((item) => {
-                    offers.push(item);
-                });
+            response.data.forEach((item) => {
+                offers.push(item);
+            });
 
             console.log(offers);
 
             this.setState({offers: offers});
-        } else {}
+        }
+        else {
+        }
     }
 
     treatOfferCategoriesResponse(response) {
@@ -99,7 +99,8 @@ export default class Offers extends Component {
             console.log(response.data);
 
             this.setState({categories: response.data});
-        } else {}
+        } else {
+        }
     }
 
     moreOffers() {
@@ -122,51 +123,52 @@ export default class Offers extends Component {
                             <Col s={6}>
                                 <p>
                                     <b>
-                                        {this.state.offers.length}
-                                        ofertas encontradas
+                                        {this.state.offers.length} ofertas encontradas
                                     </b>
                                 </p>
                             </Col>
                             <Col s={6} className="right-align">
-                                <p>
-                                    <Button onClick={this.redirectToCreateOffer} waves='light'>
+                                <div>
+                                    <Button onClick={this.redirectToCreateOffer} waves='light' className="m-r-20">
                                         Divulgar
                                     </Button>
                                     <Dropdown trigger={<Button flat waves="light">Ordenar</Button>}>
                                         <NavItem>Nome</NavItem>
                                         <NavItem>Categoria</NavItem>
                                         <NavItem>Preço</NavItem>
-                                    </Dropdown>;
-                                </p>
+                                    </Dropdown>
+                                </div>
                             </Col>
                         </div>
                     </Row>
                 </Col>
 
-                {(this.state.offers.length && this.state.categories.length) && <Col s={12}>
-                    <Row>
-                        <div className="container">
-                            <Col s={12} m={3}>
-                                <OfferFilter categories={this.state.categories}/>
-                            </Col>
+                {
+                    (this.state.offers.length && this.state.categories.length) &&
+                    <Col s={12}>
+                        <Row>
+                            <div className="container">
+                                <Col s={12} m={3}>
+                                    <OfferFilter categories={this.state.categories}/>
+                                </Col>
 
-                            <Col s={12} m={9}>
-                                <Row>
-                                    {/* Listagem das ofertas */}
-                                    <OfferList offers={this.state.offers}/>
-                                </Row>
+                                <Col s={12} m={9}>
+                                    <Row>
+                                        {/* Listagem das ofertas */}
+                                        <OfferList offers={this.state.offers}/>
+                                    </Row>
 
-                                <Row>
-                                    {/* Permite a busca de mais ofertas */}
-                                    <p className="center-align">
-                                        <Loader onClick={this.moreOffers} loading={this.state.loading}/>
-                                    </p>
-                                </Row>
-                            </Col>
-                        </div>
-                    </Row>
-                </Col>
-}
+                                    <Row>
+                                        {/* Permite a busca de mais ofertas */}
+                                        <p className="center-align">
+                                            <Loader onClick={this.moreOffers} loading={this.state.loading}/>
+                                        </p>
+                                    </Row>
+                                </Col>
+                            </div>
+                        </Row>
+                    </Col>
+                }
             </Row>
         )
     }

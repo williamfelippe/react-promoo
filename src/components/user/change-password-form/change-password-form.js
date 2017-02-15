@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CryptoJS from "crypto-js";
 import {Row, Input, Button} from 'react-materialize';
 import * as userService from '../../../services/user-service';
+import * as userInformationStore from '../../../utils/user-information-store';
 
 export default class ChangePasswordForm extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ export default class ChangePasswordForm extends Component {
         event.preventDefault();
 
         const data = {
-            user_id: 1,//this.userStore.getId(),
+            user_id: userInformationStore.getLoggedId(),
             current_password: CryptoJS.MD5(this.state.currentPassword).toString(),
             new_password: CryptoJS.MD5(this.state.newPassword).toString()
         };

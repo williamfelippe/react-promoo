@@ -85,7 +85,7 @@ export default class OfferItem extends Component {
     }
 
     render() {
-        const offer = this.props.offer;
+        const {offer} = this.props;
 
         return (
             <Col s={this.props.s} m={this.props.m} l={this.props.l}>

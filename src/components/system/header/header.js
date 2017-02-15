@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {Row, Col, Button} from "react-materialize";
-import MenuMobile from "../menu-mobile/menu-mobile";
 import * as userInformationStore from "../../../utils/user-information-store";
 import "./header.css";
 
@@ -22,8 +21,6 @@ export default class Header extends Component {
             <section className="moo-nav-bar">
                 <div className="container">
                     <Row className="n-margin-bottom">
-                        <MenuMobile signout={this.signout} isLoggedIn={isLoggedIn} />
-
                         <Col s={12} m={4} l={3}>
                             <div className="valign-wrapper">
                                 <Link to="/" className="moo-logo-text">

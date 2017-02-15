@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Input, Button} from 'react-materialize';
 import * as userService from '../../../services/user-service';
+import * as userInformationStore from '../../../utils/user-information-store';
 
 export default class ChangeEmailForm extends Component {
     constructor(props) {
@@ -17,7 +18,12 @@ export default class ChangeEmailForm extends Component {
     submit(event) {
         event.preventDefault();
 
-        userService.putEmail({email: this.state.email})
+        const data = {
+            user_id: userInformationStore.getLoggedUserId(),
+            email: this.state.email
+        };
+        
+        userService.putEmail(data)
             .then((response) => {
                 console.log(response);
             })
