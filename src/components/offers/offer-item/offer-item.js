@@ -146,9 +146,9 @@ export default class OfferItem extends Component {
                                 <ImageLoader src={offer.user.photo} alt={offer.user.name}
                                              className="circle responsive-img right"/>
 
-                                <span className="right">
-                                {offer.user.name}
-                            </span>
+                                <p className="right">
+                                    {offer.user.name}
+                                </p>
                             </div>
                             <div className="clearfix"></div>
                         </Link>

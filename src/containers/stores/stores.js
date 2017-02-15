@@ -105,7 +105,9 @@ export default class Stores extends Component {
     }
 
     redirectToCreateOffer() {
-        browserHistory.push((userInformationStore.isLoggedIn()) ? 'dashboard/create-store' : 'signin');
+        browserHistory.push((userInformationStore.isLoggedIn())
+            ? 'dashboard/create-store'
+            : 'signin');
     }
 
     sortStores() {

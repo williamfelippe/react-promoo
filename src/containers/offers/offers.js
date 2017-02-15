@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import {Row, Col, Button, Dropdown, NavItem} from 'react-materialize';
-import {browserHistory} from 'react-router';
-import axios from 'axios';
-import OfferFilter from '../../components/offers/offer-filter/offer-filter';
-import OfferList from '../../components/offers/offer-list/offer-list';
-import Loader from '../../components/util/loader/loader';
-import * as userInformationStore from '../../utils/user-information-store';
-import * as offerService from '../../services/offer-service';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import axios from "axios";
+import OfferInformationBar from "../../components/offers/offer-information-bar/offer-information-bar";
+import OfferFilter from "../../components/offers/offer-filter/offer-filter";
+import OfferList from "../../components/offers/offer-list/offer-list";
+import Loader from "../../components/util/loader/loader";
+import * as offerService from "../../services/offer-service";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -19,13 +18,6 @@ export default class Offers extends Component {
             limit: 30,
             loading: false
         };
-
-        this.moreOffers = this
-            .moreOffers
-            .bind(this);
-        this.redirectToCreateOffer = this
-            .redirectToCreateOffer
-            .bind(this);
     }
 
     componentDidMount() {
@@ -73,17 +65,8 @@ export default class Offers extends Component {
         const statusCode = response.status;
 
         if (statusCode === 200) {
-            console.log('Ofertas');
-            console.log(response.data);
-
             let offers = this.state.offers;
-            console.log(offers);
-
-            response.data.forEach((item) => {
-                offers.push(item);
-            });
-
-            console.log(offers);
+            offers.concat(response.data);
 
             this.setState({offers: offers});
         }
@@ -95,11 +78,9 @@ export default class Offers extends Component {
         const statusCode = response.status;
 
         if (statusCode === 200) {
-            console.log('Categorias de Ofertas');
-            console.log(response.data);
-
             this.setState({categories: response.data});
-        } else {
+        }
+        else {
         }
     }
 
@@ -108,40 +89,10 @@ export default class Offers extends Component {
         this.getOffers();
     }
 
-    redirectToCreateOffer() {
-        browserHistory.push((userInformationStore.isLoggedIn())
-            ? 'dashboard/create-offer'
-            : 'signin');
-    }
-
     render() {
         return (
             <Row className="m-b-40">
-                <Col s={12} className="n-padding">
-                    <Row className="moo-add-bar">
-                        <div className="container">
-                            <Col s={6}>
-                                <p>
-                                    <b>
-                                        {this.state.offers.length} ofertas encontradas
-                                    </b>
-                                </p>
-                            </Col>
-                            <Col s={6} className="right-align">
-                                <div>
-                                    <Button onClick={this.redirectToCreateOffer} waves='light' className="m-r-20">
-                                        Divulgar
-                                    </Button>
-                                    <Dropdown trigger={<Button flat waves="light">Ordenar</Button>}>
-                                        <NavItem>Nome</NavItem>
-                                        <NavItem>Categoria</NavItem>
-                                        <NavItem>Preço</NavItem>
-                                    </Dropdown>
-                                </div>
-                            </Col>
-                        </div>
-                    </Row>
-                </Col>
+                <OfferInformationBar amount={this.state.offers.length} />
 
                 {
                     (this.state.offers.length && this.state.categories.length) &&
@@ -161,7 +112,7 @@ export default class Offers extends Component {
                                     <Row>
                                         {/* Permite a busca de mais ofertas */}
                                         <p className="center-align">
-                                            <Loader onClick={this.moreOffers} loading={this.state.loading}/>
+                                            <Loader onClick={this.moreOffers.bind(this)} loading={this.state.loading}/>
                                         </p>
                                     </Row>
                                 </Col>
