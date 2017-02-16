@@ -1,13 +1,11 @@
 import axios from 'axios';
 
-const baseUrl = 'http://private-88d50-promoo.apiary-mock.com/';
-
 /**
  * Get offers
  */
 
 export function getOffers(limit, offset) {
-    return axios.get(baseUrl + 'offer/' + limit + '/' + offset);
+    return axios.get('offer/' + limit + '/' + offset);
 }
 
 /**
@@ -15,7 +13,7 @@ export function getOffers(limit, offset) {
  */
 
 export function getOffersByCity(city, limit, offset) {
-    return axios.get(baseUrl + 'offer/by_city/' + city + '/' + limit + '/' + offset);
+    return axios.get('offer/by_city/' + city + '/' + limit + '/' + offset);
 }
 
 /**
@@ -23,7 +21,7 @@ export function getOffersByCity(city, limit, offset) {
  */
 
 export function getOffersByUser(user, limit, offset) {
-    return axios.get(baseUrl + 'offer/by_user/' + user + '/' + limit + '/' + offset);
+    return axios.get('offer/by_user/' + user + '/' + limit + '/' + offset);
 }
 
 /**
@@ -31,7 +29,7 @@ export function getOffersByUser(user, limit, offset) {
  */
 
 export function postOffer(data) {
-    axios.post(baseUrl + 'offer', data, {headers: {'Authorization': ''}});
+    axios.post('offer', data, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -39,7 +37,7 @@ export function postOffer(data) {
  */
 
 export function getOfferComments(_id) {
-    axios.get(baseUrl + 'offer_comment/' + _id, {headers: {'Authorization': ''}});
+    axios.get('offer_comment/' + _id, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -47,7 +45,7 @@ export function getOfferComments(_id) {
  */
 
 export function postOfferComment(data) {
-    axios.post(baseUrl + 'offer_comment', data, {headers: {'Authorization': ''}});
+    axios.post('offer_comment', data, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -55,7 +53,7 @@ export function postOfferComment(data) {
  */
 
 export function postOfferReport(data) {
-    axios.post(baseUrl + 'offer/report', data, {headers: {'Authorization': ''}});
+    axios.post('offer/report', data, {headers: {'Authorization': ''}});
 }
 
 /**
@@ -63,9 +61,9 @@ export function postOfferReport(data) {
  */
 
 export function postOfferEvaluation(data) {
-    axios.post(baseUrl + 'offer_evaluation', data, {headers: {'Authorization': ''}});
+    axios.post('offer_evaluation', data, {headers: {'Authorization': ''}});
 }
 
 export function getOfferCategories() {
-    return axios.get(baseUrl + 'offer_category');
+    return axios.get('offer_category');
 }

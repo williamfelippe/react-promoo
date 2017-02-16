@@ -184,17 +184,3 @@ h1, h2, h3, h4, h5, h6 {
 .moo-logo-text h4:hover span {
     color: rgba(255, 83, 83, 1);
 }
-
-.moo-add-bar {
-    background-color: rgba(0, 0, 0, 0.002) !important;
-    border: rgba(0, 0, 0, 0.1) solid thin;
-    margin-bottom: 50px;
-}
-
-.moo-add-bar b {
-    font-weight: 700;
-    color: rgba(0, 0, 0, 1);
-    font-size: 17px;
-    margin-top: 5px;
-    display: inline-block;
-}

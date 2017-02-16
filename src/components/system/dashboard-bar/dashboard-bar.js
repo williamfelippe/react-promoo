@@ -15,7 +15,7 @@ export default class DashboardBar extends Component {
                             <Col s={12}>
                                 <ul>
                                     <li>
-                                        <Link to="dashboard">
+                                        <Link to="dashboard" activeClassName="active">
                                             <div className="hide-on-med-and-down">
                                                 Ofertas
                                             </div>
@@ -25,7 +25,7 @@ export default class DashboardBar extends Component {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="dashboard/stores">
+                                        <Link to="dashboard/stores" activeClassName="active">
                                             <div className="hide-on-med-and-down">
                                                 Lojas
                                             </div>
@@ -35,7 +35,7 @@ export default class DashboardBar extends Component {
                                         </Link>
                                     </li>
                                     <li className={!isLoggedIn ? 'hide' : ''}>
-                                        <Link to="dashboard/user">
+                                        <Link to="dashboard/user" activeClassName="active">
                                             <div className="hide-on-med-and-down">
                                                 Para mim
                                             </div>

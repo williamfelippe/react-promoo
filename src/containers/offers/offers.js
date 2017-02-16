@@ -1,10 +1,12 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
 import axios from "axios";
-import OfferInformationBar from "../../components/offers/offer-information-bar/offer-information-bar";
+import {browserHistory} from "react-router";
+import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
+import * as userInformationStore from "../../utils/user-information-store";
 import * as offerService from "../../services/offer-service";
 
 export default class Offers extends Component {
@@ -27,8 +29,7 @@ export default class Offers extends Component {
     getOffers() {
         this.setState({loading: true});
 
-        offerService
-            .getOffers(this.state.limit, this.state.offset)
+        offerService.getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loading: false});
@@ -66,9 +67,9 @@ export default class Offers extends Component {
 
         if (statusCode === 200) {
             let offers = this.state.offers;
-            offers.concat(response.data);
+            this.setState({offers: offers.concat(response.data)});
 
-            this.setState({offers: offers});
+            console.log("OFERTAS: " + this.state.offers);
         }
         else {
         }
@@ -89,10 +90,17 @@ export default class Offers extends Component {
         this.getOffers();
     }
 
+    redirectToCreateOfferPage() {
+        browserHistory.push((userInformationStore.isLoggedIn())
+            ? 'dashboard/create-offer'
+            : 'signin');
+    }
+
     render() {
         return (
             <Row className="m-b-40">
-                <OfferInformationBar amount={this.state.offers.length} />
+                <AddBar amount={this.state.offers.length} redirectToPage={this.redirectToCreateOfferPage}
+                        buttonName="Divulgar"/>
 
                 {
                     (this.state.offers.length && this.state.categories.length) &&

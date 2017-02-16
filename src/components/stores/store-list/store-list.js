@@ -10,8 +10,10 @@ export default class StoreList extends Component {
             </Col>
         );
 
-        return(
-            {listStores}
+        return (
+            <div>
+                {listStores}
+            </div>
         )
     }
 }

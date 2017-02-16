@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import _ from 'lodash';
-import {Row, Col, Button} from "react-materialize";
+import _ from "lodash";
+import {Row, Col} from "react-materialize";
 import axios from "axios";
-import {browserHistory} from 'react-router';
+import {browserHistory} from "react-router";
+import AddBar from "../../components/system/add-bar/add-bar";
 import StoreList from "../../components/stores/store-list/store-list";
 import Loader from "../../components/util/loader/loader";
-import * as userInformationStore from '../../utils/user-information-store';
+import * as userInformationStore from "../../utils/user-information-store";
 import * as storeService from "../../services/store-service";
 
 export default class Stores extends Component {
@@ -20,10 +21,6 @@ export default class Stores extends Component {
             loading: false,
             sortBy: ''
         };
-
-        this.moreStores = this.moreStores.bind(this);
-        this.redirectToCreateOffer = this.redirectToCreateOffer.bind(this);
-        this.sortStores = this.sortStores.bind(this);
     }
 
     componentDidMount() {
@@ -100,7 +97,7 @@ export default class Stores extends Component {
     }
 
     moreStores() {
-        this.setState({ offset: this.state.limit });
+        this.setState({offset: this.state.limit});
         this.getStores();
     }
 
@@ -113,7 +110,7 @@ export default class Stores extends Component {
     sortStores() {
         const {sortBy} = this.state;
 
-        if(sortBy !== '' || sortBy !== undefined) {
+        if (sortBy !== '' || sortBy !== undefined) {
             let stores = this.state.stores;
             stores = _.sortBy(stores, ['created_at']);
 
@@ -124,30 +121,8 @@ export default class Stores extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <Col s={12} className="n-padding">
-                    <Row className="moo-add-bar">
-                        <div className="container">
-                            <Col s={6}>
-                                <p>
-                                    <b>
-                                        { this.state.stores.length } ofertas encontradas
-                                    </b>
-                                </p>
-                            </Col>
-                            <Col s={6} className="right-align">
-                                <p>
-                                    <Button onClick={this.redirectToCreateOffer} waves='light'>
-                                        Indicar
-                                    </Button>
-
-                                    <Button flat waves='light' className="m-l-20">
-                                        Ordenar
-                                    </Button>
-                                </p>
-                            </Col>
-                        </div>
-                    </Row>
-                </Col>
+                <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateOffer}
+                        buttonName="Indicar"/>
 
                 <Col s={12}>
                     <Row>
@@ -159,13 +134,13 @@ export default class Stores extends Component {
                             <Col s={12} m={9}>
                                 <Row>
                                     {/* Listagem das ofertas */}
-                                    <StoreList stores={this.state.stores} />
+                                    <StoreList stores={this.state.stores}/>
                                 </Row>
 
                                 <Row>
                                     {/* Permite a busca de mais ofertas */}
                                     <p className="center-align">
-                                        <Loader onClick={this.moreStores} loading={this.state.loading} />
+                                        <Loader onClick={this.moreStores.bind(this)} loading={this.state.loading}/>
                                     </p>
                                 </Row>
                             </Col>

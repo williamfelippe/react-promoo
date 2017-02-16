@@ -1,0 +1,14 @@
+.moo-add-bar {
+    background-color: rgba(0, 0, 0, 0.002) !important;
+    border: rgba(0, 0, 0, 0.1) solid thin;
+    margin-bottom: 50px;
+    padding: 15px 0;
+}
+
+.moo-add-bar b {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 1);
+    font-size: 17px;
+    margin-top: 5px;
+    display: inline-block;
+}

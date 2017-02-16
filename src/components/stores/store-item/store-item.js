@@ -16,7 +16,7 @@ export default class StoreItem extends Component {
                     </div>
 
                     <div className="image">
-                        {store.photo && <ImageLoader src={store.photo} alt={store.name} className="circle" />}
+                        {store.photo && <ImageLoader src={store.logo} alt={store.name} className="circle" />}
                     </div>
 
                     <div className="name center-align truncate">
@@ -25,9 +25,9 @@ export default class StoreItem extends Component {
                     </div>
 
                     <div className="actions center-align">
-                        <Button flat waves='light'>
+                        <a>
                             Essa loja não existe ou mudou de lugar? Avise-nos
-                        </Button>;
+                        </a>
                     </div>
                 </CardPanel>
             </Col>
