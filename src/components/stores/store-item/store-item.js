@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Col, CardPanel, Button} from "react-materialize";
+import {Col, CardPanel} from "react-materialize";
 import ImageLoader from "../../util/image-loader/image-loader";
 import "./store-item.css";
 

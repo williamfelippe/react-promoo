@@ -25,6 +25,13 @@ export function getOffersByUser(user, limit, offset) {
 }
 
 /**
+ * Get offers by user
+ */
+export function getOffersByStore(store, limit, offset) {
+    return axios.get('offer/by_store/' + store + '/' + limit + '/' + offset);
+}
+
+/**
  * Post offer
  */
 
@@ -33,7 +40,7 @@ export function postOffer(data) {
 }
 
 /**
- * Ger offer comments
+ * Get offer comments
  */
 
 export function getOfferComments(_id) {
@@ -63,6 +70,10 @@ export function postOfferReport(data) {
 export function postOfferEvaluation(data) {
     axios.post('offer_evaluation', data, {headers: {'Authorization': ''}});
 }
+
+/**
+ * Get offer categories
+ */
 
 export function getOfferCategories() {
     return axios.get('offer_category');

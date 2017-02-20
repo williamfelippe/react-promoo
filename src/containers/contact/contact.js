@@ -5,9 +5,9 @@ import ContactForm from '../../components/contact/contact-form/contact-form';
 export default class Contact extends Component {
     render() {
         return (
-            <div className="container">
-                <Row>
-                    <Col s={10} m={8} l={6} offset="s1 m2 l3">
+            <Row>
+                <Col s={10} m={8} l={6} offset="s1 m2 l3">
+                    <div className="container">
                         <h2 className="center-align">
                             Contato
                         </h2>
@@ -20,9 +20,9 @@ export default class Contact extends Component {
                         </p>
 
                         <ContactForm/>
-                    </Col>
-                </Row>
-            </div>
+                    </div>
+                </Col>
+            </Row>
         )
     }
 }

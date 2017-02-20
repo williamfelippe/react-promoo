@@ -4,18 +4,22 @@ import avatar from '../../../../public/images/default_avatar.png';
 export default class ImageLoader extends Component {
     constructor(props) {
         super(props);
-
-        this.state = { src: this.props.src };
-        this.onError = this.onError.bind(this);
+        this.state = {
+            errored: false
+        }
     }
 
     onError() {
-        this.setState({ src: avatar });
+        this.setState({errored: true});
     }
 
     render() {
-        return (
-            <img onError={this.onError} src={this.state.src} alt={this.props.alt} className={this.props.className} />
-        );
+        if (this.state.errored) {
+            return <img src={avatar} alt={this.props.alt} className={this.props.className}/>;
+        }
+        else {
+            return <img onError={this.onError.bind(this)} src={this.props.src}
+                        alt={this.props.alt} className={this.props.className}/>;
+        }
     }
 }

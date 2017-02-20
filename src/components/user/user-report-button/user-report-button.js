@@ -8,7 +8,6 @@ export default class UserReportButton extends Component {
         super(props);
 
         this.state = {reason: '', message: ''};
-        this.submit = this.submit.bind(this);
     }
 
     onChangeReason(event) {
@@ -46,11 +45,11 @@ export default class UserReportButton extends Component {
                     Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et
                     eleifend.
                 </p>
-                <form onSubmit={this.submit} className="col s12">
+                <form onSubmit={this.submit.bind(this)} className="col s12">
                     <Row>
                         <Col s={12} m={8} offset="m2">
                             <Row>
-                                <Input s={12} type="select" label="Motivo" onChange={this.onChangeReason}
+                                <Input s={12} type="select" label="Motivo" onChange={this.onChangeReason.bind(this)}
                                        defaultValue="Expirou">
                                     <option value="Falsas promoções">Falsas promoções</option>
                                     <option value="Spam">Spam</option>
@@ -60,7 +59,7 @@ export default class UserReportButton extends Component {
                                 {
                                     this.state.reason.localeCompare('Outro') === 0 &&
                                     <Input s={12} type="textarea" label="Descreva o problema"
-                                           onChange={this.onChangeMessage}/>
+                                           onChange={this.onChangeMessage.bind(this)}/>
                                 }
 
                                 <Button type="submit" waves="light" className="w-100">

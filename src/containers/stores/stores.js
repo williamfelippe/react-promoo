@@ -67,9 +67,6 @@ export default class Stores extends Component {
         const statusCode = response.status;
 
         if (statusCode === 200) {
-            console.log('Lojas');
-            console.log(response.data);
-
             let stores = this.state.stores;
             response.data.forEach((item) => {
                 stores.push(item);
@@ -86,9 +83,6 @@ export default class Stores extends Component {
         const statusCode = response.status;
 
         if (statusCode === 200) {
-            console.log('Categorias de Ofertas');
-            console.log(response.data);
-
             this.setState({categories: response.data});
         }
         else {

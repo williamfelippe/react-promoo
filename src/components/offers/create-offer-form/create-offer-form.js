@@ -10,24 +10,15 @@ export default class CreateOfferForm extends Component {
         this.state = {
             name: '',
             price: 0,
-            category: null,
+            category: {},
             address: '',
-            store: null,
+            store: {},
             description: '',
             offerCategories: [],
             stores: [],
             storeNotFound: false,
             placeType: 'establishment'
         };
-
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangePrice = this.onChangePrice.bind(this);
-        this.onChangeOfferCategory = this.onChangeOfferCategory.bind(this);
-        this.onChangePlace = this.onChangePlace.bind(this);
-        this.onChangeStore = this.onChangeStore.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.storeNotFound = this.storeNotFound.bind(this);
-        this.submit = this.submit.bind(this);
     }
 
     componentDidMount() {
@@ -114,10 +105,10 @@ export default class CreateOfferForm extends Component {
         };
 
         return (
-            <form onSubmit={this.submit} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
                     { /* Endereço da loja */ }
-                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace} options={options}
+                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)} options={options}
                                         hideLabel>
                         <Input s={12} label="Onde fica a loja?"/>
                     </PlacesAutocomplete>
@@ -126,26 +117,26 @@ export default class CreateOfferForm extends Component {
                 <Row className={ !this.state.storeNotFound ? 'hide' : ''}>
                     <Col s={12}>
                         <Row>
-                            <Input s={12} type="select" label="Categoria" onChange={this.onChangeOfferCategory}>
+                            <Input s={12} type="select" label="Categoria" onChange={this.onChangeOfferCategory.bind(this)}>
                                 {listCategories}
                             </Input>
                         </Row>
 
                         <Row>
-                            <Input s={8} label="Nome do produto" onChange={this.onChangeName}/>
+                            <Input s={8} label="Nome do produto" onChange={this.onChangeName.bind(this)}/>
 
-                            <Input s={4} type="number" label="Preço" onChange={this.onChangePrice} min="0"
+                            <Input s={4} type="number" label="Preço" onChange={this.onChangePrice.bind(this)} min="0"
                                    step="0.01"/>
                         </Row>
 
                         <Row>
-                            <Input s={12} type="select" label="Loja" onChange={this.onChangeStore}>
+                            <Input s={12} type="select" label="Loja" onChange={this.onChangeStore.bind(this)}>
                                 {listStores}
                             </Input>
                         </Row>
 
                         <Row>
-                            <Input s={12} type="textarea" label="Descrição" onChange={this.onChangeDescription}/>
+                            <Input s={12} type="textarea" label="Descrição" onChange={this.onChangeDescription.bind(this)}/>
                         </Row>
                     </Col>
                 </Row>
@@ -153,7 +144,7 @@ export default class CreateOfferForm extends Component {
                 <Row className="center-align">
                     {
                         !this.state.storeNotFound &&
-                        <Button onClick={this.storeNotFound} flat waves="light" className="m-r-20">
+                        <Button onClick={this.storeNotFound.bind(this)} flat waves="light" className="m-r-20">
                             Não encontrei a loja
                         </Button>
                     }

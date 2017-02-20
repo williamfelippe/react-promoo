@@ -12,8 +12,12 @@ export function getStoresByCity(city, limit, offset) {
     return axios.get('store/by_city/' + city + '/' + limit + '/' + offset);
 }
 
+export function getStoreById(storeId) {
+    return axios.get('store/' + storeId);
+}
+
 export function postStore(data) {
-    return axios.post('store', data, {headers: {'Authorization': ''}});
+    return axios.post('store', data);
 }
 
 export function getStoreCategories() {

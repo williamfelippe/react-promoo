@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import OfferItem from '../../offers/offer-item/offer-item';
-import * as offerService from '../../../services/offer-service';
-import './offers.css';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import OfferList from "../../offers/offer-list/offer-list";
+import * as offerService from "../../../services/offer-service";
+import "./offers.css";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -25,9 +25,6 @@ export default class Offers extends Component {
                 const statusCode = response.status;
 
                 if (statusCode === 200) {
-                    console.log('Ofertas');
-                    console.log(response.data);
-
                     this.setState({offers: response.data});
                 }
                 else {
@@ -43,10 +40,6 @@ export default class Offers extends Component {
     }
 
     render() {
-        const listOffers = this.state.offers.map((offer) =>
-            <OfferItem offer={offer} s={12} m={4} l={3} key={offer._id}/>
-        );
-
         return (
             <Row className="moo-home-last-offers">
                 <Col s={12}>
@@ -59,9 +52,7 @@ export default class Offers extends Component {
                             Encontre promoções nos estabelecimentos mais próximos de você
                         </p>
 
-                        <Row>
-                            {listOffers}
-                        </Row>
+                        <OfferList offers={this.state.offers} />
                     </div>
                 </Col>
             </Row>

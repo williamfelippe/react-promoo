@@ -12,10 +12,6 @@ export default class OfferReportButton extends Component {
             subject: '',
             message: '',
         };
-
-        this.onChangeSubject = this.onChangeSubject.bind(this);
-        this.onChangeMessage = this.onChangeMessage.bind(this);
-        this.submit = this.submit.bind(this);
     }
 
     onChangeSubject(event) {
@@ -59,11 +55,11 @@ export default class OfferReportButton extends Component {
                     Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et
                     eleifend.
                 </p>
-                <form onSubmit={this.submit} className="col s12">
+                <form onSubmit={this.submit.bind(this)} className="col s12">
                     <Row>
                         <Col s={12} m={8} offset="m2">
                             <Row>
-                                <Input s={12} type="select" label="Assunto" onChange={this.onChangeSubject}
+                                <Input s={12} type="select" label="Assunto" onChange={this.onChangeSubject.bind(this)}
                                        defaultValue="Expirou">
                                     <option value="Expirou">Expirou</option>
                                     <option value="Não existe">Não existe</option>
@@ -73,7 +69,7 @@ export default class OfferReportButton extends Component {
                                 {
                                     this.state.subject.localeCompare('Outro') === 0 &&
                                     <Input s={12} type="textarea" label="Qual o problema?"
-                                           onChange={this.onChangeMessage}/>
+                                           onChange={this.onChangeMessage.bind(this)}/>
                                 }
 
                                 <Button type="submit" waves="light" className="w-100">

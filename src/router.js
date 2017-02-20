@@ -7,6 +7,7 @@ import DashboardLayout from './layouts/dashboard-layout';
 import UserLayout from './layouts/user-layout';
 
 // Pages
+import NoMatch from './containers/no-match/no-match';
 import Home from './containers/home/home';
 import About from './containers/about/about';
 import Contact from './containers/contact/contact';
@@ -18,6 +19,7 @@ import Terms from './containers/terms/terms';
 // SubPages
 import Offers from './containers/offers/offers';
 import Stores from './containers/stores/stores';
+import StoreDetail from './containers/store-detail/store-detail';
 import CreateOffer from './containers/create-offer/create-offer';
 import CreateStore from './containers/create-store/create-store';
 import UserProfile from './containers/user/user-profile/user-profile';
@@ -43,8 +45,10 @@ export default(
 
                     <Route path="offers" component={Offers}/>
                     <Route path="stores" component={Stores}/>
+                    <Route path="store/:storeId" component={StoreDetail}/>
                     <Route path="create-offer" component={CreateOffer}/>
                     <Route path="create-store" component={CreateStore}/>
+                    <Route path="user-detail/:userId" component={UserProfile}/>
 
                     <Route path="user">
                         <Route component={UserLayout}>
@@ -58,6 +62,8 @@ export default(
                     </Route>
                 </Route>
             </Route>
+
+            <Route path="*" component={NoMatch}/>
         </Route>
     </Router>
 );

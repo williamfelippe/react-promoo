@@ -6,9 +6,6 @@ export default class CreateStoreForm extends Component {
     constructor(props) {
         super(props);
         this.state = {address: ''};
-
-        this.onChangePlace = this.onChangePlace.bind(this);
-        this.submit = this.submit.bind(this);
     }
 
     onChangePlace(address) {
@@ -36,10 +33,10 @@ export default class CreateStoreForm extends Component {
         };
 
         return (
-            <form onSubmit={this.submit} className="col s12 m8 offset-m2">
+            <form onSubmit={this.submit.bind(this)} className="col s12 m8 offset-m2">
                 <Row>
                     { /* Endereço da loja */ }
-                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace}
+                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
                                         options={options} hideLabel>
                         <Input s={12} label="Onde fica essa loja?" />
                     </PlacesAutocomplete>;
@@ -47,7 +44,7 @@ export default class CreateStoreForm extends Component {
 
                 { /* Nome da loja */ }
                 <Row>
-                    <Input s={12} label="Nome da loja" onChange={this.onChangeName}/>
+                    <Input s={12} label="Nome da loja" onChange={this.onChangeName.bind(this)}/>
                 </Row>
 
                 <Row>

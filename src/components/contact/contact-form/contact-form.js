@@ -14,13 +14,6 @@ export default class ContactForm extends Component {
             message: '',
             responseCaptcha: ''
         };
-
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangeSubject = this.onChangeSubject.bind(this);
-        this.onChangeMessage = this.onChangeMessage.bind(this);
-        this.onChangeCaptcha = this.onChangeCaptcha.bind(this);
-        this.submit = this.submit.bind(this);
     }
 
     onChangeName(event) {
@@ -62,17 +55,17 @@ export default class ContactForm extends Component {
     render() {
         const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
         return (
-            <form onSubmit={this.submit} className="col s12 m-b-20">
+            <form onSubmit={this.submit.bind(this)} className="col s12 m-b-20">
                 <Row>
-                    <Input s={12} label="Nome" onChange={this.onChangeName}/>
+                    <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
                 </Row>
 
                 <Row>
-                    <Input s={12} type="email" label="E-mail" onChange={this.onChangeEmail}/>
+                    <Input s={12} type="email" label="E-mail" onChange={this.onChangeEmail.bind(this)}/>
                 </Row>
 
                 <Row>
-                    <Input s={12} type="select" label="Assunto" defaultValue="Dúvida" onChange={this.onChangeSubject}>
+                    <Input s={12} type="select" label="Assunto" defaultValue="Dúvida" onChange={this.onChangeSubject.bind(this)}>
                         <option value="Dúvida">Dúvida</option>
                         <option value="Bug">Bug</option>
                         <option value="Parceria">Parceria</option>
@@ -81,12 +74,12 @@ export default class ContactForm extends Component {
                 </Row>
 
                 <Row>
-                    <Input s={12} type="textarea" label="Mensagem" onChange={this.onChangeMessage}/>
+                    <Input s={12} type="textarea" label="Mensagem" onChange={this.onChangeMessage.bind(this)}/>
                 </Row>
 
                 <Row>
                     <Col s={12}>
-                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey} onChange={this.onChangeCaptcha}
+                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey} onChange={this.onChangeCaptcha.bind(this)}
                                    className="right"/>
                     </Col>
                 </Row>

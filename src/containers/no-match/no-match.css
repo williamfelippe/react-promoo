@@ -1,0 +1,32 @@
+.moo-no-match {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+    padding-bottom: 50px;
+    background-color: rgba(90, 95, 190, 0.3) !important;
+}
+
+.moo-no-match h1 {
+    font-family: 'Yellowtail', cursive;
+    font-size: 120px;
+    color: rgba(255, 83, 83, 0.8);
+    margin-bottom: 50px;
+}
+
+.moo-no-match h4 {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.moo-no-match ul {
+    padding: 0;
+    list-style: none;
+}
+
+.moo-no-match ul li {
+    display: inline-block;
+}
+
+.moo-no-match ul li:first-child {
+    margin-right: 25px;
+}

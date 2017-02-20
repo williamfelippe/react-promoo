@@ -1,9 +1,9 @@
 /* Usuário */
 .moo-user-header {
     margin: 0;
-    padding: 20px 0 !important;
+    padding: 40px 0 !important;
     text-align: center;
-    background-color: rgba(90, 95, 190, 0.02);
+    background-color: rgba(90, 95, 190, 0.2);
 }
 
 /*.moo-user-header .btn {

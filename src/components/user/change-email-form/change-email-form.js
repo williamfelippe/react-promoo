@@ -6,9 +6,7 @@ import * as userInformationStore from '../../../utils/user-information-store';
 export default class ChangeEmailForm extends Component {
     constructor(props) {
         super(props);
-
         this.state = {email: ''};
-        this.onChangeEmail = this.onChangeEmail.bind(this);
     }
 
     onChangeEmail(event) {
@@ -34,9 +32,9 @@ export default class ChangeEmailForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.submit} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
-                    <Input s={12} type="email" label="Novo e-mail" onChange={this.onChangeEmail}/>
+                    <Input s={12} type="email" label="Novo e-mail" onChange={this.onChangeEmail.bind(this)}/>
                 </Row>
 
                 <Button type="submit" waves="light" className="right">

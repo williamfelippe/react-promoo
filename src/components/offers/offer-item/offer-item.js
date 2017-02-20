@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {Icon, Col, CardPanel} from 'react-materialize';
-import ImageLoader from '../../util/image-loader/image-loader';
-import OfferReportButton from '../../../components/offers/offer-report-button/offer-report-button';
-import * as dateFormat from '../../../utils/date-format';
-import * as currencyFormat from '../../../utils/currency-format';
-import * as offerService from '../../../services/offer-service';
-import * as userInformationStore from '../../../utils/user-information-store';
-import './offer-item.css';
+import React, {Component} from "react";
+import {Link} from "react-router";
+import {Icon, CardPanel} from "react-materialize";
+import ImageLoader from "../../util/image-loader/image-loader";
+import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
+import * as dateFormat from "../../../utils/date-format";
+import * as currencyFormat from "../../../utils/currency-format";
+import * as offerService from "../../../services/offer-service";
+import * as userInformationStore from "../../../utils/user-information-store";
+import "./offer-item.css";
 
 export default class OfferItem extends Component {
     constructor(props) {
@@ -88,73 +88,71 @@ export default class OfferItem extends Component {
         const {offer} = this.props;
 
         return (
-            <Col s={this.props.s} m={this.props.m} l={this.props.l}>
-                <CardPanel className="moo-offer-card">
-                    <div className="right-align category">
-                        {/* Categoria */}
-                        { offer.category.name }
-                    </div>
+            <CardPanel className="moo-offer-card">
+                <div className="right-align category">
+                    {/* Categoria */}
+                    { offer.category.name }
+                </div>
 
-                    <div className="name center-align truncate">
-                        {/* Nome */}
-                        { offer.name }
-                    </div>
+                <div className="name center-align truncate">
+                    {/* Nome */}
+                    { offer.name }
+                </div>
 
-                    <div className="store center-align">
-                        {/* Loja */}
-                        { offer.store.name }
-                    </div>
+                <div className="store center-align">
+                    {/* Loja */}
+                    { offer.store.name }
+                </div>
 
-                    <div className="price center-align">
-                        {/* Preço */}
-                        { currencyFormat.format(offer.price) }
-                    </div>
+                <div className="price center-align">
+                    {/* Preço */}
+                    { currencyFormat.format(offer.price) }
+                </div>
 
-                    <div className="date center-align">
-                        {/* Data */}
-                        <small>{ dateFormat.format(offer.created_at) }</small>
-                    </div>
+                <div className="date center-align">
+                    {/* Data */}
+                    <small>{ dateFormat.format(offer.created_at) }</small>
+                </div>
 
-                    <div className="actions center-align">
-                        <ul>
-                            <li>
-                                <a className={this.state.liked ? 'active' : ''}>
-                                    <Icon className="thumbs_up">thumb_up</Icon> {this.state.likes}
-                                </a>
-                            </li>
-                            <li>
-                                <a className={this.state.disliked ? 'active' : ''}>
-                                    <Icon className="thumbs_down">thumb_down</Icon> {this.state.dislikes}
-                                </a>
-                            </li>
-                            <li>
-                                <a>
-                                    <Icon className="comment">
-                                        mode_comment
-                                    </Icon>
-                                </a>
-                            </li>
-                            <li>
-                                <OfferReportButton/>
-                            </li>
-                        </ul>
-                    </div>
+                <div className="actions center-align">
+                    <ul>
+                        <li>
+                            <a className={this.state.liked ? 'active' : ''}>
+                                <Icon className="thumbs_up">thumb_up</Icon> {this.state.likes}
+                            </a>
+                        </li>
+                        <li>
+                            <a className={this.state.disliked ? 'active' : ''}>
+                                <Icon className="thumbs_down">thumb_down</Icon> {this.state.dislikes}
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <Icon className="comment">
+                                    mode_comment
+                                </Icon>
+                            </a>
+                        </li>
+                        <li>
+                            <OfferReportButton/>
+                        </li>
+                    </ul>
+                </div>
 
-                    <div>
-                        <Link to="user-detail" className="avatar">
-                            <div className="right valign-wrapper">
-                                <ImageLoader src={offer.user.photo} alt={offer.user.name}
-                                             className="circle responsive-img right"/>
+                <div>
+                    <Link to={`dashboard/user-detail/${offer.user._id}`} className="avatar">
+                        <div className="right valign-wrapper">
+                            <ImageLoader src={offer.user.photo} alt={offer.user.name}
+                                         className="circle responsive-img right"/>
 
-                                <p className="right">
-                                    {offer.user.name}
-                                </p>
-                            </div>
-                            <div className="clearfix"></div>
-                        </Link>
-                    </div>
-                </CardPanel>
-            </Col>
+                            <p className="right">
+                                {offer.user.name}
+                            </p>
+                        </div>
+                        <div className="clearfix"></div>
+                    </Link>
+                </div>
+            </CardPanel>
         )
     }
 }

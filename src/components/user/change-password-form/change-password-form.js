@@ -9,8 +9,6 @@ export default class ChangePasswordForm extends Component {
         super(props);
 
         this.state = {currentPassword: '', newPassword: ''};
-        this.onChangeCurrentPassword = this.onChangeCurrentPassword.bind(this);
-        this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
     }
 
     onChangeCurrentPassword(event) {
@@ -51,15 +49,15 @@ export default class ChangePasswordForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.submit} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
                     <Input s={12} type="password" label="Senha atual"
-                           onChange={this.onChangeCurrentPassword}/>
+                           onChange={this.onChangeCurrentPassword.bind(this)}/>
                 </Row>
 
                 <Row>
                     <Input s={12} type="password" label="Nova senha"
-                           onChange={this.onChangeNewPassword}/>
+                           onChange={this.onChangeNewPassword.bind(this)}/>
                 </Row>
 
                 <Button type="submit" waves="light" className="right">

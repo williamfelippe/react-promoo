@@ -14,10 +14,6 @@ export default class SigninForm extends Component {
             password: '',
             loading: false
         };
-
-        this.submit = this.submit.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
     }
 
     onChangeEmail(event) {
@@ -73,14 +69,14 @@ export default class SigninForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.submit} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row className="n-margin-bottom">
-                    <Input s={12} type="email" onChange={this.onChangeEmail}
+                    <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)}
                            label="E-mail" />
                 </Row>
 
                 <Row>
-                    <Input s={12} type="password" onChange={this.onChangePassword}
+                    <Input s={12} type="password" onChange={this.onChangePassword.bind(this)}
                            label="Senha" />
                 </Row>
 

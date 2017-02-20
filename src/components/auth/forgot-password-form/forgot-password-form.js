@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
-import {Row, Input, Button} from 'react-materialize';
-import * as loginService from '../../../services/auth-service';
+import React, {Component} from "react";
+import {Row, Input, Button} from "react-materialize";
+import * as loginService from "../../../services/auth-service";
 
 export default class ForgotPasswordForm extends Component {
     constructor(props) {
         super(props);
-
         this.state = {email: ''};
-
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.submit = this.submit.bind(this);
     }
 
     onChangeEmail(event) {
@@ -38,9 +34,9 @@ export default class ForgotPasswordForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.submit} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
-                    <Input s={12} type="email" onChange={this.onChangeEmail} label="E-mail" />
+                    <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)} label="E-mail" />
                 </Row>
 
                 <Button type="submit" waves="light" className="w-100">

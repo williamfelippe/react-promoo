@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
-import {Row} from 'react-materialize';
-import axios from 'axios';
-import UserInfoHeader from '../../../components/user/user-info-header/user-info-header';
-import OfferItem from '../../../components/offers/offer-item/offer-item';
-import StoreItem from '../../../components/stores/store-item/store-item';
-import * as userInformationStore from '../../../utils/user-information-store';
-import * as userService from '../../../services/user-service';
-import * as offerService from '../../../services/offer-service';
-import * as storeService from '../../../services/store-service';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import axios from "axios";
+import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
+import OfferList from "../../../components/offers/offer-list/offer-list";
+import StoreList from "../../../components/stores/store-list/store-list";
+import * as userInformationStore from "../../../utils/user-information-store";
+import * as userService from "../../../services/user-service";
+import * as offerService from "../../../services/offer-service";
+import * as storeService from "../../../services/store-service";
 
 export default class UserProfile extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: null,
+            user: {},
             offers: [],
             stores: [],
             limit: 10,
@@ -28,13 +28,17 @@ export default class UserProfile extends Component {
     }
 
     getAllUserInformations() {
-        const _id = (this.props.userId) ? this.props.userId : userInformationStore.getLoggedUserId();
-        console.log('ID' + _id);
+        console.log('PARAM ID: ' + this.props.params.userId);
+
+        const userId = (this.props.params.userId)
+            ? this.props.params.userId
+            : userInformationStore.getLoggedUserId();
+        console.log('ID: ' + userId);
 
         const requests = [
-            userService.getUser(_id),
-            offerService.getOffersByUser(_id, this.state.limit, this.state.offerOffset),
-            storeService.getStoresByUser(_id, this.state.limit, this.state.storeOffset)
+            userService.getUser(userId),
+            offerService.getOffersByUser(userId, this.state.limit, this.state.offerOffset),
+            storeService.getStoresByUser(userId, this.state.limit, this.state.storeOffset)
         ];
 
         axios
@@ -77,26 +81,29 @@ export default class UserProfile extends Component {
     }
 
     render() {
-        const listOffers = this.state.offers.map((offer) =>
-            <OfferItem offer={offer} s={12} m={4} l={3} key={offer._id}/>
-        );
-
-        const listStores = this.state.stores.map((store) =>
-            <StoreItem store={store} s={12} m={4} l={3} key={store._id}/>
-        );
         return (
             <Row>
-                {
-                    this.state.user && <UserInfoHeader user={this.state.user}/>
-                }
+                <UserInfoHeader user={this.state.user}/>
 
-                <Row>
-                    {listOffers}
-                </Row>
+                <div className="container">
+                    <Row>
+                        <Col s={12}>
+                            <h5 className="center-align">
+                                Ofertas
+                            </h5>
 
-                <Row>
-                    {listStores}
-                </Row>
+                            <OfferList offers={this.state.offers}/>
+                        </Col>
+
+                        <Col s={12}>
+                            <h5 className="center-align">
+                                Lojas
+                            </h5>
+
+                            <StoreList stores={this.state.stores}/>
+                        </Col>
+                    </Row>
+                </div>
             </Row>
         )
     }
