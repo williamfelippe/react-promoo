@@ -5,7 +5,7 @@ import axios from "axios";
 import {browserHistory} from "react-router";
 import AddBar from "../../components/system/add-bar/add-bar";
 import StoreList from "../../components/stores/store-list/store-list";
-import Loader from "../../components/util/loader/loader";
+import TextLoader from "../../components/util/text-loader/text-loader";
 import * as userInformationStore from "../../utils/user-information-store";
 import * as storeService from "../../services/store-service";
 
@@ -121,11 +121,11 @@ export default class Stores extends Component {
                 <Col s={12}>
                     <Row>
                         <div className="container">
-                            <Col s={12} m={3}>
+                            <Col s={12}>
                                 {/*<StoreFilter categories={this.state.categories}/>*/}
                             </Col>
 
-                            <Col s={12} m={9}>
+                            <Col s={12}>
                                 <Row>
                                     {/* Listagem das ofertas */}
                                     <StoreList stores={this.state.stores}/>
@@ -134,7 +134,7 @@ export default class Stores extends Component {
                                 <Row>
                                     {/* Permite a busca de mais ofertas */}
                                     <p className="center-align">
-                                        <Loader onClick={this.moreStores.bind(this)} loading={this.state.loading}/>
+                                        <TextLoader onClick={this.moreStores.bind(this)} loading={this.state.loading}/>
                                     </p>
                                 </Row>
                             </Col>

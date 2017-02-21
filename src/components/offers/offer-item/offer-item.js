@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {Icon, CardPanel} from "react-materialize";
-import ImageLoader from "../../util/image-loader/image-loader";
+import ImageWrapper from "../../util/image-wrapper/image-wrapper";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import * as dateFormat from "../../../utils/date-format";
 import * as currencyFormat from "../../../utils/currency-format";
@@ -142,7 +142,7 @@ export default class OfferItem extends Component {
                 <div>
                     <Link to={`user-detail/${offer.user._id}`} className="avatar">
                         <div className="right valign-wrapper">
-                            <ImageLoader src={offer.user.photo} alt={offer.user.name}
+                            <ImageWrapper src={offer.user.photo} alt={offer.user.name}
                                          className="circle responsive-img right"/>
 
                             <p className="right">

@@ -5,7 +5,7 @@ import axios from "axios";
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
-import Loader from "../../components/util/loader/loader";
+import TextLoader from "../../components/util/text-loader/text-loader";
 import * as userInformationStore from "../../utils/user-information-store";
 import * as offerService from "../../services/offer-service";
 
@@ -118,7 +118,7 @@ export default class Offers extends Component {
                                     <Row>
                                         {/* Permite a busca de mais ofertas */}
                                         <p className="center-align">
-                                            <Loader onClick={this.moreOffers.bind(this)} loading={this.state.loading}/>
+                                            <TextLoader onClick={this.moreOffers.bind(this)} loading={this.state.loading}/>
                                         </p>
                                     </Row>
                                 </Col>

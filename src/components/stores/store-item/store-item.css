@@ -1,11 +1,13 @@
 .moo-store-card {
+    width: 210px;
     padding: 15px !important;
 }
 
-.moo-store-card .image {
+.moo-store-card .image img {
     width: 100px;
     height: auto;
     margin: 15px auto;
+    display: block;
 }
 
 .moo-store-card .category {
@@ -19,4 +21,24 @@
     font-size: 32px;
     font-weight: 300;
     color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+}
+
+.moo-store-card .address {
+    font-size: 18px;
+    font-weight: 200;
+    color: rgba(0, 0, 0, 0.4);
+    margin-bottom: 15px;
+}
+
+.moo-store-card .actions {
+    font-size: 12px;
+}
+
+.moo-store-card .actions a {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.moo-store-card .actions a:hover {
+    color: rgba(255, 83, 83, 0.8);
 }

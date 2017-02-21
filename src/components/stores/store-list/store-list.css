@@ -1,0 +1,13 @@
+.moo-store-list {
+    list-style: none;
+    padding: 0;
+
+    justify-content: center;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.moo-store-list > li {
+    float: left;
+    margin: 10px;
+}

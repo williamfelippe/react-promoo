@@ -1,0 +1,24 @@
+/* LOADER MORE */
+.moo-loader-more {
+    font-family: 'Roboto Slab', serif;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    color: rgba(255, 83, 83, 0.8);
+    cursor: pointer;
+}
+
+.moo-loader-more:hover,
+.moo-loader-more.active {
+    cursor: pointer;
+    display: inline-block;
+    color: rgba(255, 83, 83, 1);
+
+    animation: bounce 1s infinite;
+    -webkit-animation: bounce 1s infinite;
+}
+
+.moo-loader-more.active {
+    animation: bounce 1s infinite;
+    -webkit-animation: bounce 1s infinite;
+}

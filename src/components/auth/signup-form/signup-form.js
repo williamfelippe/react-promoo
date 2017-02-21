@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {Row, Input, Button, Preloader} from 'react-materialize';
-import {browserHistory} from 'react-router';
+import React, {Component} from "react";
+import {Row, Input, Button} from "react-materialize";
+import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
-import * as loginService from '../../../services/auth-service';
-import * as userInformationStore from '../../../utils/user-information-store';
+import Loader from "../../util/loader/loader";
+import * as loginService from "../../../services/auth-service";
+import * as userInformationStore from "../../../utils/user-information-store";
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -47,9 +48,6 @@ export default class SignupForm extends Component {
     }
 
     signup(data) {
-        console.log('Signup');
-        console.log(data);
-
         this.setState({loading: true});
         loginService.signup(data)
             .then((response) => {
@@ -74,6 +72,10 @@ export default class SignupForm extends Component {
     }
 
     render() {
+        const submitButton = (!this.state.loading)
+            ? <Button type="submit" waves="light" className="w-100 center-align">Cadastrar</Button>
+            : <Loader />;
+
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row className="n-margin-bottom">
@@ -90,11 +92,7 @@ export default class SignupForm extends Component {
                            onChange={this.onChangePassword.bind(this)}/>
                 </Row>
 
-                <Button type="submit" waves="light" className="w-100">
-                    {
-                        this.state.loading ? (<Preloader size="small" color="yellow"/>) : (<div>Cadastrar</div>)
-                    }
-                </Button>
+                {submitButton}
             </form>
         )
     }

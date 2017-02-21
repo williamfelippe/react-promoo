@@ -15,7 +15,7 @@ export default class DashboardBar extends Component {
                             <Col s={12}>
                                 <ul>
                                     <li>
-                                        <Link to="dashboard" activeClassName="active">
+                                        <Link to="dashboard/offers" activeClassName="active">
                                             <div className="hide-on-med-and-down">
                                                 Ofertas
                                             </div>

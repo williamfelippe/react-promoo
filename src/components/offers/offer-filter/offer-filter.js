@@ -12,7 +12,8 @@ export default class OfferFilter extends Component {
             checkedCategories: [],
             minPrice: 0,
             maxPrice: Number.POSITIVE_INFINITY,
-            address: ''
+            address: '',
+            addressLocation: {}
         };
     }
 
@@ -57,20 +58,20 @@ export default class OfferFilter extends Component {
 
     filter() {
         const address = this.state.address;
-        geocodeByAddress(address, (err, {lat, lng}, results) => {
+        geocodeByAddress(address, (err, {lat, lng}) => {
             if (err) {
                 console.log('Oh no!', err);
             }
 
-            console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng});
-            console.log('Entire payload from Google API', results);
+            this.setState({addressLocation: {lat: lat, lng: lng}});
         });
     }
 
     render() {
-        const nameFilter = <Row className="n-margin-bottom">
-            <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
-        </Row>;
+        const nameFilter =
+            <Row className="n-margin-bottom">
+                <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
+            </Row>;
 
         const listCategoriesFilter =
             this.props.categories.map((category) =>
@@ -80,11 +81,14 @@ export default class OfferFilter extends Component {
                 </Row>
             );
 
-        const priceFilter = <Row>
-            <Input s={12} m={5} type="number" label="Min" onChange={this.onChangeMinPrice.bind(this)} min="0" step="5"/>
+        const priceFilter =
+            <Row>
+                <Input s={12} m={5} type="number" label="Min" onChange={this.onChangeMinPrice.bind(this)} min="0"
+                       step="5"/>
 
-            <Input s={12} m={5} type="number" label="Máx" onChange={this.onChangeMaxPrice.bind(this)} min="0" step="5"/>
-        </Row>;
+                <Input s={12} m={5} type="number" label="Máx" onChange={this.onChangeMaxPrice.bind(this)} min="0"
+                       step="5"/>
+            </Row>;
 
         const options = {
             types: ['address, establishment'],
@@ -93,8 +97,8 @@ export default class OfferFilter extends Component {
 
         const placeFilter =
             <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                options={options} hideLabel>
-                <Input s={12} label="Procurar por endereço" />
+                                options={options} placeholder="&nbsp;" className="m-l-20 m-r-20" hideLabel>
+                <Input s={12} label="Procurar por endereço"/>
             </PlacesAutocomplete>;
 
         return (

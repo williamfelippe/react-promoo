@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Modal} from 'react-materialize';
 import {Row, Col, Input, Button, Icon} from 'react-materialize';
 import * as offerService from '../../../services/offer-service';
+import * as userInformationStore from '../../../utils/user-information-store';
 import './offer-report-button.css';
 
 export default class OfferReportButton extends Component {
@@ -30,7 +31,7 @@ export default class OfferReportButton extends Component {
     indicateExpiredOffer() {
         const data = {
             'reason': (this.state.subject.localeCompare('Outro') === 0) ? this.state.message : this.state.subject,
-            'report_by': 1,//this.userStore.getId(),
+            'report_by': userInformationStore.getLoggedUserId(),
             'offer_id': this.props.offer._id
         };
 
@@ -48,13 +49,20 @@ export default class OfferReportButton extends Component {
     render() {
         const reportLink = <a className="report"><Icon>block</Icon></a>;
 
+        const message =
+            this.state.subject.localeCompare('Outro') === 0 &&
+            <Input s={12} type="textarea" label="Qual o problema?"
+                   onChange={this.onChangeMessage.bind(this)}/>;
+
         return (
             <Modal header='Algum problema?' trigger={reportLink}
                    actions="&nbsp;">
+
                 <p className="m-t-40">
                     Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et
                     eleifend.
                 </p>
+
                 <form onSubmit={this.submit.bind(this)} className="col s12">
                     <Row>
                         <Col s={12} m={8} offset="m2">
@@ -66,11 +74,7 @@ export default class OfferReportButton extends Component {
                                     <option value="Outro">Outro</option>
                                 </Input>
 
-                                {
-                                    this.state.subject.localeCompare('Outro') === 0 &&
-                                    <Input s={12} type="textarea" label="Qual o problema?"
-                                           onChange={this.onChangeMessage.bind(this)}/>
-                                }
+                                {message}
 
                                 <Button type="submit" waves="light" className="w-100">
                                     Enviar

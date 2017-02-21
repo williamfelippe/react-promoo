@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {Row, Input, Button, Preloader} from 'react-materialize';
-import {browserHistory} from 'react-router';
+import React, {Component} from "react";
+import {Row, Input, Button} from "react-materialize";
+import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
-import * as loginService from '../../../services/auth-service';
-import * as userInformationStore from '../../../utils/user-information-store';
+import Loader from "../../util/loader/loader";
+import * as loginService from "../../../services/auth-service";
+import * as userInformationStore from "../../../utils/user-information-store";
 
 export default class SigninForm extends Component {
     constructor(props) {
@@ -26,9 +27,6 @@ export default class SigninForm extends Component {
 
     submit(event) {
         event.preventDefault();
-
-        console.log('Login realizado com sucesso');
-        console.log(this.state);
 
         const data = {
             email: this.state.email,
@@ -55,7 +53,9 @@ export default class SigninForm extends Component {
                     const token = userInformations.token;
                     const user = userInformations.user;
 
-                    userInformationStore.createUserStore(user._id, user.name, user.email, user.photo, token, user.settings);
+                    userInformationStore.createUserStore(user._id, user.name, user.email,
+                        user.photo, token, user.settings);
+
                     browserHistory.push('/');
                 }
 
@@ -68,23 +68,23 @@ export default class SigninForm extends Component {
     }
 
     render() {
+        const submitButton = (!this.state.loading)
+            ? <Button type="submit" waves="light" className="w-100 center-align">Faça parte!</Button>
+            : <Loader />;
+
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row className="n-margin-bottom">
                     <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)}
-                           label="E-mail" />
+                           label="E-mail"/>
                 </Row>
 
                 <Row>
                     <Input s={12} type="password" onChange={this.onChangePassword.bind(this)}
-                           label="Senha" />
+                           label="Senha"/>
                 </Row>
 
-                <Button type="submit" waves="light" className="w-100 center-align">
-                    {
-                        this.state.loading ? (<Preloader size="small" color="yellow"/>) : (<div>Faça parte!</div>)
-                    }
-                </Button>
+                {submitButton}
             </form>
         )
     }

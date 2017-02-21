@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import avatar from '../../../../public/images/default_avatar.png';
 
-export default class ImageLoader extends Component {
+export default class ImageWrapper extends Component {
     constructor(props) {
         super(props);
         this.state = {

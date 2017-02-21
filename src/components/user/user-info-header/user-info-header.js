@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
-import ImageLoader from "../../util/image-loader/image-loader";
+import ImageLoader from "../../util/image-wrapper/image-wrapper";
 import UserReportButton from "../user-report-button/user-report-button";
 import * as userInformationStore from "../../../utils/user-information-store";
 import "./user-info-header.css";

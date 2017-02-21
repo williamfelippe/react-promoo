@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Row, Col, Button} from "react-materialize";
-import ReactCrop from 'react-image-crop';
+import {Row, Col, Input} from "react-materialize";
+//import ReactCrop from 'react-image-crop';
+import ImageLoader from '../../../components/util/image-wrapper/image-wrapper';
 import * as userInformationStore from "../../../utils/user-information-store";
 
 export default class EditAvatar extends Component {
@@ -27,13 +28,11 @@ export default class EditAvatar extends Component {
             <Row>
                 <Col s={12}>
                     <div className="user-photo-container circle">
-                        <ImageLoader src={user.photo} alt={user.name}
+                        <ImageLoader src={this.state.userPhoto} alt={this.state.userName}
                                      className="circle responsive-img center-block"/>
                     </div>
 
-                    <Button type="file" waves="light">
-                        Pegar imagem
-                    </Button>
+                    <Input type="file" label="Pegar Imagem" />
                 </Col>
             </Row>
         )

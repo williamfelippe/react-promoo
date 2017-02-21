@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
+import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
 
 export default class ForgotPasswordForm extends Component {
@@ -33,15 +34,17 @@ export default class ForgotPasswordForm extends Component {
     }
 
     render() {
+        const submitButton = (!this.state.loading)
+            ? <Button type="submit" waves="light" className="w-100 center-align">Enviar instruções</Button>
+            : <Loader />;
+
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
                     <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)} label="E-mail" />
                 </Row>
 
-                <Button type="submit" waves="light" className="w-100">
-                    Enviar instruções
-                </Button>
+                {submitButton}
             </form>
         )
     }
