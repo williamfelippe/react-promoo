@@ -7,7 +7,7 @@ export default class UserLayout extends Component {
         return (
             <section>
                 <div className="container">
-                    <Row>
+                    <Row className="n-margin-bottom">
                         <Col s={12}>
                             <UserBar />
                         </Col>

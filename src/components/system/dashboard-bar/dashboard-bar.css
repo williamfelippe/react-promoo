@@ -5,7 +5,7 @@
     font-family: 'Roboto Slab', serif;
     font-size: 20px;
     background-color: rgba(255, 83, 83, 1);
-
+    margin-bottom: 0 !important;
 }
 
 .moo-dashboard-bar .row {

@@ -14,6 +14,10 @@ export default class UserReportButton extends Component {
         this.setState({reason: event.target.value});
     }
 
+    onChangeMessage(event) {
+        this.setState({message: event.target.value});
+    }
+
     submit(event) {
         event.preventDefault();
         this.reportUser();

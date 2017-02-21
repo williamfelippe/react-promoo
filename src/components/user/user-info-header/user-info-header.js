@@ -17,14 +17,17 @@ export default class UserInfoHeader extends Component {
                     </div>
 
                     <h2 className="name">
-                        {this.props.user.name}
+                        {user.name}
                     </h2>
 
-                    <p className="email">
-                        <small>
-                            {user.email}
-                        </small>
-                    </p>
+                    {
+                        (userInformationStore.getLoggedUserId() === user._id) &&
+                        <p className="email">
+                            <small>
+                                {user.email}
+                            </small>
+                        </p>
+                    }
                 </Col>
 
                 {

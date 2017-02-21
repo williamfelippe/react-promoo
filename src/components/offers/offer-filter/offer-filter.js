@@ -14,14 +14,6 @@ export default class OfferFilter extends Component {
             maxPrice: Number.POSITIVE_INFINITY,
             address: ''
         };
-
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeCheck = this.onChangeCheck.bind(this);
-        this.onChangeMinPrice = this.onChangeMinPrice.bind(this);
-        this.onChangeMaxPrice = this.onChangeMaxPrice.bind(this);
-        this.onChangePlace = this.onChangePlace.bind(this);
-        this.cleanFilter = this.cleanFilter.bind(this);
-        this.filter = this.filter.bind(this);
     }
 
     onChangeName(event) {
@@ -77,21 +69,21 @@ export default class OfferFilter extends Component {
 
     render() {
         const nameFilter = <Row className="n-margin-bottom">
-            <Input s={12} label="Nome" onChange={this.onChangeName}/>
+            <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
         </Row>;
 
         const listCategoriesFilter =
             this.props.categories.map((category) =>
                 <Row key={category._id}>
                     <Input type='checkbox' s={12} value={category._id} label={category.name}
-                           onChange={this.onChangeCheck}/>
+                           onChange={this.onChangeCheck.bind(this)}/>
                 </Row>
             );
 
         const priceFilter = <Row>
-            <Input s={12} m={5} type="number" label="Min" onChange={this.onChangeMinPrice} min="0" step="5"/>
+            <Input s={12} m={5} type="number" label="Min" onChange={this.onChangeMinPrice.bind(this)} min="0" step="5"/>
 
-            <Input s={12} m={5} type="number" label="Máx" onChange={this.onChangeMaxPrice} min="0" step="5"/>
+            <Input s={12} m={5} type="number" label="Máx" onChange={this.onChangeMaxPrice.bind(this)} min="0" step="5"/>
         </Row>;
 
         const options = {
@@ -100,7 +92,7 @@ export default class OfferFilter extends Component {
         };
 
         const placeFilter =
-            <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace}
+            <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
                                 options={options} hideLabel>
                 <Input s={12} label="Procurar por endereço" />
             </PlacesAutocomplete>;
@@ -134,11 +126,11 @@ export default class OfferFilter extends Component {
                 </Col>
 
                 <Col s={12}>
-                    <Button waves='light' className="w-100 m-b-20" onClick={this.filter}>
+                    <Button waves='light' className="w-100 m-b-20" onClick={this.filter.bind(this)}>
                         Filtrar
                     </Button>
 
-                    <Button flat waves='light' className="w-100" onClick={this.cleanFilter}>
+                    <Button flat waves='light' className="w-100" onClick={this.cleanFilter.bind(this)}>
                         Limpar filtro
                     </Button>
                 </Col>

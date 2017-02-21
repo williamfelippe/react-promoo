@@ -37,6 +37,7 @@ export default(
             <Route path="signin" component={Signin}/>
             <Route path="forgot-password" component={ForgotPassword}/>
             <Route path="terms" component={Terms}/>
+            <Route path="user-detail/:userId" component={UserProfile}/>
 
             <Route path="dashboard">
                 <Route component={DashboardLayout}>
@@ -48,7 +49,6 @@ export default(
                     <Route path="store/:storeId" component={StoreDetail}/>
                     <Route path="create-offer" component={CreateOffer}/>
                     <Route path="create-store" component={CreateStore}/>
-                    <Route path="user-detail/:userId" component={UserProfile}/>
 
                     <Route path="user">
                         <Route component={UserLayout}>
