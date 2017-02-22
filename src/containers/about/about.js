@@ -6,7 +6,7 @@ export default class About extends Component {
         return (
             <div className="container">
                 <Row>
-                    <Col s={10} m={8} l={6} offset="s1 m2 l3" className="center-align">
+                    <Col s={10} m={8} offset="s1 m2" className="center-align">
                         <h2>Sobre</h2>
 
                         <p>

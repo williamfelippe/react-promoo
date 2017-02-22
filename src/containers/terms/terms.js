@@ -6,7 +6,7 @@ export default class Terms extends Component {
         return (
             <div className="container">
                 <Row>
-                    <Col s={8} offset="s2" className="center-align">
+                    <Col s={10} m={8} offset="s1 m2" className="center-align">
                         <h2>Termos de uso</h2>
 
                         <p>

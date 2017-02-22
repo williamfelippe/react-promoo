@@ -72,6 +72,7 @@ export default class StoreDetail extends Component {
 
         if (statusCode === 200) {
             this.setState({store: response.data});
+            console.log(this.state.store);
         }
         else {
         }
@@ -114,8 +115,7 @@ export default class StoreDetail extends Component {
                 { 'saturation': -60 },
                 { 'gamma': 0.8 },
                 { 'lightness': 4 }, 
-                { 'visibility': 'on' }
-                ]
+                { 'visibility': 'on' }]
             }]
         }
 

@@ -29,7 +29,8 @@ export default class Offers extends Component {
     getOffers() {
         this.setState({loading: true});
 
-        offerService.getOffers(this.state.limit, this.state.offset)
+        offerService
+            .getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loading: false});
@@ -67,10 +68,10 @@ export default class Offers extends Component {
 
         if (statusCode === 200) {
             let offers = this.state.offers;
-            this.setState({offers: offers.concat(response.data)});
-        }
-        else {
-        }
+            this.setState({
+                offers: offers.concat(response.data)
+            });
+        } else {}
     }
 
     treatOfferCategoriesResponse(response) {
@@ -78,9 +79,7 @@ export default class Offers extends Component {
 
         if (statusCode === 200) {
             this.setState({categories: response.data});
-        }
-        else {
-        }
+        } else {}
     }
 
     moreOffers() {
@@ -97,35 +96,45 @@ export default class Offers extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.offers.length} redirectToPage={this.redirectToCreateOfferPage}
-                        buttonName="Divulgar"/>
+                <AddBar
+                    amount={this.state.offers.length}
+                    redirectToPage={this.redirectToCreateOfferPage}
+                    buttonName="Divulgar"/>
 
-                {
-                    (this.state.offers.length && this.state.categories.length) &&
-                    <Col s={12}>
-                        <Row>
-                            <div className="container">
+                <Col s={12}>
+                    <Row>
+                        <div className="container">
+
+                            {
+                                (this.state.offers.length && this.state.categories.length) && 
                                 <Col s={12} m={3}>
                                     <OfferFilter categories={this.state.categories}/>
                                 </Col>
+                            }
 
-                                <Col s={12} m={9}>
+                            <Col s={12} m={9}>
+                                {
+                                    (this.state.offers.length && this.state.categories.length) && 
                                     <Row>
                                         {/* Listagem das ofertas */}
                                         <OfferList offers={this.state.offers}/>
                                     </Row>
+                                }
 
-                                    <Row>
-                                        {/* Permite a busca de mais ofertas */}
-                                        <p className="center-align">
-                                            <TextLoader onClick={this.moreOffers.bind(this)} loading={this.state.loading}/>
-                                        </p>
-                                    </Row>
-                                </Col>
-                            </div>
-                        </Row>
-                    </Col>
-                }
+                                <Row>
+                                    {/* Permite a busca de mais ofertas */}
+                                    <p className="center-align">
+                                        <TextLoader
+                                            onClick={this
+                                            .moreOffers
+                                            .bind(this)}
+                                            loading={this.state.loading}/>
+                                    </p>
+                                </Row>
+                            </Col>
+                        </div>
+                    </Row>
+                </Col>
             </Row>
         )
     }

@@ -6,7 +6,7 @@ export default class Contact extends Component {
     render() {
         return (
             <Row>
-                <Col s={10} m={8} l={6} offset="s1 m2 l3">
+                <Col s={10} m={8} offset="s1 m2">
                     <div className="container">
                         <h2 className="center-align">
                             Contato
