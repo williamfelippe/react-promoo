@@ -8,22 +8,22 @@ export default class UserBar extends Component {
         return (
             <ul className="right moo-user-bar">
                 <li>
-                    <Link to="user-profile">
+                    <Link to="dashboard/user/user-profile">
                         <Icon>dashboard</Icon>
                     </Link>
                 </li>
                 <li>
-                    <Link to="edit-avatar">
+                    <Link to="dashboard/user/edit-avatar">
                         <Icon>insert_photo</Icon>
                     </Link>
                 </li>
                 <li>
-                    <Link to="edit-email">
+                    <Link to="dashboard/user/edit-email">
                         <Icon>email</Icon>
                     </Link>
                 </li>
                 <li>
-                    <Link to="edit-password">
+                    <Link to="dashboard/user/edit-password">
                         <Icon>vpn_key</Icon>
                     </Link>
                 </li>

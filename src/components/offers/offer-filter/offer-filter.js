@@ -97,7 +97,7 @@ export default class OfferFilter extends Component {
 
         const placeFilter =
             <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                options={options} placeholder="&nbsp;" className="m-l-20 m-r-20" hideLabel>
+                                options={options} placeholder="&nbsp;" hideLabel>
                 <Input s={12} label="Procurar por endereço"/>
             </PlacesAutocomplete>;
 
@@ -126,7 +126,9 @@ export default class OfferFilter extends Component {
                 <Col s={12} className="n-padding">
                     <b className="place">Endereço</b>
 
-                    {placeFilter}
+                    <div className="m-l-20 m-r-20">
+                        {placeFilter}
+                    </div>
                 </Col>
 
                 <Col s={12}>

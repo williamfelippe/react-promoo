@@ -44,6 +44,12 @@ export function getLoggedUserToken() {
     return user.token;
 }
 
+export function getLoggedUser() {
+    const user = Store.get('user');
+    verifyIfExistUserInformationSaved(user);
+    return user;
+}
+
 export function isLoggedIn() {
     const user = Store.get('user');
     return (user && user !== undefined);

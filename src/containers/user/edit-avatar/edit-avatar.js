@@ -1,40 +1,114 @@
-import React, {Component} from 'react';
-import {Row, Col, Input} from "react-materialize";
-//import ReactCrop from 'react-image-crop';
-import ImageLoader from '../../../components/util/image-wrapper/image-wrapper';
+import React, {Component} from "react";
+import FileProcessor from "react-file-processor";
+import Cropper from "react-cropper";
+import {Row, Col, Button} from "react-materialize";
 import * as userInformationStore from "../../../utils/user-information-store";
+import "cropperjs/dist/cropper.css";
+import "./edit-avatar.css";
 
 export default class EditAvatar extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            userName: "",
-            userPhoto: "",
-            userId: 0,
-            cropping: false
-        }
+            src: userInformationStore.getLoggedUserAvatar(),
+            cropResult: null,
+        };
     }
 
-    componentDidMount() {
+    handleClick(e) {
+        this.refs.avatarInput.chooseFile();
+    }
+
+    handleFileSelect(e, files) {
+        console.log(e, files);
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.setState({src: reader.result})
+        };
+        reader.readAsDataURL(files[0]);
+    }
+
+    onChange(event) {
+        event.preventDefault();
+
+        let files;
+        if (event.dataTransfer) {
+            files = event.dataTransfer.files;
+        }
+        else if (event.target) {
+            files = event.target.files;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.setState({src: reader.result})
+        };
+        reader.readAsDataURL(files[0]);
+    }
+
+    cropImage() {
+        if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
+            console.log('Aqui');
+            return;
+        }
+
         this.setState({
-            userName: userInformationStore.getLoggedUserName(),
-            userPhoto: userInformationStore.getLoggedUserAvatar(),
-            userId: userInformationStore.getLoggedUserId()
+            cropResult: this.cropper.getCroppedCanvas().toDataURL(),
         });
+
+        setInterval(() => {
+            console.log('RESULT: ' + this.state.cropResult);
+        }, 2000);
+
+    }
+
+    useDefaultImage() {
+        this.setState({src: userInformationStore.getLoggedUserAvatar()});
     }
 
     render() {
         return (
-            <Row>
-                <Col s={12}>
-                    <div className="user-photo-container circle">
-                        <ImageLoader src={this.state.userPhoto} alt={this.state.userName}
-                                     className="circle responsive-img center-block"/>
-                    </div>
+            <div className="container moo-edit-avatar">
+                <Row>
+                    <Col s={12}>
+                        <Cropper style={{height: 400, width: '100%'}} aspectRatio={1}
+                                 preview=".img-preview" guides={false} src={this.state.src}
+                                 ref={cropper => {
+                                     this.cropper = cropper;
+                                 }}/>
+                    </Col>
 
-                    <Input type="file" label="Pegar Imagem" />
-                </Col>
-            </Row>
-        )
+                    <Col s={12}>
+
+                        {/*
+                         <input type="file" onChange={this.onChange.bind(this)}/>
+                         */}
+                    </Col>
+
+                    <Col s={12}>
+                        <ul className="list-buttons">
+                            <li>
+                                <FileProcessor ref="avatarInput" onFileSelect={this.handleFileSelect.bind(this)}>
+                                    <Button waves="light" onClick={this.handleClick.bind(this)}>
+                                        Pegar uma imagem
+                                    </Button>
+                                </FileProcessor>
+                            </li>
+                            <li>
+                                <Button onClick={this.useDefaultImage.bind(this)} waves="light" flat>
+                                    Usar imagem padrão
+                                </Button>
+                            </li>
+                            <li>
+                                <Button onClick={this.cropImage.bind(this)} waves="light" flat>
+                                    Cortar
+                                </Button>
+                            </li>
+                        </ul>
+                    </Col>
+                </Row>
+            </div>
+        );
     }
 }

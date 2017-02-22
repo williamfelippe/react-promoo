@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Row, Col, Button} from "react-materialize";
-import './no-match.css';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import "./no-match.css";
 
 export default class NoMatch extends Component {
     render() {
@@ -17,19 +17,6 @@ export default class NoMatch extends Component {
                         <p>
                             Erro 404
                         </p>
-
-                        <ul>
-                            <li>
-                                <Button waves='light' large>
-                                    Home
-                                </Button>
-                            </li>
-                            <li>
-                                <Button waves='light' flat large>
-                                    Fale conosco
-                                </Button>
-                            </li>
-                        </ul>
                     </div>
                 </Col>
             </Row>
