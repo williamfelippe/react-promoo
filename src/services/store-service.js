@@ -23,3 +23,7 @@ export function postStore(data) {
 export function getStoreCategories() {
     return axios.get('store_category');
 }
+
+export function postStoreReport(data) {
+    return axios.post('store/report', data);
+}

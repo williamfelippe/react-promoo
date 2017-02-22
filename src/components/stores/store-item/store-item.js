@@ -1,18 +1,32 @@
 import React, {Component} from "react";
-import {Col, CardPanel} from "react-materialize";
+import {CardPanel} from "react-materialize";
+import {Link} from "react-router";
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
+import * as storeService from "../../../services/store-service";
 import "./store-item.css";
 
 export default class StoreItem extends Component {
+    reportStoreDoesNotExist() {
+        storeService.postStoreReport({})
+            .then((response) => {
+
+            })
+            .catch((error) => {
+
+            });
+    }
+
     render() {
         const {store} = this.props;
+
+        console.log(store);
 
         const formattedAddress =
             `${store.address.street} - ${store.address.neighborhood}. ${store.address.city}`;
 
         return (
-            <Col s={this.props.s} m={this.props.m} l={this.props.l}>
-                <CardPanel className="moo-store-card">
+            <CardPanel className="moo-store-card">
+                <Link to={`dashboard/store/${store._id}`}>
                     <div className="right-align category">
                         {
                             /* Categoria */
@@ -40,14 +54,14 @@ export default class StoreItem extends Component {
                             formattedAddress
                         }
                     </div>
+                </Link>
 
-                    <div className="actions center-align">
-                        <a>
-                            Essa loja não existe ou mudou de lugar? Avise-nos
-                        </a>
-                    </div>
-                </CardPanel>
-            </Col>
+                <div className="actions center-align">
+                    <a onClick={this.reportStoreDoesNotExist.bind(this)}>
+                        Essa loja não existe ou mudou de lugar? Avise-nos
+                    </a>
+                </div>
+            </CardPanel>
         );
     }
 }

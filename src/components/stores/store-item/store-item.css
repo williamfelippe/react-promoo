@@ -25,18 +25,16 @@
 }
 
 .moo-store-card .address {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 200;
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.7);
     margin-bottom: 15px;
 }
 
-.moo-store-card .actions {
-    font-size: 12px;
-}
-
 .moo-store-card .actions a {
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
 .moo-store-card .actions a:hover {
