@@ -153,11 +153,12 @@ export default class StoreDetail extends Component {
 
                 <Col s={12}>
                     <div className="container">
-                        <div className="store-image circle">
-                            {
-                                store.logo && <ImageWrapper src={store.logo} alt={store.name} className="circle"/>
-                            }
-                        </div>
+                        {
+                            store.logo &&
+                            <div className="store-image circle">
+                                <ImageWrapper src={store.logo} alt={store.name} className="circle"/>   
+                            </div>
+                        }
 
                         <div className="store-name center-align">
                             {
@@ -179,7 +180,11 @@ export default class StoreDetail extends Component {
                 <Col s={12}>
                     <div className="container">
                         <OfferList offers={this.state.offers}/>
+                    </div>
+                </Col>
 
+                <Col s={12}>
+                    <div className="container">
                         <p className="center-align">
                             <TextLoader
                                 onClick={this

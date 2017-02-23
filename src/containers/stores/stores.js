@@ -4,6 +4,7 @@ import {Row, Col} from "react-materialize";
 import axios from "axios";
 import {browserHistory} from "react-router";
 import AddBar from "../../components/system/add-bar/add-bar";
+import StoreFilter from "../../components/stores/store-filter/store-filter";
 import StoreList from "../../components/stores/store-list/store-list";
 import TextLoader from "../../components/util/text-loader/text-loader";
 import * as userInformationStore from "../../utils/user-information-store";
@@ -121,15 +122,21 @@ export default class Stores extends Component {
                 <Col s={12}>
                     <Row>
                         <div className="container">
-                            <Col s={12}>
-                                {/*<StoreFilter categories={this.state.categories}/>*/}
-                            </Col>
+                            {
+                                (this.state.stores.length && this.state.categories.length) && 
+                                <Col s={12} m={3}>
+                                    <StoreFilter categories={this.state.categories}/>
+                                </Col>
+                            }
 
-                            <Col s={12}>
-                                <Row>
-                                    {/* Listagem das ofertas */}
-                                    <StoreList stores={this.state.stores}/>
-                                </Row>
+                            <Col s={12} m={9}>
+                                {
+                                    (this.state.stores.length && this.state.categories.length) && 
+                                    <Row>
+                                        {/* Listagem das ofertas */}
+                                        <StoreList stores={this.state.stores}/>
+                                    </Row>
+                                }
 
                                 <Row>
                                     {/* Permite a busca de mais ofertas */}
