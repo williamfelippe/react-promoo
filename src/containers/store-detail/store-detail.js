@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import GoogleMapReact from 'google-map-react';
 import {Row, Col} from "react-materialize";
 import axios from "axios";
-import StoreMarker from "../../components/stores/store-marker/store-marker";
+import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import TextLoader from "../../components/util/text-loader/text-loader";
 import * as storeService from "../../services/store-service";
@@ -17,11 +17,18 @@ export default class StoreDetail extends Component {
             offers: [],
             categories: [],
             limit: 30,
-            offset: 0
+            offset: 0,
+            center: {}
         }
     }
 
-    static defaultProps = { center: {lat: 59.95, lng: 30.33}, zoom: 15};
+    static defaultProps = {
+        center: {
+            lat: 59.95,
+            lng: 30.33
+        },
+        zoom: 15
+    };
 
     componentDidMount() {
         const {storeId} = this.props.params;
@@ -32,7 +39,8 @@ export default class StoreDetail extends Component {
     getOffers() {
         this.setState({loading: true});
 
-        offerService.getOffers(this.state.limit, this.state.offset)
+        offerService
+            .getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loading: false});
@@ -71,11 +79,17 @@ export default class StoreDetail extends Component {
         const statusCode = response.status;
 
         if (statusCode === 200) {
-            this.setState({store: response.data});
+            const store = response.data;
+
+            this.setState({
+                store: store,
+                center: {
+                    lat: store.address.latitude,
+                    lng: store.address.longitude
+                }
+            });
             console.log(this.state.store);
-        }
-        else {
-        }
+        } else {}
     }
 
     treatOffersResponse(response) {
@@ -83,10 +97,10 @@ export default class StoreDetail extends Component {
 
         if (statusCode === 200) {
             let offers = this.state.offers;
-            this.setState({offers: offers.concat(response.data)});
-        }
-        else {
-        }
+            this.setState({
+                offers: offers.concat(response.data)
+            });
+        } else {}
     }
 
     treatOfferCategoriesResponse(response) {
@@ -94,9 +108,7 @@ export default class StoreDetail extends Component {
 
         if (statusCode === 200) {
             this.setState({categories: response.data});
-        }
-        else {
-        }
+        } else {}
     }
 
     moreOffers() {
@@ -111,34 +123,69 @@ export default class StoreDetail extends Component {
             panControl: false,
             mapTypeControl: false,
             scrollwheel: false,
-            styles: [{ stylers: [
-                { 'saturation': -60 },
-                { 'gamma': 0.8 },
-                { 'lightness': 4 }, 
-                { 'visibility': 'on' }]
-            }]
-        }
+            styles: [
+                {
+                    stylers: [
+                        {
+                            'saturation': -65
+                        }, {
+                            'gamma': 0.8
+                        }, {
+                            'lightness': 4
+                        }, {
+                            'visibility': 'on'
+                        }
+                    ]
+                }
+            ]
+        };
 
         return (
             <Row className="moo-store-detail">
-                <Col s={12}>
-                    <div className="container">
-                    </div>
-                </Col>
-
                 <Col s={12} className="map-wrapper">
-                    <GoogleMapReact defaultCenter={this.props.center} defaultZoom={this.props.zoom} options={mapOptions}>
-                        <StoreMarker lat={store.latitude} lng={store.longitude} name={store.name}/>
+                    <GoogleMapReact
+                        defaultCenter={this.props.center}
+                        center={this.state.center}
+                        defaultZoom={this.props.zoom}
+                        options={mapOptions}>
                     </GoogleMapReact>
                 </Col>
 
+                <Col s={12}>
+                    <div className="container">
+                        <div className="store-image circle">
+                            {
+                                store.logo && <ImageWrapper src={store.logo} alt={store.name} className="circle"/>
+                            }
+                        </div>
+
+                        <div className="store-name center-align">
+                            {
+                                /* Nome*/
+                                store.name
+                            }
+                        </div>
+
+                        <div className="store-address center-align">
+                            {
+                                /* Endereço */
+                                (store.address && store.address !== undefined) &&
+                                `${store.address.street} - ${store.address.neighborhood}. ${store.address.city}`
+                            }
+                        </div>
+                    </div>
+                </Col>
 
                 <Col s={12}>
                     <div className="container">
                         <OfferList offers={this.state.offers}/>
 
                         <p className="center-align">
-                            <TextLoader onClick={this.moreOffers.bind(this)} loading={this.state.loading}/>
+                            <TextLoader
+                                onClick={this
+                                .moreOffers
+                                .bind(this)}
+                                loading={this.state.loading}/>
                         </p>
                     </div>
                 </Col>

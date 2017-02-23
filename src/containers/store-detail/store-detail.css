@@ -1,5 +1,40 @@
+.moo-store-detail {
+    margin-bottom: 40px;
+}
+
 .moo-store-detail .map-wrapper {
     width: 100%;
     height: 350px;
     padding: 0;
+}
+
+.moo-store-detail .store-image {
+    width: 230px;
+    height: 230px;
+    display: block;
+    position: relative;
+    z-index: 2;
+    margin: -100px auto 20px;
+    border: rgba(255, 83, 83, 0.8) solid medium;
+    background: transparent;
+    padding: 5px;
+}
+
+.moo-store-detail .store-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.moo-store-detail .store-name {
+    font-size: 40px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.moo-store-detail .store-address {
+    font-size: 20px;
+    font-weight: 200;
+    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 1);
 }

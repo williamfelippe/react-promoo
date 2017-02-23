@@ -80,13 +80,6 @@ export default class EditAvatar extends Component {
                     </Col>
 
                     <Col s={12}>
-
-                        {/*
-                         <input type="file" onChange={this.onChange.bind(this)}/>
-                         */}
-                    </Col>
-
-                    <Col s={12}>
                         <ul className="list-buttons">
                             <li>
                                 <FileProcessor ref="avatarInput" onFileSelect={this.handleFileSelect.bind(this)}>

@@ -19,10 +19,8 @@ export default class StoreItem extends Component {
     render() {
         const {store} = this.props;
 
-        console.log(store);
-
-        const formattedAddress =
-            `${store.address.street} - ${store.address.neighborhood}. ${store.address.city}`;
+        const formatedAddress =
+            `${store.address.street} - ${store.address.neighborhood}. ${store.address.city}`
 
         return (
             <CardPanel className="moo-store-card">
@@ -51,7 +49,7 @@ export default class StoreItem extends Component {
                     <div className="address center-align">
                         {
                             /* Endereço */
-                            formattedAddress
+                            formatedAddress
                         }
                     </div>
                 </Link>
