@@ -24,8 +24,8 @@ export default class StoreDetail extends Component {
 
     static defaultProps = {
         center: {
-            lat: 59.95,
-            lng: 30.33
+            lat: -20.377138,
+            lng: -43.4363368
         },
         zoom: 15
     };
