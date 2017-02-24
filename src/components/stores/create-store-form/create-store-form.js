@@ -8,6 +8,10 @@ export default class CreateStoreForm extends Component {
         this.state = {address: ''};
     }
 
+    onChangeName(event) {
+        this.setState({name: event.target.value});
+    }
+
     onChangePlace(address) {
         this.setState({address: address});
     }
@@ -37,9 +41,9 @@ export default class CreateStoreForm extends Component {
                 <Row>
                     { /* Endereço da loja */ }
                     <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                        options={options} hideLabel>
+                                        options={options} hideLabel placeholder="">
                         <Input s={12} label="Onde fica essa loja?" />
-                    </PlacesAutocomplete>;
+                    </PlacesAutocomplete>
                 </Row>
 
                 { /* Nome da loja */ }
