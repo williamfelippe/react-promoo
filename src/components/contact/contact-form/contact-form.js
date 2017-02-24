@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Validator from 'Validator';
 import ReCAPTCHA from 'react-google-recaptcha';
 import {Row, Col, Input, Button} from 'react-materialize';
 import * as systemService from '../../../services/system-service';
@@ -41,21 +42,39 @@ export default class ContactForm extends Component {
 
         console.log(this.state);
 
-        systemService.sendMessage(this.state)
-            .then((response) => {
-                console.log(response.data);
-                console.log('Mensagem enviada com sucesso');
-            })
-            .catch((error) => {
-                console.log('CONTACT');
-                console.log(error);
-            })
+        const rules = {
+            name: 'required',
+            email: 'required|email',
+            subject: 'required|min:4',
+            message: 'required',
+            responseCaptcha: 'required'
+        }
+
+        const v = Validator.make(this.state, rules)
+ 
+        if (v.fails()) {
+            //Inserir mensagem de erro
+            const errors = v.getErrors();
+            console.log("CONTACT ERROR");
+            console.log(errors);
+        }
+        else {
+            systemService.sendMessage(this.state)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log('Mensagem enviada com sucesso');
+                })
+                .catch((error) => {
+                    console.log('CONTACT');
+                    console.log(error);
+                });
+        }
     }
 
     render() {
         const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
         return (
-            <form onSubmit={this.submit.bind(this)} className="col s12 m-b-20">
+            <form onSubmit={this.submit.bind(this)} className="col s12 m-b-20" noValidate>
                 <Row>
                     <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
                 </Row>

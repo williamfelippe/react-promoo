@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
+import Validator from 'Validator';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
@@ -39,12 +40,32 @@ export default class SignupForm extends Component {
         const data = {
             name: this.state.name,
             email: this.state.email,
-            password: CryptoJS.MD5(this.state.password).toString(),
-            device_type: 'web',
-            device_token: ''
+            password: this.state.password
         };
 
-        this.signup(data);
+        const rules = {
+            name: 'required',
+            email: 'required|email',
+            password: 'required|min:6'
+        }
+
+        const v = Validator.make(data, rules)
+ 
+        if (v.fails()) {
+            //Inserir mensagem de erro
+            const errors = v.getErrors();
+            console.log("SIGNUP ERROR");
+            console.log(errors);
+        }
+        else {
+            this.signup({
+                name: this.state.name,
+                email: this.state.email,
+                password: CryptoJS.MD5(this.state.password).toString(),
+                device_type: 'web',
+                device_token: ''
+            });
+        }
     }
 
     signup(data) {
@@ -77,7 +98,7 @@ export default class SignupForm extends Component {
             : <Loader />;
 
         return (
-            <form onSubmit={this.submit.bind(this)} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
                 <Row className="n-margin-bottom">
                     <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
                 </Row>

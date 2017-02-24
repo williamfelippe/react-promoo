@@ -1,18 +1,16 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
+import {browserHistory} from "react-router";
 import {Row, Col, Button} from "react-materialize";
 import * as userInformationStore from "../../../utils/user-information-store";
 import "./header.css";
 
 export default class Header extends Component {
-    constructor() {
-        super();
-        this.signout = this.signout.bind(this);
-    }
-
     signout() {
         userInformationStore.clear();
         console.log('Saiu');
+        
+        browserHistory.push('/');
     }
 
     render() {
@@ -51,7 +49,7 @@ export default class Header extends Component {
                                     </Link>
                                 </li>
                                 <li className={!isLoggedIn ? 'hide' : ''}>
-                                    <Button onClick={this.signout} waves="light" className="btn">
+                                    <Button onClick={this.signout.bind(this)} waves="light" className="btn">
                                         Sair
                                     </Button>
                                 </li>

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
+import Validator from 'Validator';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
@@ -30,12 +31,32 @@ export default class SigninForm extends Component {
 
         const data = {
             email: this.state.email,
-            password: CryptoJS.MD5(this.state.password).toString(),
-            device_type: 'web',
-            device_token: ''
-        };
+            password: this.state.password
+        }
 
-        this.signin(data);
+        console.log(data);
+
+        const rules = {
+            email: 'required|email',
+            password: 'required|min:6'
+        }
+
+        const v = Validator.make(data, rules)
+ 
+        if (v.fails()) {
+            //Inserir mensagem de erro
+            const errors = v.getErrors();
+            console.log("SIGNIN ERROR");
+            console.log(errors);
+        }
+        else {
+            this.signin({
+                email: this.state.email,
+                password: CryptoJS.MD5(this.state.password).toString(),
+                device_type: 'web',
+                device_token: ''
+            });
+        }
     }
 
     signin(data) {
@@ -73,7 +94,7 @@ export default class SigninForm extends Component {
             : <Loader />;
 
         return (
-            <form onSubmit={this.submit.bind(this)} className="col s12">
+            <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
                 <Row className="n-margin-bottom">
                     <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)}
                            label="E-mail"/>
