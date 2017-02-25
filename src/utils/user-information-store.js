@@ -16,8 +16,7 @@ export function createUserStore(_id, name, email, photo, token, settings) {
 
 export function getLoggedUserId() {
     const user = Store.get('user');
-    verifyIfExistUserInformationSaved(user);
-    return user._id;
+    return (verifyIfExistUserInformationSaved(user)) ? user._id : -1;
 }
 
 export function getLoggedUserAvatar() {
@@ -60,7 +59,5 @@ export function clear() {
 }
 
 function verifyIfExistUserInformationSaved(user) {
-    if (user === null && user === undefined) {
-        return '';
-    }
+    return (user && user !== undefined);
 }

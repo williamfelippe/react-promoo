@@ -21,6 +21,8 @@ export default class UserProfile extends Component {
             storeOffset: 0,
             offerOffset: 0
         }
+
+        console.log('PARAM ID: ' + this.props.params.userId);
     }
 
     componentDidMount() {
@@ -58,6 +60,7 @@ export default class UserProfile extends Component {
 
         if (statusCode === 200) {
             this.setState({user: response.data});
+            console.log("USER");
             console.log(this.state.user);
         }
     }
