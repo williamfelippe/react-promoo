@@ -32,7 +32,14 @@ export default class UserReportButton extends Component {
 
         userService.postUserReport(data)
             .then((response) => {
-                console.log(response);
+                const statusCode = response.status;
+                
+                if(statusCode === 200) {
+                    console.log(response.data);
+                }
+                else {
+                    throw new Error(response.data);
+                }
             })
             .catch((error) => {
                 console.log(error);

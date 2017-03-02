@@ -39,7 +39,7 @@ export default class ChangePasswordForm extends Component {
                     console.log(response.data);
                 }
                 else {
-                    console.log('Ops...');
+                    throw new Error(response.data);
                 }
             })
             .catch((error) => {

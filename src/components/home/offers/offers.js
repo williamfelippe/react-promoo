@@ -28,7 +28,7 @@ export default class Offers extends Component {
                     this.setState({offers: response.data});
                 }
                 else {
-
+                    throw new Error(response.data);
                 }
 
                 this.setState({loading: false});

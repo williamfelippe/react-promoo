@@ -63,6 +63,9 @@ export default class UserProfile extends Component {
             console.log("USER");
             console.log(this.state.user);
         }
+        else {
+            throw new Error(response.data);
+        }                
     }
 
     treatOffersResponse(response) {
@@ -72,6 +75,9 @@ export default class UserProfile extends Component {
             this.setState({offers: response.data});
             console.log(this.state.offers);
         }
+        else {
+            throw new Error(response.data);
+        }        
     }
 
     treatStoresResponse(response) {
@@ -81,6 +87,9 @@ export default class UserProfile extends Component {
             this.setState({stores: response.data});
             console.log(this.state.stores);
         }
+        else {
+            throw new Error(response.data);
+        }                
     }
 
     render() {

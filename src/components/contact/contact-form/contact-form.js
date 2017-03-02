@@ -51,7 +51,7 @@ export default class ContactForm extends Component {
         }
 
         const v = Validator.make(this.state, rules)
- 
+
         if (v.fails()) {
             //Inserir mensagem de erro
             const errors = v.getErrors();
@@ -59,16 +59,28 @@ export default class ContactForm extends Component {
             console.log(errors);
         }
         else {
-            systemService.sendMessage(this.state)
-                .then((response) => {
+            this.sendMessage();
+        }
+    }
+
+    sendMessage() {
+        systemService
+            .sendMessage(this.state)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === 200) {
                     console.log(response.data);
                     console.log('Mensagem enviada com sucesso');
-                })
-                .catch((error) => {
-                    console.log('CONTACT');
-                    console.log(error);
-                });
-        }
+                } 
+                else {
+                    throw new Error(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log('CONTACT');
+                console.log(error);
+            });
     }
 
     render() {
@@ -76,15 +88,18 @@ export default class ContactForm extends Component {
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12 m-b-20" noValidate>
                 <Row>
-                    <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
+                    <Input s={12} label="Nome" 
+                        onChange={this.onChangeName.bind(this)}/>
                 </Row>
 
                 <Row>
-                    <Input s={12} type="email" label="E-mail" onChange={this.onChangeEmail.bind(this)}/>
+                    <Input s={12} type="email" label="E-mail"
+                        onChange={this.onChangeEmail.bind(this)}/>
                 </Row>
 
                 <Row>
-                    <Input s={12} type="select" label="Assunto" defaultValue="Dúvida" onChange={this.onChangeSubject.bind(this)}>
+                    <Input s={12} type="select" label="Assunto"
+                        defaultValue="Dúvida" onChange={this.onChangeSubject.bind(this)}>
                         <option value="Dúvida">Dúvida</option>
                         <option value="Bug">Bug</option>
                         <option value="Parceria">Parceria</option>
@@ -93,13 +108,15 @@ export default class ContactForm extends Component {
                 </Row>
 
                 <Row>
-                    <Input s={12} type="textarea" label="Mensagem" onChange={this.onChangeMessage.bind(this)}/>
+                    <Input s={12} type="textarea" label="Mensagem"
+                        onChange={this.onChangeMessage.bind(this)}/>
                 </Row>
 
                 <Row>
                     <Col s={12}>
-                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey} onChange={this.onChangeCaptcha.bind(this)}
-                                   className="right"/>
+                        <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey}
+                            onChange={this.onChangeCaptcha.bind(this)}
+                            className="right"/>
                     </Col>
                 </Row>
 

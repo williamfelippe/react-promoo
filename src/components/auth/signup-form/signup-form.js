@@ -83,6 +83,9 @@ export default class SignupForm extends Component {
                     userInformationStore.createUserStore(user._id, user.name, user.email, user.photo, token, user.settings);
                     browserHistory.push('/');
                 }
+                else {
+                    throw new Error(response.data);
+                }
 
                 this.setState({loading: false});
             })

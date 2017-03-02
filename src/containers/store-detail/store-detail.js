@@ -186,10 +186,7 @@ export default class StoreDetail extends Component {
                 <Col s={12}>
                     <div className="container">
                         <p className="center-align">
-                            <TextLoader
-                                onClick={this
-                                .moreOffers
-                                .bind(this)}
+                            <TextLoader onClick={this.moreOffers.bind(this)}
                                 loading={this.state.loading}/>
                         </p>
                     </div>

@@ -76,7 +76,7 @@ export default class Stores extends Component {
             this.setState({stores: stores});
         }
         else {
-
+            throw new Error(response.data);
         }
     }
 
@@ -87,7 +87,7 @@ export default class Stores extends Component {
             this.setState({categories: response.data});
         }
         else {
-
+            throw new Error(response.data);
         }
     }
 

@@ -11,7 +11,6 @@ export function createUserStore(_id, name, email, photo, token, settings) {
     };
 
     Store.set('user', data);
-    console.log(Store.get('user'));
 }
 
 export function getLoggedUserId() {
@@ -21,32 +20,27 @@ export function getLoggedUserId() {
 
 export function getLoggedUserAvatar() {
     const user = Store.get('user');
-    verifyIfExistUserInformationSaved(user);
-    return user.photo;
+    return (verifyIfExistUserInformationSaved(user)) ? user.photo : null;
 }
 
 export function getLoggedUserName() {
     const user = Store.get('user');
-    verifyIfExistUserInformationSaved(user);
-    return user.name;
+    return (verifyIfExistUserInformationSaved(user)) ? user.name : "";
 }
 
 export function getLoggedUserEmail() {
     const user = Store.get('user');
-    verifyIfExistUserInformationSaved(user);
-    return user.email;
+    return (verifyIfExistUserInformationSaved(user)) ? user.email : "";
 }
 
 export function getLoggedUserToken() {
     const user = Store.get('user');
-    verifyIfExistUserInformationSaved(user);
-    return user.token;
+    return (verifyIfExistUserInformationSaved(user)) ? user.token : "";
 }
 
 export function getLoggedUser() {
     const user = Store.get('user');
-    verifyIfExistUserInformationSaved(user);
-    return user;
+    return (verifyIfExistUserInformationSaved(user)) ? user : null;
 }
 
 export function isLoggedIn() {

@@ -71,7 +71,10 @@ export default class Offers extends Component {
             this.setState({
                 offers: offers.concat(response.data)
             });
-        } else {}
+        } 
+        else {
+            throw new Error(response.data);
+        }
     }
 
     treatOfferCategoriesResponse(response) {
@@ -79,7 +82,10 @@ export default class Offers extends Component {
 
         if (statusCode === 200) {
             this.setState({categories: response.data});
-        } else {}
+        }
+        else {
+            throw new Error(response.data);
+        }
     }
 
     moreOffers() {

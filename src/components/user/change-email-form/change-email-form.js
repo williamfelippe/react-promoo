@@ -23,7 +23,13 @@ export default class ChangeEmailForm extends Component {
         
         userService.putEmail(data)
             .then((response) => {
-                console.log(response);
+                const statusCode = response.status;
+                if(statusCode === 200) {
+                    console.log(response.data);
+                }
+                else {
+                    throw new Error(response.data);
+                }
             })
             .catch((error) => {
                 console.log(error);

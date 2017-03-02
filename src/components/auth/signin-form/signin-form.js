@@ -79,6 +79,9 @@ export default class SigninForm extends Component {
 
                     browserHistory.push('/');
                 }
+                else {
+                    throw new Error(response.data);
+                }
 
                 this.setState({loading: false});
             })
