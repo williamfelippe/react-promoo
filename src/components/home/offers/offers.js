@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
 import OfferList from "../../offers/offer-list/offer-list";
+import Loader from "../../util/loader/loader";
 import * as offerService from "../../../services/offer-service";
 import "./offers.css";
 
@@ -40,6 +41,9 @@ export default class Offers extends Component {
     }
 
     render() {
+        const offers = (this.state.loading) ? <Loader /> :
+            <OfferList offers={this.state.offers} />;
+
         return (
             <Row className="moo-home-last-offers">
                 <Col s={12}>
@@ -51,8 +55,8 @@ export default class Offers extends Component {
                         <p className="center-align">
                             Encontre promoções nos estabelecimentos mais próximos de você
                         </p>
-
-                        <OfferList offers={this.state.offers} />
+                        
+                        {offers}
                     </div>
                 </Col>
             </Row>

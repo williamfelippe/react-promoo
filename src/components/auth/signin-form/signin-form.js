@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
-import PubSub from 'pubsub-js';
 import Validator from 'Validator';
 import Notification from '../../util/notification/notification';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
 import * as userInformationStore from "../../../utils/user-information-store";
+import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class SigninForm extends Component {
     constructor(props) {
@@ -51,8 +51,7 @@ export default class SigninForm extends Component {
             console.log("SIGNIN ERROR");
             console.log(errors);
 
-            errors.email.map((error) => PubSub.publish('show-message', error));
-            errors.password.map((error) => PubSub.publish('show-message', error));
+            messagesPublisher.showMessage(...errors.email, ...errors.password);
         }
         else {
             this.signin({
@@ -94,7 +93,8 @@ export default class SigninForm extends Component {
             .catch((error) => {
                 console.log(error);
 
-                PubSub.publish('show-message', "Ops... Parece que estamos com alguns problemas.");
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
                 this.setState({loading: false});
             });
     }

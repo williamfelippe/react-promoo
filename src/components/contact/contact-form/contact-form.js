@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import PubSub from 'pubsub-js';
 import Validator from 'Validator';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Notification from '../../util/notification/notification';
 import Loader from "../../util/loader/loader";
 import {Row, Col, Input, Button} from 'react-materialize';
 import * as systemService from '../../../services/system-service';
+import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class ContactForm extends Component {
     constructor(props) {
@@ -63,11 +63,8 @@ export default class ContactForm extends Component {
             console.log("CONTACT ERROR");
             console.log(errors);
 
-            errors.name.map((error) => PubSub.publish('show-message', error));
-            errors.email.map((error) => PubSub.publish('show-message', error));
-            errors.subject.map((error) => PubSub.publish('show-message', error));
-            errors.message.map((error) => PubSub.publish('show-message', error));
-            errors.responseCaptcha.map((error) => PubSub.publish('show-message', error));
+            messagesPublisher.showMessage(...errors.name, ...errors.email,
+                ...errors.subject, ...errors.message, ...errors.responseCaptcha);
         }
         else {
             this.sendMessage();
@@ -84,7 +81,7 @@ export default class ContactForm extends Component {
 
                 if (statusCode === 200) {
                     console.log(response.data);
-                    console.log('Mensagem enviada com sucesso');
+                    messagesPublisher.showMessage(["Mensagem enviada com sucesso"]);
                 } 
                 else {
                     throw new Error(response.data);
@@ -98,7 +95,7 @@ export default class ContactForm extends Component {
 
                 this.setState({loading: false});
                 
-                PubSub.publish('show-message', "Ops... Parece que estamos com alguns problemas.");
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
             });
     }
 

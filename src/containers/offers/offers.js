@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import {browserHistory} from "react-router";
 import {Row, Col} from "react-materialize";
-import axios from "axios";
+import Notification from '../../components/util/notification/notification';
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import TextLoader from "../../components/util/text-loader/text-loader";
 import * as userInformationStore from "../../utils/user-information-store";
 import * as offerService from "../../services/offer-service";
+import * as messagesPublisher from "../../utils/messages-publisher";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -18,49 +19,32 @@ export default class Offers extends Component {
             categories: [],
             offset: 0,
             limit: 30,
-            loading: false
+            loadingOffers: false,
+            loadingCategories: false
         };
     }
 
     componentDidMount() {
-        this.getOffersAndCategories();
+        this.getOffers();
+        this.getOffersCategories();
     }
 
     getOffers() {
-        this.setState({loading: true});
+        this.setState({loadingOffers: true});
 
         offerService
             .getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
-                this.setState({loading: false});
+                this.setState({loadingOffers: false});
             })
             .catch((error) => {
                 console.log(error);
-                this.setState({loading: false});
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingOffers: false});
             })
-    }
-
-    getOffersAndCategories() {
-        this.setState({loading: true});
-
-        const requests = [
-            offerService.getOffers(this.state.limit, this.state.offset),
-            offerService.getOfferCategories()
-        ];
-
-        axios
-            .all(requests)
-            .then(axios.spread((offerResponse, categoryResponse) => {
-                this.treatOffersResponse(offerResponse);
-                this.treatOfferCategoriesResponse(categoryResponse);
-
-                this.setState({loading: false});
-            }))
-            .catch((error) => {
-                console.log(error);
-                this.setState({loading: false});
-            });
     }
 
     treatOffersResponse(response) {
@@ -75,6 +59,24 @@ export default class Offers extends Component {
         else {
             throw new Error(response.data);
         }
+    }
+
+    getOffersCategories() {
+        this.setState({loadingCategories: true});
+
+        offerService
+            .getOfferCategories()
+            .then((response) => {
+                this.treatOfferCategoriesResponse(response);
+                this.setState({loadingCategories: false});
+            })
+            .catch((error) => {
+                console.log(error);
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingCategories: false});
+            })
     }
 
     treatOfferCategoriesResponse(response) {
@@ -102,45 +104,42 @@ export default class Offers extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar
-                    amount={this.state.offers.length}
-                    redirectToPage={this.redirectToCreateOfferPage}
-                    buttonName="Divulgar"/>
+                {
+                    (this.state.offers.length) &&
+                    <AddBar amount={this.state.offers.length} 
+                        redirectToPage={this.redirectToCreateOfferPage}
+                         buttonName="Divulgar"/>
+                }
 
                 <Col s={12}>
                     <Row>
                         <div className="container">
 
-                            {
-                                (this.state.offers.length && this.state.categories.length) && 
                                 <Col s={12} m={3}>
-                                    <OfferFilter categories={this.state.categories}/>
+                                    {
+                                        (this.state.categories.length) && 
+                                        <OfferFilter categories={this.state.categories}/>
+                                    }
                                 </Col>
-                            }
 
                             <Col s={12} m={9}>
-                                {
-                                    (this.state.offers.length && this.state.categories.length) && 
-                                    <Row>
-                                        {/* Listagem das ofertas */}
-                                        <OfferList offers={this.state.offers}/>
-                                    </Row>
-                                }
-
                                 <Row>
+                                    {
+                                        /* Listagem das ofertas */
+                                        (this.state.offers.length) && 
+                                        <OfferList offers={this.state.offers}/>
+                                    }
+
                                     {/* Permite a busca de mais ofertas */}
                                     <p className="center-align">
-                                        <TextLoader
-                                            onClick={this
-                                            .moreOffers
-                                            .bind(this)}
-                                            loading={this.state.loading}/>
+                                        <TextLoader onClick={this.moreOffers.bind(this)} loading={this.state.loadingOffers}/>
                                     </p>
                                 </Row>
                             </Col>
                         </div>
                     </Row>
                 </Col>
+                <Notification/>
             </Row>
         )
     }
