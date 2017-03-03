@@ -6,7 +6,7 @@ export default class MainLayout extends Component {
     render() {
         return (
             <div className="moo-app">
-                <Header/>
+                <Header />
 
                 <main>
                     {this.props.children}

@@ -1,12 +1,14 @@
 import React, {Component} from "react";
 import GoogleMapReact from 'google-map-react';
 import {Row, Col} from "react-materialize";
-import axios from "axios";
+import Notification from '../../components/util/notification/notification';
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
+//import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import * as storeService from "../../services/store-service";
 import * as offerService from "../../services/offer-service";
+import * as messagesPublisher from "../../utils/messages-publisher";
 import "./store-detail.css";
 
 export default class StoreDetail extends Component {
@@ -18,7 +20,10 @@ export default class StoreDetail extends Component {
             categories: [],
             limit: 30,
             offset: 0,
-            center: {}
+            center: {},
+            loadingOffers: false,
+            loadingStores: false,
+            loadingCategories: false
         }
     }
 
@@ -37,42 +42,52 @@ export default class StoreDetail extends Component {
     }
 
     getOffers() {
-        this.setState({loading: true});
+        this.setState({loadingOffers: true});
 
         offerService
             .getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
-                this.setState({loading: false});
+                this.setState({loadingOffers: false});
             })
             .catch((error) => {
                 console.log(error);
-                this.setState({loading: false});
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingOffers: false});
             })
     }
 
-    getAllStoreInformations(storeId) {
-        this.setState({loading: true});
+    treatOffersResponse(response) {
+        const statusCode = response.status;
 
-        const requests = [
-            storeService.getStoreById(storeId),
-            offerService.getOffersByStore(storeId, this.state.limit, this.state.offset),
-            offerService.getOfferCategories()
-        ];
+        if (statusCode === 200) {
+            let offers = this.state.offers;
+            this.setState({
+                offers: offers.concat(response.data)
+            });
+        } 
+        else {
+            throw new Error(response.data);
+        }
+    }
 
-        axios
-            .all(requests)
-            .then(axios.spread((storeResponse, offerResponse, categoryResponse) => {
-                this.treatStoreResponse(storeResponse);
-                this.treatOffersResponse(offerResponse);
-                this.treatOfferCategoriesResponse(categoryResponse);
+    getStores(storeId) {
+        this.setState({loadingStores: true});
 
-                this.setState({loading: false});
-            }))
+        storeService.getStoreById(storeId)
+            .then((response) => {
+                this.treatStoreResponse(response);
+                this.setState({loadingStores: false});
+            })
             .catch((error) => {
                 console.log(error);
-                this.setState({loading: false});
-            });
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingStores: false});
+            })
     }
 
     treatStoreResponse(response) {
@@ -89,18 +104,28 @@ export default class StoreDetail extends Component {
                 }
             });
             console.log(this.state.store);
-        } else {}
+        } 
+        else {
+            throw new Error(response.data);
+        }
     }
 
-    treatOffersResponse(response) {
-        const statusCode = response.status;
+    getOffersCategories() {
+        this.setState({loadingCategories: true});
 
-        if (statusCode === 200) {
-            let offers = this.state.offers;
-            this.setState({
-                offers: offers.concat(response.data)
-            });
-        } else {}
+        offerService
+            .getOfferCategories()
+            .then((response) => {
+                this.treatOfferCategoriesResponse(response);
+                this.setState({loadingCategories: false});
+            })
+            .catch((error) => {
+                console.log(error);
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingCategories: false});
+            })
     }
 
     treatOfferCategoriesResponse(response) {
@@ -108,7 +133,10 @@ export default class StoreDetail extends Component {
 
         if (statusCode === 200) {
             this.setState({categories: response.data});
-        } else {}
+        } 
+        else {
+            throw new Error(response.data);
+        }
     }
 
     moreOffers() {
@@ -186,10 +214,12 @@ export default class StoreDetail extends Component {
                 <Col s={12}>
                     <div className="container">
                         <p className="center-align">
-                            <LoadMoreButton onClick={this.moreOffers.bind(this)}/>
+                            <LoadMoreButton loading={this.state.loadingOffers} onClick={this.moreOffers.bind(this)}/>
                         </p>
                     </div>
                 </Col>
+
+                <Notification/>
             </Row>
         )
     }

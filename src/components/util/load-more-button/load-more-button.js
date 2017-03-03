@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
+import Loader from "../loader/loader";
 import "./load-more-button.css";
 
 export default class LoadMoreButton extends Component {
     render() {
         return (
-            <a onClick={this.props.onClick} className='moo-loader-more'>
-                Carregar mais
-            </a>
+            this.props.loading ? <Loader /> :
+                <a onClick={this.props.onClick} className='moo-loader-more'>
+                    Carregar mais
+                </a>
         );
     }
 }

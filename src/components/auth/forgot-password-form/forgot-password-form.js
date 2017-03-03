@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
-import PubSub from 'pubsub-js';
 import Validator from 'Validator';
 import Notification from '../../util/notification/notification';
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
+import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class ForgotPasswordForm extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ export default class ForgotPasswordForm extends Component {
             console.log("FORGOT ERROR");
             console.log(errors);
 
-            errors.email.map((error) => PubSub.publish('show-message', error));
+            messagesPublisher.showMessage(...errors.email);
         } 
         else {
             this.sendEmail(data);
@@ -55,7 +55,8 @@ export default class ForgotPasswordForm extends Component {
 
                 if (statusCode === 200) {
                     console.log(response.data);
-                    PubSub.publish('show-message', 'Senha alterada com sucesso');
+
+                    messagesPublisher.showMessage(["Senha alterada com sucesso"]);
                 } 
                 else {
                     throw new Error(response.data);
@@ -67,7 +68,8 @@ export default class ForgotPasswordForm extends Component {
                 console.log(error);
 
                 this.setState({loading: false});
-                PubSub.publish('show-message', "Ops... Parece que estamos com alguns problemas");
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
             });
     }
 

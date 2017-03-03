@@ -141,8 +141,8 @@ export default class Offers extends Component {
                                 <p className="center-align">
                                     {
                                         /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                        (this.state.loadingOffers) ? <Loader />
-                                            : <LoadMoreButton onClick={this.moreOffers.bind(this)} />
+                                        <LoadMoreButton loading={this.state.loadingOffers} 
+                                            onClick={this.moreOffers.bind(this)} />
                                     }
                                 </p>
                             </Col>

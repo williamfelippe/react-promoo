@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
-import axios from "axios";
+import Notification from '../../../components/util/notification/notification';
+import Loader from "../../../components/util/loader/loader";
+import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
 import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
 import OfferList from "../../../components/offers/offer-list/offer-list";
-import StoreList from "../../../components/stores/store-list/store-list";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as userService from "../../../services/user-service";
 import * as offerService from "../../../services/offer-service";
-import * as storeService from "../../../services/store-service";
+import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -16,43 +17,37 @@ export default class UserProfile extends Component {
         this.state = {
             user: {},
             offers: [],
-            stores: [],
             limit: 10,
-            storeOffset: 0,
-            offerOffset: 0
+            offerOffset: 0,
+            loadingOffers: false,
+            loadingUser: false
         }
-
-        console.log('PARAM ID: ' + this.props.params.userId);
     }
 
     componentDidMount() {
-        this.getAllUserInformations();
-    }
-
-    getAllUserInformations() {
-        console.log('PARAM ID: ' + this.props.params.userId);
-
         const userId = (this.props.params.userId)
             ? this.props.params.userId
             : userInformationStore.getLoggedUserId();
-        console.log('ID: ' + userId);
 
-        const requests = [
-            userService.getUser(userId),
-            offerService.getOffersByUser(userId, this.state.limit, this.state.offerOffset),
-            storeService.getStoresByUser(userId, this.state.limit, this.state.storeOffset)
-        ];
+        this.getUser(userId);
+        this.getUserOffers(userId);
+    }
 
-        axios
-            .all(requests)
-            .then(axios.spread((userResponse, offerResponse, storeResponse) => {
-                this.treatUserResponse(userResponse);
-                this.treatOffersResponse(offerResponse);
-                this.treatStoresResponse(storeResponse);
-            }))
+    getUser(userId) {
+        this.setState({loadingUser: true});
+
+        userService.getUser(userId)
+            .then((response) => {
+                this.treatUserResponse(response);
+                this.setState({loadingUser: false});
+            })
             .catch((error) => {
                 console.log(error);
-            });
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingUser: false});
+            })
     }
 
     treatUserResponse(response) {
@@ -68,6 +63,24 @@ export default class UserProfile extends Component {
         }                
     }
 
+    getUserOffers(userId) {
+        this.setState({loadingOffers: true});
+
+        offerService
+            .getOffersByUser(userId, this.state.limit, this.state.offerOffset)
+            .then((response) => {
+                this.treatOffersResponse(response);
+                this.setState({loadingOffers: false});
+            })
+            .catch((error) => {
+                console.log(error);
+
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+
+                this.setState({loadingOffers: false});
+            })
+    }
+
     treatOffersResponse(response) {
         const statusCode = response.status;
 
@@ -80,22 +93,21 @@ export default class UserProfile extends Component {
         }        
     }
 
-    treatStoresResponse(response) {
-        const statusCode = response.status;
-
-        if (statusCode === 200) {
-            this.setState({stores: response.data});
-            console.log(this.state.stores);
-        }
-        else {
-            throw new Error(response.data);
-        }                
-    }
-
     render() {
         return (
             <Row>
-                <UserInfoHeader user={this.state.user}/>
+                {
+                    (this.state.user && this.state.user !== undefined) &&
+                        <UserInfoHeader user={this.state.user}/>
+                }
+
+                {
+                    /* Exibe uma imagem de "loading" */
+                    (this.state.loadingUser) && 
+                    <p className="center-align">
+                        <Loader />
+                    </p>
+                }
 
                 <div className="container">
                     <Row>
@@ -105,17 +117,18 @@ export default class UserProfile extends Component {
                             </h5>
 
                             <OfferList offers={this.state.offers}/>
-                        </Col>
 
-                        <Col s={12}>
-                            <h5 className="center-align">
-                                Lojas
-                            </h5>
-
-                            <StoreList stores={this.state.stores}/>
+                            <p className="center-align">
+                                {
+                                    /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
+                                    <LoadMoreButton loading={this.state.loadingOffers} 
+                                        onClick={this.moreOffers.bind(this)} />
+                                }
+                            </p>
                         </Col>
                     </Row>
                 </div>
+                <Notification />
             </Row>
         )
     }

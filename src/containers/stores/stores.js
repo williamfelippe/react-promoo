@@ -134,8 +134,8 @@ export default class Stores extends Component {
                                 <p className="center-align">
                                     {
                                         /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                        (this.state.loadingStore) ? <Loader />
-                                            : <LoadMoreButton onClick={this.moreStores.bind(this)} />
+                                        <LoadMoreButton loading={this.state.loadingOffers} 
+                                            onClick={this.moreOffers.bind(this)} />
                                     }
                                 </p>
                             </Col>
