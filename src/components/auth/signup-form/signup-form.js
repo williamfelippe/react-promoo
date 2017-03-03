@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
+import PubSub from 'pubsub-js';
 import Validator from 'Validator';
+import Notification from '../../util/notification/notification';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
@@ -54,8 +56,13 @@ export default class SignupForm extends Component {
         if (v.fails()) {
             //Inserir mensagem de erro
             const errors = v.getErrors();
+
             console.log("SIGNUP ERROR");
             console.log(errors);
+
+            errors.name.map((error) => PubSub.publish('show-message', error));
+            errors.email.map((error) => PubSub.publish('show-message', error));
+            errors.password.map((error) => PubSub.publish('show-message', error));
         }
         else {
             this.signup({
@@ -70,6 +77,7 @@ export default class SignupForm extends Component {
 
     signup(data) {
         this.setState({loading: true});
+
         loginService.signup(data)
             .then((response) => {
                 const statusCode = response.status;
@@ -91,7 +99,9 @@ export default class SignupForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
+
                 this.setState({loading: false});
+                PubSub.publish('show-message', "Ops... Parece que estamos com alguns problemas.");
             });
     }
 
@@ -101,23 +111,26 @@ export default class SignupForm extends Component {
             : <Loader />;
 
         return (
-            <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
-                <Row className="n-margin-bottom">
-                    <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
-                </Row>
+            <div>
+                <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
+                    <Row className="n-margin-bottom">
+                        <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
+                    </Row>
 
-                <Row className="n-margin-bottom">
-                    <Input s={12} type="email" label="E-mail"
-                           onChange={this.onChangeEmail.bind(this)}/>
-                </Row>
+                    <Row className="n-margin-bottom">
+                        <Input s={12} type="email" label="E-mail"
+                            onChange={this.onChangeEmail.bind(this)}/>
+                    </Row>
 
-                <Row className="n-margin-bottom">
-                    <Input s={12} type="password" label="Senha"
-                           onChange={this.onChangePassword.bind(this)}/>
-                </Row>
+                    <Row className="n-margin-bottom">
+                        <Input s={12} type="password" label="Senha"
+                            onChange={this.onChangePassword.bind(this)}/>
+                    </Row>
 
-                {submitButton}
-            </form>
+                    {submitButton}
+                </form>
+                <Notification/>
+            </div>
         )
     }
 }

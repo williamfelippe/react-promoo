@@ -1,17 +1,17 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
+import PubSub from 'pubsub-js';
 import Validator from 'Validator';
+import Notification from '../../util/notification/notification';
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
-import SnackBar from 'react-material-snackbar';
 
 export default class ForgotPasswordForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            showErrorMessage: false,
-            errorMessage: ''
+            loading: false
         };
     }
 
@@ -33,34 +33,42 @@ export default class ForgotPasswordForm extends Component {
         const v = Validator.make(data, rules)
 
         if (v.fails()) {
-            this.setState({
-                errorMessage: "Ops... Dê uma olhadinha no campo de e-mail",
-                showErrorMessage: true
-            });
-        }
+            const errors = v.getErrors();
+
+            console.log("FORGOT ERROR");
+            console.log(errors);
+
+            errors.email.map((error) => PubSub.publish('show-message', error));
+        } 
         else {
-            loginService
-                .forgotPassword(data)
-                .then((response) => {
-                    const statusCode = response.status;
-
-                    if (statusCode === 200) {
-                        console.log('Senha alterada com sucesso');
-                        console.log(response.data);
-                    }
-                    else {
-                        throw new Error(response.data);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-
-                    this.setState({
-                        errorMessage: "Ixi!! Talvez esteja ocorrendo algum probleminha conosco",
-                        showErrorMessage: true
-                    });
-                });
+            this.sendEmail(data);
         }
+    }
+
+    sendEmail(data) {
+        this.setState({loading: true});
+
+        loginService
+            .forgotPassword(data)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === 200) {
+                    console.log(response.data);
+                    PubSub.publish('show-message', 'Senha alterada com sucesso');
+                } 
+                else {
+                    throw new Error(response.data);
+                }
+
+                this.setState({loading: false});
+            })
+            .catch((error) => {
+                console.log(error);
+
+                this.setState({loading: false});
+                PubSub.publish('show-message', "Ops... Parece que estamos com alguns problemas");
+            });
     }
 
     render() {
@@ -72,13 +80,13 @@ export default class ForgotPasswordForm extends Component {
             <div>
                 <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
                     <Row>
-                        <Input s={12} type="email" 
-                            onChange={this.onChangeEmail.bind(this)} label="E-mail"/>
+                        <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)} label="E-mail"/>
                     </Row>
 
                     {submitButton}
                 </form>
-                <SnackBar actionText="fechar" show={this.state.showErrorMessage} snackBarText={this.state.errorMessage}  timer={2000} />
+
+                <Notification/>
             </div>
         )
     }

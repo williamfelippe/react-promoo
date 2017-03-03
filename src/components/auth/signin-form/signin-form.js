@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
+import PubSub from 'pubsub-js';
 import Validator from 'Validator';
+import Notification from '../../util/notification/notification';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import * as loginService from "../../../services/auth-service";
@@ -44,10 +46,13 @@ export default class SigninForm extends Component {
         const v = Validator.make(data, rules)
  
         if (v.fails()) {
-            //Inserir mensagem de erro
             const errors = v.getErrors();
+
             console.log("SIGNIN ERROR");
             console.log(errors);
+
+            errors.email.map((error) => PubSub.publish('show-message', error));
+            errors.password.map((error) => PubSub.publish('show-message', error));
         }
         else {
             this.signin({
@@ -64,6 +69,7 @@ export default class SigninForm extends Component {
         console.log(data);
 
         this.setState({loading: true});
+
         loginService.signin(data)
             .then((response) => {
                 const statusCode = response.status;
@@ -87,6 +93,8 @@ export default class SigninForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
+
+                PubSub.publish('show-message', "Ops... Parece que estamos com alguns problemas.");
                 this.setState({loading: false});
             });
     }
@@ -97,19 +105,22 @@ export default class SigninForm extends Component {
             : <Loader />;
 
         return (
-            <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
-                <Row className="n-margin-bottom">
-                    <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)}
-                           label="E-mail"/>
-                </Row>
+            <div>
+                <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
+                    <Row className="n-margin-bottom">
+                        <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)}
+                            label="E-mail"/>
+                    </Row>
 
-                <Row>
-                    <Input s={12} type="password" onChange={this.onChangePassword.bind(this)}
-                           label="Senha"/>
-                </Row>
+                    <Row>
+                        <Input s={12} type="password" onChange={this.onChangePassword.bind(this)}
+                            label="Senha"/>
+                    </Row>
 
-                {submitButton}
-            </form>
+                    {submitButton}
+                </form>
+                <Notification/>
+            </div>
         )
     }
 }
