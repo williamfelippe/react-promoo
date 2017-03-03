@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
-import Validator from 'Validator';
 import Notification from '../../util/notification/notification';
 import Loader from "../../util/loader/loader";
+import * as Validator from '../../../utils/validator';
 import * as loginService from "../../../services/auth-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -30,7 +30,7 @@ export default class ForgotPasswordForm extends Component {
             email: 'required|email'
         }
 
-        const v = Validator.make(data, rules)
+        const v = Validator.validate(data, rules)
 
         if (v.fails()) {
             const errors = v.getErrors();
