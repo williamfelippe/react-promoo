@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import _ from "lodash";
 import {Row, Col} from "react-materialize";
-import axios from "axios";
 import {browserHistory} from "react-router";
 import AddBar from "../../components/system/add-bar/add-bar";
 import StoreFilter from "../../components/stores/store-filter/store-filter";
 import StoreList from "../../components/stores/store-list/store-list";
-import TextLoader from "../../components/util/text-loader/text-loader";
+import Loader from "../../components/util/loader/loader";
+import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import * as userInformationStore from "../../utils/user-information-store";
 import * as storeService from "../../services/store-service";
 
@@ -19,49 +19,29 @@ export default class Stores extends Component {
             categories: [],
             limit: 30,
             offset: 0,
-            loading: false,
+            loadingStore: false,
+            loadingCategories: false,
             sortBy: ''
         };
     }
 
     componentDidMount() {
-        this.getStoresAndCategories();
+        this.getStores();
+        this.getCategories();
     }
 
     getStores() {
-        this.setState({loading: true});
+        this.setState({loadingStore: true});
 
         storeService.getStores(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatStoresResponse(response);
-                this.setState({loading: false});
+                this.setState({loadingStore: false});
             })
             .catch((error) => {
                 console.log(error);
-                this.setState({loading: false});
+                this.setState({loadingStore: false});
             })
-    }
-
-    getStoresAndCategories() {
-        this.setState({loading: true});
-
-        const requests = [
-            storeService.getStores(this.state.limit, this.state.offset),
-            storeService.getStoreCategories()
-        ];
-
-        axios
-            .all(requests)
-            .then(axios.spread((storeResponse, categoryResponse) => {
-                this.treatStoresResponse(storeResponse);
-                this.treatStoreCategoriesResponse(categoryResponse);
-
-                this.setState({loading: false});
-            }))
-            .catch((error) => {
-                console.log(error);
-                this.setState({loading: false});
-            });
     }
 
     treatStoresResponse(response) {
@@ -78,6 +58,20 @@ export default class Stores extends Component {
         else {
             throw new Error(response.data);
         }
+    }
+
+    getCategories() {
+        this.setState({loadingCategories: true});
+
+        storeService.getStoreCategories()
+            .then((response) => {
+                this.treatStoreCategoriesResponse(response);
+                this.setState({loadingCategories: false});
+            })
+            .catch((error) => {
+                console.log(error);
+                this.setState({loadingCategories: false});
+            })
     }
 
     treatStoreCategoriesResponse(response) {
@@ -122,28 +116,28 @@ export default class Stores extends Component {
                 <Col s={12}>
                     <Row>
                         <div className="container">
-                            {
-                                (this.state.stores.length && this.state.categories.length) && 
-                                <Col s={12} m={3}>
-                                    <StoreFilter categories={this.state.categories}/>
-                                </Col>
-                            }
+                            <Col s={12} m={3}>
+                                { this.state.categories.length && <StoreFilter categories={this.state.categories}/> }
+
+                                {
+                                    /* Exibe uma imagem de "loading" */
+                                    (this.state.loadingCategories) && <p className="center-align"><Loader /></p>
+                                }
+                            </Col>
 
                             <Col s={12} m={9}>
                                 {
-                                    (this.state.stores.length && this.state.categories.length) && 
-                                    <Row>
-                                        {/* Listagem das ofertas */}
-                                        <StoreList stores={this.state.stores}/>
-                                    </Row>
+                                    /* Listagem das ofertas */
+                                    this.state.stores.length && <StoreList stores={this.state.stores}/>
                                 }
 
-                                <Row>
-                                    {/* Permite a busca de mais ofertas */}
-                                    <p className="center-align">
-                                        <TextLoader onClick={this.moreStores.bind(this)} loading={this.state.loading}/>
-                                    </p>
-                                </Row>
+                                <p className="center-align">
+                                    {
+                                        /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
+                                        (this.state.loadingStore) ? <Loader />
+                                            : <LoadMoreButton onClick={this.moreStores.bind(this)} />
+                                    }
+                                </p>
                             </Col>
                         </div>
                     </Row>

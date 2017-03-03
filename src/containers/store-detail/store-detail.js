@@ -4,7 +4,7 @@ import {Row, Col} from "react-materialize";
 import axios from "axios";
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
-import TextLoader from "../../components/util/text-loader/text-loader";
+import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import * as storeService from "../../services/store-service";
 import * as offerService from "../../services/offer-service";
 import "./store-detail.css";
@@ -186,8 +186,7 @@ export default class StoreDetail extends Component {
                 <Col s={12}>
                     <div className="container">
                         <p className="center-align">
-                            <TextLoader onClick={this.moreOffers.bind(this)}
-                                loading={this.state.loading}/>
+                            <LoadMoreButton onClick={this.moreOffers.bind(this)}/>
                         </p>
                     </div>
                 </Col>

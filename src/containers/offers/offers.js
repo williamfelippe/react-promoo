@@ -5,7 +5,8 @@ import Notification from '../../components/util/notification/notification';
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
-import TextLoader from "../../components/util/text-loader/text-loader";
+import Loader from "../../components/util/loader/loader";
+import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import * as userInformationStore from "../../utils/user-information-store";
 import * as offerService from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
@@ -115,26 +116,35 @@ export default class Offers extends Component {
                     <Row>
                         <div className="container">
 
-                                <Col s={12} m={3}>
-                                    {
-                                        (this.state.categories.length) && 
-                                        <OfferFilter categories={this.state.categories}/>
-                                    }
-                                </Col>
+                            <Col s={12} m={3}>
+                                {
+                                    (this.state.categories.length) && 
+                                    <OfferFilter categories={this.state.categories}/>
+                                }
+
+                                {
+                                    /* Exibe uma imagem de "loading" */
+                                    (this.state.loadingCategories) && 
+                                    <p className="center-align">
+                                        <Loader />
+                                    </p>
+                                }
+                            </Col>
 
                             <Col s={12} m={9}>
-                                <Row>
-                                    {
-                                        /* Listagem das ofertas */
-                                        (this.state.offers.length) && 
-                                        <OfferList offers={this.state.offers}/>
-                                    }
+                                {
+                                    /* Listagem das ofertas */
+                                    (this.state.offers.length) && 
+                                    <OfferList offers={this.state.offers}/>
+                                }
 
-                                    {/* Permite a busca de mais ofertas */}
-                                    <p className="center-align">
-                                        <TextLoader onClick={this.moreOffers.bind(this)} loading={this.state.loadingOffers}/>
-                                    </p>
-                                </Row>
+                                <p className="center-align">
+                                    {
+                                        /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
+                                        (this.state.loadingOffers) ? <Loader />
+                                            : <LoadMoreButton onClick={this.moreOffers.bind(this)} />
+                                    }
+                                </p>
                             </Col>
                         </div>
                     </Row>
