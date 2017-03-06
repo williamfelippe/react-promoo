@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {browserHistory} from "react-router";
 import {Row, Col} from "react-materialize";
-import Notification from '../../components/util/notification/notification';
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
@@ -149,7 +148,6 @@ export default class Offers extends Component {
                         </div>
                     </Row>
                 </Col>
-                <Notification/>
             </Row>
         )
     }

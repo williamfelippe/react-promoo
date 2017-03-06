@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
-import Validator from 'Validator';
-import Notification from '../../util/notification/notification';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
+import * as Validator from '../../../utils/validator';
 import * as loginService from "../../../services/auth-service";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
@@ -40,20 +39,13 @@ export default class SigninForm extends Component {
 
         const rules = {
             email: 'required|email',
-            password: 'required|min:6'
+            password: 'min:6'
         }
 
-        const v = Validator.make(data, rules)
- 
-        if (v.fails()) {
-            const errors = v.getErrors();
+        const validator = Validator.validate(data, rules);
 
-            console.log("SIGNIN ERROR");
-            console.log(errors);
-
-            messagesPublisher.showMessage(...errors.email, ...errors.password);
-        }
-        else {
+        if(validator.passes())
+        {
             this.signin({
                 email: this.state.email,
                 password: CryptoJS.MD5(this.state.password).toString(),
@@ -61,12 +53,17 @@ export default class SigninForm extends Component {
                 device_token: ''
             });
         }
+        else {
+            const errors = validator.errors;
+
+            console.log("SIGNIN ERROR");
+            console.log(errors.all());
+
+            messagesPublisher.showMessage(...errors.get('email'), ...errors.get('password'));
+        }
     }
 
     signin(data) {
-        console.log('Signin');
-        console.log(data);
-
         this.setState({loading: true});
 
         loginService.signin(data)
@@ -108,7 +105,7 @@ export default class SigninForm extends Component {
             <div>
                 <form onSubmit={this.submit.bind(this)} className="col s12" noValidate>
                     <Row className="n-margin-bottom">
-                        <Input s={12} type="email" onChange={this.onChangeEmail.bind(this)}
+                        <Input s={12} type="email"  onChange={this.onChangeEmail.bind(this)}
                             label="E-mail"/>
                     </Row>
 
@@ -119,7 +116,6 @@ export default class SigninForm extends Component {
 
                     {submitButton}
                 </form>
-                <Notification/>
             </div>
         )
     }

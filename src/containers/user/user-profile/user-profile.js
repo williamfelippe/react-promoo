@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
-import Notification from '../../../components/util/notification/notification';
 import Loader from "../../../components/util/loader/loader";
 import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
 import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
@@ -128,7 +127,6 @@ export default class UserProfile extends Component {
                         </Col>
                     </Row>
                 </div>
-                <Notification />
             </Row>
         )
     }

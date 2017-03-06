@@ -1,10 +1,6 @@
-import Validator from 'Validator';
-
-const messages = {
-    'email': ':attribute não parece ser válido',
-    'required': 'Você esqueceu de preencher o campo :attribute'
-};
+import Validator from "validatorjs";
 
 export function validate(data, rules) {
-    return Validator.make(data, rules, messages);
+    Validator.useLang('pt');
+    return new Validator(data, rules);
 }

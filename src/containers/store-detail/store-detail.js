@@ -1,10 +1,8 @@
 import React, {Component} from "react";
 import GoogleMapReact from 'google-map-react';
 import {Row, Col} from "react-materialize";
-import Notification from '../../components/util/notification/notification';
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
-//import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import * as storeService from "../../services/store-service";
 import * as offerService from "../../services/offer-service";
@@ -218,8 +216,6 @@ export default class StoreDetail extends Component {
                         </p>
                     </div>
                 </Col>
-
-                <Notification/>
             </Row>
         )
     }

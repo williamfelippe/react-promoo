@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
-import Validator from 'Validator';
-import Notification from '../../util/notification/notification';
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
+import * as Validator from '../../../utils/validator';
 import * as loginService from "../../../services/auth-service";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
@@ -36,9 +35,6 @@ export default class SignupForm extends Component {
     submit(event) {
         event.preventDefault();
 
-        console.log('Registro enviado com sucesso');
-        console.log(this.state);
-
         const data = {
             name: this.state.name,
             email: this.state.email,
@@ -51,18 +47,10 @@ export default class SignupForm extends Component {
             password: 'required|min:6'
         }
 
-        const v = Validator.make(data, rules)
- 
-        if (v.fails()) {
-            //Inserir mensagem de erro
-            const errors = v.getErrors();
+        const validator = Validator.make(data, rules)
 
-            console.log("SIGNUP ERROR");
-            console.log(errors);
-
-            messagesPublisher.showMessage(...errors.name, ...errors.email, ...errors.password);
-        }
-        else {
+        if(validator.passes())
+        {
             this.signup({
                 name: this.state.name,
                 email: this.state.email,
@@ -70,6 +58,15 @@ export default class SignupForm extends Component {
                 device_type: 'web',
                 device_token: ''
             });
+        }
+        else {
+            //Inserir mensagem de erro
+            const errors = validator.errors;
+
+            console.log("SIGNUP ERROR");
+            console.log(errors);
+
+            messagesPublisher.showMessage(...errors.get('name'), ...errors.get('email'), ...errors.get('password'));
         }
     }
 
@@ -127,7 +124,6 @@ export default class SignupForm extends Component {
 
                     {submitButton}
                 </form>
-                <Notification/>
             </div>
         )
     }

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import Validator from 'Validator';
-import ReCAPTCHA from 'react-google-recaptcha';
-import Notification from '../../util/notification/notification';
-import Loader from "../../util/loader/loader";
 import {Row, Col, Input, Button} from 'react-materialize';
+import ReCAPTCHA from 'react-google-recaptcha';
+import Loader from "../../util/loader/loader";
+import * as Validator from '../../../utils/validator';
 import * as systemService from '../../../services/system-service';
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -54,20 +53,21 @@ export default class ContactForm extends Component {
             responseCaptcha: 'required'
         }
 
-        const v = Validator.make(this.state, rules)
+        const validator = Validator.make(this.state, rules)
 
-        if (v.fails()) {
+        if(validator.passes())
+        {
+            this.sendMessage();
+        }
+        else {
             //Inserir mensagem de erro
-            const errors = v.getErrors();
+            const errors = validator.errors;
 
             console.log("CONTACT ERROR");
             console.log(errors);
 
-            messagesPublisher.showMessage(...errors.name, ...errors.email,
-                ...errors.subject, ...errors.message, ...errors.responseCaptcha);
-        }
-        else {
-            this.sendMessage();
+            messagesPublisher.showMessage(...errors.get('name'), ...errors.get('email'),
+                ...errors.get('subject'), ...errors.get('message'), ...errors.get('responseCaptcha'));
         }
     }
 
@@ -144,7 +144,6 @@ export default class ContactForm extends Component {
 
                     {submitButton}
                 </form>
-                <Notification/>
             </div>
         )
     }

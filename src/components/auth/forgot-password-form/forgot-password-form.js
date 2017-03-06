@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
-import Notification from '../../util/notification/notification';
 import Loader from "../../util/loader/loader";
-import * as Validator from '../../../utils/validator';
+import * as Validator from "../../../utils/validator";
 import * as loginService from "../../../services/auth-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -30,19 +29,16 @@ export default class ForgotPasswordForm extends Component {
             email: 'required|email'
         }
 
-        const v = Validator.validate(data, rules)
+        const validator = Validator.validate(data, rules);
 
-        if (v.fails()) {
-            const errors = v.getErrors();
-
-            console.log("FORGOT ERROR");
-            console.log(errors);
-
-            messagesPublisher.showMessage(...errors.email);
-        } 
-        else {
+        if(validator.passes())
+        {
             this.sendEmail(data);
         }
+        else {
+            const errors = validator.errors;
+            messagesPublisher.showMessage(...errors.get('email'));
+        } 
     }
 
     sendEmail(data) {
@@ -55,7 +51,6 @@ export default class ForgotPasswordForm extends Component {
 
                 if (statusCode === 200) {
                     console.log(response.data);
-
                     messagesPublisher.showMessage(["Senha alterada com sucesso"]);
                 } 
                 else {
@@ -87,8 +82,6 @@ export default class ForgotPasswordForm extends Component {
 
                     {submitButton}
                 </form>
-
-                <Notification/>
             </div>
         )
     }
