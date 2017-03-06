@@ -21,7 +21,7 @@ export default class Contact extends Component {
                                 </p>
                             </Col>
                             <Col s={12} m={4}>
-                                <Link to="contact" className="waves-effect waves-light btn btn-large">
+                                <Link to="contato" className="waves-effect waves-light btn btn-large">
                                     Fale conosco
                                 </Link>
                             </Col>

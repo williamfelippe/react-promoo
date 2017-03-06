@@ -123,10 +123,7 @@ export default class Offers extends Component {
 
                                 {
                                     /* Exibe uma imagem de "loading" */
-                                    (this.state.loadingCategories) && 
-                                    <p className="center-align">
-                                        <Loader />
-                                    </p>
+                                    (this.state.loadingCategories) && <Loader />
                                 }
                             </Col>
 
@@ -137,13 +134,11 @@ export default class Offers extends Component {
                                     <OfferList offers={this.state.offers}/>
                                 }
 
-                                <p className="center-align">
-                                    {
-                                        /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                        <LoadMoreButton loading={this.state.loadingOffers} 
-                                            onClick={this.moreOffers.bind(this)} />
-                                    }
-                                </p>
+                                {
+                                    /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
+                                    <LoadMoreButton loading={this.state.loadingOffers} 
+                                        onClick={this.moreOffers.bind(this)} />
+                                }
                             </Col>
                         </div>
                     </Row>

@@ -19,7 +19,7 @@ export default class Stores extends Component {
             categories: [],
             limit: 30,
             offset: 0,
-            loadingStore: false,
+            loadingStores: false,
             loadingCategories: false,
             sortBy: ''
         };
@@ -31,16 +31,16 @@ export default class Stores extends Component {
     }
 
     getStores() {
-        this.setState({loadingStore: true});
+        this.setState({loadingStores: true});
 
         storeService.getStores(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatStoresResponse(response);
-                this.setState({loadingStore: false});
+                this.setState({loadingStores: false});
             })
             .catch((error) => {
                 console.log(error);
-                this.setState({loadingStore: false});
+                this.setState({loadingStores: false});
             })
     }
 
@@ -121,7 +121,7 @@ export default class Stores extends Component {
 
                                 {
                                     /* Exibe uma imagem de "loading" */
-                                    (this.state.loadingCategories) && <p className="center-align"><Loader /></p>
+                                    (this.state.loadingCategories) && <Loader />
                                 }
                             </Col>
 
@@ -131,13 +131,11 @@ export default class Stores extends Component {
                                     this.state.stores.length && <StoreList stores={this.state.stores}/>
                                 }
 
-                                <p className="center-align">
-                                    {
-                                        /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                        <LoadMoreButton loading={this.state.loadingOffers} 
-                                            onClick={this.moreOffers.bind(this)} />
-                                    }
-                                </p>
+                                {
+                                    /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
+                                    <LoadMoreButton loading={this.state.loadingStores} 
+                                        onClick={this.moreStores.bind(this)} />
+                                }
                             </Col>
                         </div>
                     </Row>

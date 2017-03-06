@@ -6,9 +6,11 @@ export default class LoadMoreButton extends Component {
     render() {
         return (
             this.props.loading ? <Loader /> :
+            <p className="center-align m-t-20">
                 <a onClick={this.props.onClick} className='moo-loader-more'>
                     Carregar mais
                 </a>
+            </p>
         );
     }
 }

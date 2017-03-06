@@ -140,7 +140,7 @@ export default class OfferItem extends Component {
                 </div>
 
                 <div>
-                    <Link to={`user-detail/${offer.user._id}`} className="avatar">
+                    <Link to={`detalhes-usuario/${offer.user._id}`} className="avatar">
                         <div className="right valign-wrapper">
                             <ImageWrapper src={offer.user.photo} alt={offer.user.name}
                                          className="circle responsive-img right"/>

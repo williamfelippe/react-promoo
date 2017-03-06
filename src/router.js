@@ -31,33 +31,33 @@ export default(
     <Router history={browserHistory}>
         <Route component={MainLayout}>
             <Route path="/" component={Home}/>
-            <Route path="about" component={About}/>
-            <Route path="contact" component={Contact}/>
-            <Route path="signup" component={Signup}/>
-            <Route path="signin" component={Signin}/>
-            <Route path="forgot-password" component={ForgotPassword}/>
-            <Route path="terms" component={Terms}/>
-            <Route path="user-detail/:userId" component={UserProfile}/>
+            <Route path="sobre" component={About}/>
+            <Route path="contato" component={Contact}/>
+            <Route path="registrar" component={Signup}/>
+            <Route path="entrar" component={Signin}/>
+            <Route path="esqueci-a-senha" component={ForgotPassword}/>
+            <Route path="termos-de-uso" component={Terms}/>
+            <Route path="detalhes-usuario/:userId" component={UserProfile}/>
 
             <Route path="dashboard">
                 <Route component={DashboardLayout}>
 
                     <IndexRoute component={Offers}/>
 
-                    <Route path="offers" component={Offers}/>
-                    <Route path="stores" component={Stores}/>
-                    <Route path="store/:storeId" component={StoreDetail}/>
-                    <Route path="create-offer" component={CreateOffer}/>
-                    <Route path="create-store" component={CreateStore}/>
+                    <Route path="ofertas" component={Offers}/>
+                    <Route path="lojas" component={Stores}/>
+                    <Route path="loja/:storeId" component={StoreDetail}/>
+                    <Route path="criar-oferta" component={CreateOffer}/>
+                    <Route path="criar-loja" component={CreateStore}/>
 
-                    <Route path="user">
+                    <Route path="usuario">
                         <Route component={UserLayout}>
                             <IndexRoute component={UserProfile}/>
 
-                            <Route path="user-profile" component={UserProfile}/>
-                            <Route path="edit-avatar" component={EditAvatar}/>
-                            <Route path="edit-email" component={EditEmail}/>
-                            <Route path="edit-password" component={EditPassword}/>
+                            <Route path="perfil-usuario" component={UserProfile}/>
+                            <Route path="editar-avatar" component={EditAvatar}/>
+                            <Route path="editar-email" component={EditEmail}/>
+                            <Route path="editar-senha" component={EditPassword}/>
                         </Route>
                     </Route>
                 </Route>

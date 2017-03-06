@@ -11,5 +11,7 @@
         <li>Faltando criação de oferta e loja <i>(pensando uma maneira intuitiva, rápida e bonita de fazer)</i></li>
 
         <li>Falta criar filtragem das ofertas e lojas</li>
+
+        <li>Melhorar mensagens de erro</li>
     </ul>
 </p>

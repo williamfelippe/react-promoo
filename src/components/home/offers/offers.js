@@ -52,7 +52,7 @@ export default class Offers extends Component {
                             Economize
                         </h2>
 
-                        <p className="center-align">
+                        <p className="center-align m-b-40">
                             Encontre promoções nos estabelecimentos mais próximos de você
                         </p>
                         

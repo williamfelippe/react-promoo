@@ -25,14 +25,14 @@ export default class Signin extends Component {
                             <Row>
                                 <Col s={12} m={5}>
                                     <p className="messages">
-                                        <Link to="forgot-password">
+                                        <Link to="esqueci-a-senha">
                                             Esqueceu sua senha?
                                         </Link>
                                     </p>
                                 </Col>
                                 <Col s={12} m={7}>
                                     <p className="messages">
-                                        Não é registrado? <Link to="signup">Registre-se</Link>
+                                        Não é registrado? <Link to="registrar">Registre-se</Link>
                                     </p>
                                 </Col>
                             </Row>

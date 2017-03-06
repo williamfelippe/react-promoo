@@ -92,6 +92,11 @@ export default class UserProfile extends Component {
         }        
     }
 
+    moreUserOffers() {
+        this.setState({offset: this.state.limit});
+        this.getUserOffers(this.state.user._id);
+    }
+
     render() {
         return (
             <Row>
@@ -121,7 +126,7 @@ export default class UserProfile extends Component {
                                 {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
                                     <LoadMoreButton loading={this.state.loadingOffers} 
-                                        onClick={this.moreOffers.bind(this)} />
+                                        onClick={this.moreUserOffers.bind(this)} />
                                 }
                             </p>
                         </Col>

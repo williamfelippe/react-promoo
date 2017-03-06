@@ -1,4 +1,8 @@
 /* Últimas ofertas */
+.moo-home-last-offers {
+  margin-bottom: 40px;
+}
+
 .moo-home-last-offers h2 {
   display: table;
   white-space: nowrap;
