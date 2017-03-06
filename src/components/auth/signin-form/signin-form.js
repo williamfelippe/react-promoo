@@ -33,14 +33,14 @@ export default class SigninForm extends Component {
         const data = {
             email: this.state.email,
             password: this.state.password
-        }
+        };
 
         console.log(data);
 
         const rules = {
             email: 'required|email',
             password: 'min:6'
-        }
+        };
 
         const validator = Validator.validate(data, rules);
 

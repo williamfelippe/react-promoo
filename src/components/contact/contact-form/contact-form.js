@@ -6,6 +6,8 @@ import * as Validator from '../../../utils/validator';
 import * as systemService from '../../../services/system-service';
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
+const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
+
 export default class ContactForm extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +53,7 @@ export default class ContactForm extends Component {
             subject: 'required|min:4',
             message: 'required',
             responseCaptcha: 'required'
-        }
+        };
 
         const validator = Validator.validate(this.state, rules);
 
@@ -100,8 +102,6 @@ export default class ContactForm extends Component {
     }
 
     render() {
-        const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
-
         const submitButton = (!this.state.loading)
             ? <Button type='submit' waves='light' className="m-t-20 w-100">Enviar</Button>
             : <Loader />;

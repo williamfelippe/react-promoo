@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact from "google-map-react";
 import {Row, Col} from "react-materialize";
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
@@ -36,14 +36,15 @@ export default class StoreDetail extends Component {
     componentDidMount() {
         const {storeId} = this.props.params;
 
-        this.getAllStoreInformations(storeId);
+        this.getStores(storeId);
+        this.getOffers(storeId);
+        this.getOffersCategories();
     }
 
-    getOffers() {
+    getOffers(store) {
         this.setState({loadingOffers: true});
 
-        offerService
-            .getOffers(this.state.limit, this.state.offset)
+        offerService.getOffersByStore(store, this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loadingOffers: false});
@@ -65,7 +66,7 @@ export default class StoreDetail extends Component {
             this.setState({
                 offers: offers.concat(response.data)
             });
-        } 
+        }
         else {
             throw new Error(response.data);
         }
@@ -102,7 +103,7 @@ export default class StoreDetail extends Component {
                 }
             });
             console.log(this.state.store);
-        } 
+        }
         else {
             throw new Error(response.data);
         }
@@ -131,7 +132,7 @@ export default class StoreDetail extends Component {
 
         if (statusCode === 200) {
             this.setState({categories: response.data});
-        } 
+        }
         else {
             throw new Error(response.data);
         }
@@ -169,12 +170,9 @@ export default class StoreDetail extends Component {
         return (
             <Row className="moo-store-detail">
                 <Col s={12} className="map-wrapper">
-                    <GoogleMapReact
-                        defaultCenter={this.props.center}
-                        center={this.state.center}
-                        defaultZoom={this.props.zoom}
-                        options={mapOptions}>
-                    </GoogleMapReact>
+                    <GoogleMapReact defaultCenter={this.props.center}
+                                    center={this.state.center} defaultZoom={this.props.zoom}
+                                    options={mapOptions} />
                 </Col>
 
                 <Col s={12}>
@@ -182,7 +180,7 @@ export default class StoreDetail extends Component {
                         {
                             store.logo &&
                             <div className="store-image circle">
-                                <ImageWrapper src={store.logo} alt={store.name} className="circle"/>   
+                                <ImageWrapper src={store.logo} alt={store.name} className="circle"/>
                             </div>
                         }
 
@@ -206,14 +204,8 @@ export default class StoreDetail extends Component {
                 <Col s={12}>
                     <div className="container">
                         <OfferList offers={this.state.offers}/>
-                    </div>
-                </Col>
 
-                <Col s={12}>
-                    <div className="container">
-                        <p className="center-align">
-                            <LoadMoreButton loading={this.state.loadingOffers} onClick={this.moreOffers.bind(this)}/>
-                        </p>
+                        <LoadMoreButton loading={this.state.loadingOffers} onClick={this.moreOffers.bind(this)}/>
                     </div>
                 </Col>
             </Row>

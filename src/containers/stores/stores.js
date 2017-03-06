@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import _ from "lodash";
 import {Row, Col} from "react-materialize";
 import {browserHistory} from "react-router";
 import AddBar from "../../components/system/add-bar/add-bar";
@@ -21,7 +20,6 @@ export default class Stores extends Component {
             offset: 0,
             loadingStores: false,
             loadingCategories: false,
-            sortBy: ''
         };
     }
 
@@ -96,22 +94,14 @@ export default class Stores extends Component {
             : 'signin');
     }
 
-    sortStores() {
-        const {sortBy} = this.state;
-
-        if (sortBy !== '' || sortBy !== undefined) {
-            let stores = this.state.stores;
-            stores = _.sortBy(stores, ['created_at']);
-
-            this.setState({stores: stores});
-        }
-    }
-
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateOffer}
-                        buttonName="Indicar"/>
+                {
+                    this.state.stores.length &&
+                    <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateOffer}
+                            buttonName="Indicar"/>
+                }
 
                 <Col s={12}>
                     <Row>
@@ -133,8 +123,8 @@ export default class Stores extends Component {
 
                                 {
                                     /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                    <LoadMoreButton loading={this.state.loadingStores} 
-                                        onClick={this.moreStores.bind(this)} />
+                                    <LoadMoreButton loading={this.state.loadingStores}
+                                                    onClick={this.moreStores.bind(this)}/>
                                 }
                             </Col>
                         </div>

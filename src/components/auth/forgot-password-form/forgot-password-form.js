@@ -27,7 +27,7 @@ export default class ForgotPasswordForm extends Component {
 
         const rules = {
             email: 'required|email'
-        }
+        };
 
         const validator = Validator.validate(data, rules);
 

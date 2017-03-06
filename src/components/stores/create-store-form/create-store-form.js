@@ -1,75 +1,61 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {Row, Col, Input, Button} from 'react-materialize';
-import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete'
+import Geosuggest from 'react-geosuggest';
+
+const ESTABLISHMENT = 'establishment';
+const ADDRESS = 'geocode';
 
 export default class CreateStoreForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {address: ''};
+        this.state = {location: {}, name: '', typeOfLocation: ESTABLISHMENT};
     }
 
-    onChangeName(event) {
-        this.setState({name: event.target.value});
-    }
-
-    onChangePlace(address) {
-        this.setState({address: address});
+    onSuggestSelect(suggest) {
+        console.log(suggest);
     }
 
     submit(event) {
         event.preventDefault();
-
-        const address = this.state.address;
-        geocodeByAddress(address, (err, {lat, lng}, results) => {
-            if (err) {
-                console.log('Oh no!', err);
-            }
-
-            console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng});
-            console.log('Entire payload from Google API', results);
-        });
     }
 
     render() {
-        const options = {
-            types: ['address'],
-            componentRestrictions: {'country': 'br'}
-        };
+        const title = this.state.typeOfLocation === ESTABLISHMENT ?
+            "Procure a loja" : "Procure o endereço";
 
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12 m8 offset-m2">
-                <Row>
-                    { /* Endereço da loja */ }
-                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                        options={options} hideLabel placeholder="">
-                        <Input s={12} label="Onde fica essa loja?" />
-                    </PlacesAutocomplete>
-                </Row>
+                <div className="container">
+                    <Row>
+                        <Col s={12}>
 
-                { /* Nome da loja */ }
-                <Row>
-                    <Input s={12} label="Nome da loja" onChange={this.onChangeName.bind(this)}/>
-                </Row>
+                            <Geosuggest types={this.state.typeOfLocation}
+                                        country="br" placeholder={title}
+                                        onSuggestSelect={this.onSuggestSelect}/>
 
-                <Row>
-                    <Col s={12}>
-                        {/*
-                         <div className="file-field input-field">
-                         <div className="btn">
-                         <span>Imagem</span>
-                         <input type="file">
-                         </div>
-                         <div className="file-path-wrapper">
-                         <input className="file-path validate" type="text">
-                         </div>
-                         </div>
-                         */}
-                    </Col>
-                </Row>
+                            {
+                                this.state.typeOfLocation === ESTABLISHMENT &&
+                                <a onClick={() => this.setState({typeOfLocation: ADDRESS})} className="center-align">
+                                    <small>
+                                        Não encontrei a loja
+                                    </small>
+                                </a>
+                            }
+                        </Col>
 
-                <Button type="submit" waves="light">
-                    Indicar
-                </Button>
+                        {
+                            this.state.location && this.state.typeOfLocation === ADDRESS &&
+                            <Input s={12} type="name" label="Qual o nome dessa loja?"
+                                   onChange={this.onChangeName.bind(this)}/>
+                        }
+
+                        <Col s={12}>
+                            <Button waves="light">
+                                Indicar
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
             </form>
         )
     }

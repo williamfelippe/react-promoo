@@ -7,7 +7,6 @@ import './banner.css';
 
 export default class Banner extends Component {
     createOffer() {
-        console.log('Logado: ' + userInformationStore.isLoggedIn());
         browserHistory.push((userInformationStore.isLoggedIn())
             ? 'dashboard/criar_oferta'
             : 'entrar');

@@ -21,12 +21,12 @@ export default class Apps extends Component {
                                 <ul>
                                     <li>
                                         <a href="#" target="_blank">
-                                            <span className="play"></span>
+                                            <span className="play" />
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#" target="_blank">
-                                            <span className="app"></span>
+                                            <span className="app" />
                                         </a>
                                     </li>
                                 </ul>
