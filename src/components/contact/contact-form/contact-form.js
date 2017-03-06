@@ -53,7 +53,7 @@ export default class ContactForm extends Component {
             responseCaptcha: 'required'
         }
 
-        const validator = Validator.make(this.state, rules)
+        const validator = Validator.validate(this.state, rules);
 
         if(validator.passes())
         {

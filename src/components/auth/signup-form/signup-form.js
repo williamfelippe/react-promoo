@@ -47,7 +47,7 @@ export default class SignupForm extends Component {
             password: 'required|min:6'
         }
 
-        const validator = Validator.make(data, rules)
+        const validator = Validator.validate(data, rules);
 
         if(validator.passes())
         {
