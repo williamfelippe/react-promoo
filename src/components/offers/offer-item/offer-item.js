@@ -7,6 +7,7 @@ import * as dateFormat from "../../../utils/date-format";
 import * as currencyFormat from "../../../utils/currency-format";
 import * as offerService from "../../../services/offer-service";
 import * as userInformationStore from "../../../utils/user-information-store";
+import avatar from '../../../../public/images/default_avatar.png';
 import "./offer-item.css";
 
 export default class OfferItem extends Component {
@@ -142,7 +143,7 @@ export default class OfferItem extends Component {
                 <div>
                     <Link to={`detalhes-usuario/${offer.user._id}`} className="avatar">
                         <div className="right valign-wrapper">
-                            <ImageWrapper src={offer.user.photo} alt={offer.user.name}
+                            <ImageWrapper placeholder={avatar} src={offer.user.photo} alt={offer.user.name}
                                          className="circle responsive-img right"/>
 
                             <p className="right">

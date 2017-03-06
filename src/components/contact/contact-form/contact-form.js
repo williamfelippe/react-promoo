@@ -57,16 +57,12 @@ export default class ContactForm extends Component {
 
         const validator = Validator.validate(this.state, rules);
 
-        if(validator.passes())
-        {
+        if(validator.passes()) {
             this.sendMessage();
         }
         else {
             //Inserir mensagem de erro
             const errors = validator.errors;
-
-            console.log("CONTACT ERROR");
-            console.log(errors);
 
             messagesPublisher.showMessage(...errors.get('name'), ...errors.get('email'),
                 ...errors.get('subject'), ...errors.get('message'), ...errors.get('responseCaptcha'));
@@ -92,11 +88,7 @@ export default class ContactForm extends Component {
                 this.setState({loading: false});
             })
             .catch((error) => {
-                console.log('CONTACT');
-                console.log(error);
-
                 this.setState({loading: false});
-                
                 messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
             });
     }
