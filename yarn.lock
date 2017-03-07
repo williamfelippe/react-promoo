@@ -1610,6 +1610,10 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
+detect-passive-events@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/detect-passive-events/-/detect-passive-events-1.0.2.tgz#0e39d7b675907eff55b8965f5be3fc0b0f4178b9"
+
 detect-port@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/detect-port/-/detect-port-1.0.1.tgz#3e1aa6a7ff6677bb60894b291172529d880c1e85"
@@ -4387,6 +4391,14 @@ react-scripts@0.8.5:
   optionalDependencies:
     fsevents "1.0.14"
 
+react-scroll-up@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-scroll-up/-/react-scroll-up-1.2.1.tgz#6fffff6e2b78a741d1cc1d3983384502dbef3c1c"
+  dependencies:
+    detect-passive-events "^1.0.0"
+    object-assign "^4.0.1"
+    tween-functions "^1.1.0"
+
 react@15.4.2, react@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
@@ -5084,6 +5096,10 @@ tty-browserify@0.0.0:
 tunnel-agent@~0.4.1:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/tunnel-agent/-/tunnel-agent-0.4.3.tgz#6373db76909fe570e08d73583365ed828a74eeeb"
+
+tween-functions@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tween-functions/-/tween-functions-1.2.0.tgz#1ae3a50e7c60bb3def774eac707acbca73bbc3ff"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"

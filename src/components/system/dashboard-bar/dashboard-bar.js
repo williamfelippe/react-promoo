@@ -35,7 +35,7 @@ export default class DashboardBar extends Component {
                                         </Link>
                                     </li>
                                     <li className={!isLoggedIn ? 'hide' : ''}>
-                                        <Link to="dashboard/usuario" activeClassName="active">
+                                        <Link to="dashboard/usuario/perfil-usuario" activeClassName="active">
                                             <div className="hide-on-med-and-down">
                                                 Para mim
                                             </div>

@@ -24,7 +24,7 @@ export default class StoreItem extends Component {
 
         return (
             <CardPanel className="moo-store-card">
-                <Link to={`dashboard/store/${store._id}`}>
+                <Link to={`dashboard/loja/${store._id}`}>
                     <div className="right-align category">
                         {
                             /* Categoria */

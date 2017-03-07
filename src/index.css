@@ -184,3 +184,11 @@ h1, h2, h3, h4, h5, h6 {
 .moo-logo-text h4:hover span {
     color: rgba(255, 83, 83, 1);
 }
+
+.moo-scroll-up-button {
+    background-color: rgba(255, 83, 83, 0.8) !important;
+}
+
+.moo-scroll-up-button:hover {
+    background-color: rgba(255, 83, 83, 1) !important;
+}

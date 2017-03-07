@@ -8,13 +8,13 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <Banner />
+                <Banner/>
 
-                <Offers />
+                <Offers/>
 
-                <Contact />
+                <Contact/>
 
-                <Apps />
+                <Apps/>
             </div>
         )
     }
