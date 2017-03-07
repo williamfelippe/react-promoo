@@ -44,7 +44,7 @@ export default class Offers extends Component {
                 messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
 
                 this.setState({loadingOffers: false});
-            })
+            });
     }
 
     treatOffersResponse(response) {
@@ -76,7 +76,7 @@ export default class Offers extends Component {
                 messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
 
                 this.setState({loadingCategories: false});
-            })
+            });
     }
 
     treatOfferCategoriesResponse(response) {
@@ -97,7 +97,7 @@ export default class Offers extends Component {
 
     redirectToCreateOfferPage() {
         browserHistory.push((userInformationStore.isLoggedIn())
-            ? 'dashboard/create-offer'
+            ? 'dashboard/criar-oferta'
             : 'signin');
     }
 
@@ -105,7 +105,7 @@ export default class Offers extends Component {
         return (
             <Row className="m-b-40">
                 {
-                    (this.state.offers.length) &&
+                    (this.state.offers.length > 0) &&
                     <AddBar amount={this.state.offers.length} 
                         redirectToPage={this.redirectToCreateOfferPage}
                          buttonName="Divulgar"/>
@@ -117,7 +117,7 @@ export default class Offers extends Component {
 
                             <Col s={12} m={3}>
                                 {
-                                    (this.state.categories.length) && 
+                                    (this.state.categories.length > 0) && 
                                     <OfferFilter categories={this.state.categories}/>
                                 }
 
@@ -130,7 +130,7 @@ export default class Offers extends Component {
                             <Col s={12} m={9}>
                                 {
                                     /* Listagem das ofertas */
-                                    (this.state.offers.length) && 
+                                    (this.state.offers.length > 0) && 
                                     <OfferList offers={this.state.offers}/>
                                 }
 

@@ -3,9 +3,10 @@ export function format(value) {
 }
 
 function configure(value, n, x, s, c) {
-    let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0
+    const re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0
         ? '\\D'
         : '$') + ')';
+
     let num = value.toFixed(Math.max(0, ~~ n));
 
     return (c

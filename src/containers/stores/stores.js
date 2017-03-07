@@ -107,7 +107,7 @@ export default class Stores extends Component {
                     <Row>
                         <div className="container">
                             <Col s={12} m={3}>
-                                { this.state.categories.length && <StoreFilter categories={this.state.categories}/> }
+                                { this.state.categories.length > 0 && <StoreFilter categories={this.state.categories}/> }
 
                                 {
                                     /* Exibe uma imagem de "loading" */
@@ -118,7 +118,7 @@ export default class Stores extends Component {
                             <Col s={12} m={9}>
                                 {
                                     /* Listagem das ofertas */
-                                    this.state.stores.length && <StoreList stores={this.state.stores}/>
+                                    this.state.stores.length > 0 && <StoreList stores={this.state.stores}/>
                                 }
 
                                 {
