@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {browserHistory} from 'react-router';
 import {Row, Col, Input, Button, Icon, Modal} from 'react-materialize';
 import * as offerService from '../../../services/offer-service';
 import * as userInformationStore from '../../../utils/user-information-store';
@@ -13,10 +12,6 @@ export default class OfferReportButton extends Component {
             subject: '',
             message: '',
         };
-    }
-
-    componentDidMount() {
-        if(!userInformationStore.isLoggedIn()) browserHistory.push('entrar');
     }
 
     onChangeSubject(event) {

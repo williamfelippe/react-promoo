@@ -28,19 +28,20 @@ export default class CreateStoreForm extends Component {
                 <div className="container">
                     <Row>
                         <Col s={12}>
-
-                            <Geosuggest types={this.state.typeOfLocation}
+                            <Geosuggest types={[this.state.typeOfLocation]}
                                         country="br" placeholder={title}
                                         onSuggestSelect={this.onSuggestSelect}/>
 
-                            {
-                                this.state.typeOfLocation === ESTABLISHMENT &&
-                                <a onClick={() => this.setState({typeOfLocation: ADDRESS})} className="center-align">
-                                    <small>
-                                        Não encontrei a loja
-                                    </small>
-                                </a>
-                            }
+                            <p className="center-align">
+                                {
+                                    this.state.typeOfLocation === ESTABLISHMENT &&
+                                    <a onClick={() => this.setState({typeOfLocation: ADDRESS})}>
+                                        <small>
+                                            Não encontrei a loja
+                                        </small>
+                                    </a>
+                                }
+                            </p>
                         </Col>
 
                         {
@@ -50,7 +51,7 @@ export default class CreateStoreForm extends Component {
                         }
 
                         <Col s={12}>
-                            <Button waves="light">
+                            <Button waves="light" className="w-100">
                                 Indicar
                             </Button>
                         </Col>

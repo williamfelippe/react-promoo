@@ -135,7 +135,7 @@ export default class OfferItem extends Component {
                             </a>
                         </li>
                         <li>
-                            <OfferReportButton/>
+                            {userInformationStore.isLoggedIn() && <OfferReportButton/>}
                         </li>
                     </ul>
                 </div>

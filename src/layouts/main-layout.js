@@ -14,7 +14,7 @@ export default class MainLayout extends Component {
                     <Notification/>
                 </main>
 
-                <Footer/>
+                <Footer />
             </div>
         )
     }

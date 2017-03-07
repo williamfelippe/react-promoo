@@ -35,8 +35,6 @@ export default class SigninForm extends Component {
             password: this.state.password
         };
 
-        console.log(data);
-
         const rules = {
             email: 'required|email',
             password: 'min:6'
@@ -55,10 +53,6 @@ export default class SigninForm extends Component {
         }
         else {
             const errors = validator.errors;
-
-            console.log("SIGNIN ERROR");
-            console.log(errors.all());
-
             messagesPublisher.showMessage(...errors.get('email'), ...errors.get('password'));
         }
     }
