@@ -6,12 +6,16 @@
 
 <p>
     <ul>
-        <li>Faltando alertas de erro <i>(em progresso)</i></li>
-
         <li>Faltando criação de oferta e loja <i>(pensando uma maneira intuitiva, rápida e bonita de fazer)</i></li>
 
         <li>Falta criar filtragem das ofertas e lojas</li>
 
         <li>Melhorar mensagens de erro</li>
+
+        <li>Produzir textos</li>
+
+        <li>Testar</li>
+        
+        <li>Renderização no servidor</li>
     </ul>
 </p>
