@@ -10,8 +10,6 @@
 
         <li>Falta criar filtragem das ofertas e lojas</li>
 
-        <li>Melhorar mensagens de erro</li>
-
         <li>Produzir textos</li>
 
         <li>Testar</li>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button} from 'react-materialize';
 import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
+import * as Validator from '../../../utils/validator';
 
 export default class StoreFilter extends Component {
     constructor(props) {
@@ -33,6 +34,17 @@ export default class StoreFilter extends Component {
         this.setState({address: address});
     }
 
+    onSelectPlace() {
+        const address = this.state.address;
+        geocodeByAddress(address, (err, {lat, lng}) => {
+            if (err) {
+                console.log('Oh no!', err);
+            }
+
+            this.setState({addressLocation: {lat: lat, lng: lng}});
+        });
+    }
+
     cleanFilter() {
         this.setState = {
             name: '',
@@ -44,14 +56,29 @@ export default class StoreFilter extends Component {
     }
 
     filter() {
-        const address = this.state.address;
-        geocodeByAddress(address, (err, {lat, lng}) => {
-            if (err) {
-                console.log('Oh no!', err);
-            }
+        this.onSelectPlace();
 
-            this.setState({addressLocation: {lat: lat, lng: lng}});
-        });
+        const data = {
+            nome: this.state.name,
+            endereco: this.state.address,
+            categorias: this.state.checkedCategories,
+        };
+
+        const rules = {
+            nome: 'min:1',
+            endereco: 'min:1',
+            categorias: 'array',
+        };
+
+        const validator = Validator.validate(this.state, rules);
+
+        if(validator.passes()) {
+            console.log("It works");
+        }
+        else {
+            //Inserir mensagem de erro
+            const errors = validator.errors;
+        }
     }
 
     render() {
@@ -69,7 +96,7 @@ export default class StoreFilter extends Component {
             );
 
         const options = {
-            types: ['address, establishment'],
+            types: ['address'],
             componentRestrictions: {'country': 'br'}
         };
 

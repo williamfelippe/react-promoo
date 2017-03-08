@@ -32,12 +32,12 @@ export default class SigninForm extends Component {
 
         const data = {
             email: this.state.email,
-            password: this.state.password
+            senha: this.state.password
         };
 
         const rules = {
             email: 'required|email',
-            password: 'min:6'
+            senha: 'min:6'
         };
 
         const validator = Validator.validate(data, rules);
@@ -53,7 +53,7 @@ export default class SigninForm extends Component {
         }
         else {
             const errors = validator.errors;
-            messagesPublisher.showMessage(...errors.get('email'), ...errors.get('password'));
+            messagesPublisher.showMessage(...errors.get('email'), ...errors.get('senha'));
         }
     }
 

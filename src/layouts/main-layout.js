@@ -12,8 +12,8 @@ export default class MainLayout extends Component {
                 <Header/>
 
                 <main>
-                    {this.props.children}
                     <Notification/>
+                    {this.props.children}
                 </main>
 
                 <ScrollUp showUnder={160}>

@@ -45,17 +45,23 @@ export default class ContactForm extends Component {
     submit(event) {
         event.preventDefault();
 
-        console.log(this.state);
-
-        const rules = {
-            name: 'required',
-            email: 'required|email',
-            subject: 'required|min:4',
-            message: 'required',
-            responseCaptcha: 'required'
+        const data = {
+            nome: this.state.name,
+            email: this.state.email,
+            assunto: this.state.subject,
+            mensagem: this.state.message,
+            captcha: this.state.responseCaptcha
         };
 
-        const validator = Validator.validate(this.state, rules);
+        const rules = {
+            nome: 'required',
+            email: 'required|email',
+            assunto: 'required|min:4',
+            mensagem: 'required',
+            captcha: 'required'
+        };
+
+        const validator = Validator.validate(data, rules);
 
         if(validator.passes()) {
             this.sendMessage();
@@ -64,8 +70,8 @@ export default class ContactForm extends Component {
             //Inserir mensagem de erro
             const errors = validator.errors;
 
-            messagesPublisher.showMessage(...errors.get('name'), ...errors.get('email'),
-                ...errors.get('subject'), ...errors.get('message'), ...errors.get('responseCaptcha'));
+            messagesPublisher.showMessage(...errors.get('nome'), ...errors.get('email'),
+                ...errors.get('assunto'), ...errors.get('mensagem'), ...errors.get('captcha'));
         }
     }
 

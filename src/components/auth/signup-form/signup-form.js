@@ -36,15 +36,15 @@ export default class SignupForm extends Component {
         event.preventDefault();
 
         const data = {
-            name: this.state.name,
+            nome: this.state.name,
             email: this.state.email,
-            password: this.state.password
+            senha: this.state.password
         };
 
         const rules = {
-            name: 'required',
+            nome: 'required',
             email: 'required|email',
-            password: 'required|min:6'
+            senha: 'required|min:6'
         };
 
         const validator = Validator.validate(data, rules);
@@ -66,7 +66,7 @@ export default class SignupForm extends Component {
             console.log("SIGNUP ERROR");
             console.log(errors);
 
-            messagesPublisher.showMessage(...errors.get('name'), ...errors.get('email'), ...errors.get('password'));
+            messagesPublisher.showMessage(...errors.get('nome'), ...errors.get('email'), ...errors.get('senha'));
         }
     }
 

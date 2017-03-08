@@ -7,6 +7,7 @@ import * as dateFormat from "../../../utils/date-format";
 import * as currencyFormat from "../../../utils/currency-format";
 import * as offerService from "../../../services/offer-service";
 import * as userInformationStore from "../../../utils/user-information-store";
+import * as messagesPublisher from "../../../utils/messages-publisher";
 import avatar from '../../../../public/images/default_avatar.png';
 import "./offer-item.css";
 
@@ -51,12 +52,22 @@ export default class OfferItem extends Component {
             offer_id: this.props.offer._id
         };
 
+        console.log(`Evaluate ${data}`);
+
         offerService.postOfferEvaluation(data)
             .then((response) => {
-                console.log(response);
+                const statusCode = response.status;
+
+                if(statusCode === 200) {
+                    console.log(response.data);
+                }
+                else {
+                    throw new Error(response.data);
+                }
             })
             .catch((error) => {
                 console.log(error);
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
             });
     }
 
