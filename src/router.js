@@ -18,6 +18,7 @@ import Terms from './containers/terms/terms';
 
 // SubPages
 import Offers from './containers/offers/offers';
+import OfferDetail from './containers/offer-detail/offer-detail';
 import Stores from './containers/stores/stores';
 import StoreDetail from './containers/store-detail/store-detail';
 import CreateOffer from './containers/create-offer/create-offer';
@@ -45,6 +46,7 @@ export default(
                     <IndexRoute component={Offers}/>
 
                     <Route path="ofertas" component={Offers}/>
+                    <Route path="oferta/:offerId" component={OfferDetail}/>
                     <Route path="lojas" component={Stores}/>
                     <Route path="loja/:storeId" component={StoreDetail}/>
                     <Route path="criar-oferta" component={CreateOffer}/>

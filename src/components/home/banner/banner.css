@@ -26,11 +26,11 @@
   margin-top: 80px;
   font-size: 30px;
 
-  -webkit-animation: mover 1s infinite alternate;
-  animation: mover 1s infinite alternate;
+  -webkit-animation: budge 1s infinite alternate;
+  animation: budge 1s infinite alternate;
 }
 
-@-webkit-keyframes mover {
+@-webkit-keyframes budge {
     0% {
         transform: translateY(0);
     }
@@ -39,7 +39,7 @@
     }
 }
 
-@keyframes mover {
+@keyframes budge {
     0% {
         transform: translateY(0);
     }

@@ -8,6 +8,11 @@ export function getOffers(limit, offset) {
     return axios.get('offer/' + limit + '/' + offset);
 }
 
+export function getOfferById(_id) {
+    return axios.get('offer/' + _id);
+}
+
+
 /**
  * Get offers by city
  */

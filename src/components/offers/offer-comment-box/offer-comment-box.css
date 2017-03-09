@@ -1,0 +1,16 @@
+.moo-comments-box {
+    max-width: 40%;
+    right: 0;
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.moo-comments-box.open {
+    display: block;
+}
+
+.moo-comments-box.close {
+    display: none;
+}

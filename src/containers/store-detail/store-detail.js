@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import GoogleMapReact from "google-map-react";
 import {Row, Col} from "react-materialize";
+import GoogleMapReact from "google-map-react";
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
