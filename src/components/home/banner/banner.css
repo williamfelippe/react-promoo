@@ -1,6 +1,6 @@
 /* Destaque/Chamada da página inicial  */
 .moo-home-banner {
-  padding: 70px 0 70px !important;
+  padding: 70px 0 0 !important;
   background-color: rgba(90, 95, 190, 0.3) !important;
 }
 
@@ -10,12 +10,40 @@
 
 .moo-home-banner .logo {
   width: auto;
-  height: 200px !important;
+  height: 150px !important;
   margin: 10px auto 30px;
   display: block;
 }
 
 .moo-home-banner .btn {
-  font-size: 18px;
   margin-top: 20px;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.moo-indicator-arrow {
+  color: rgba(255, 83, 83, 0.8);
+  margin-top: 80px;
+  font-size: 30px;
+
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+}
+
+@-webkit-keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
 }

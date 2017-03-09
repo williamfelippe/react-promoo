@@ -56,8 +56,6 @@ export default class StoreFilter extends Component {
     }
 
     filter() {
-        this.onSelectPlace();
-
         const data = {
             nome: this.state.name,
             endereco: this.state.address,
@@ -70,14 +68,16 @@ export default class StoreFilter extends Component {
             categorias: 'array',
         };
 
-        const validator = Validator.validate(this.state, rules);
+        const validator = Validator.validate(data, rules);
 
         if(validator.passes()) {
             console.log("It works");
+            this.onSelectPlace();
         }
         else {
             //Inserir mensagem de erro
             const errors = validator.errors;
+            console.log(errors);
         }
     }
 

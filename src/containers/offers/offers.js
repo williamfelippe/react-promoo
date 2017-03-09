@@ -98,18 +98,14 @@ export default class Offers extends Component {
     redirectToCreateOfferPage() {
         browserHistory.push((userInformationStore.isLoggedIn())
             ? 'dashboard/criar-oferta'
-            : 'signin');
+            : 'entrar');
     }
 
     render() {
         return (
             <Row className="m-b-40">
-                {
-                    (this.state.offers.length > 0) &&
-                    <AddBar amount={this.state.offers.length} 
-                        redirectToPage={this.redirectToCreateOfferPage}
+                <AddBar amount={this.state.offers.length} redirectToPage={this.redirectToCreateOfferPage}
                          buttonName="Divulgar"/>
-                }
 
                 <Col s={12}>
                     <Row>

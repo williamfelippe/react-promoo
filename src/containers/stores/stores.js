@@ -97,11 +97,8 @@ export default class Stores extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                {
-                    this.state.stores.length > 0 &&
-                    <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateOffer}
+                <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateOffer}
                             buttonName="Indicar"/>
-                }
 
                 <Col s={12}>
                     <Row>
