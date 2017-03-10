@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {Icon, CardPanel} from "react-materialize";
+import PubSub from 'pubsub-js';
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import * as dateFormat from "../../../utils/date-format";
@@ -10,6 +11,8 @@ import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import avatar from '../../../../public/images/default_avatar.png';
 import "./offer-item.css";
+
+const TAG = "show-or-hide-comment-nav";
 
 export default class OfferItem extends Component {
     constructor(props) {
@@ -98,6 +101,9 @@ export default class OfferItem extends Component {
 
     openComments() {
         console.log('Abrir os comentários');
+
+        const message = {openNav: true, offer: this.props.offer};
+        PubSub.publish(TAG, message);
     }
 
     render() {
@@ -147,7 +153,7 @@ export default class OfferItem extends Component {
                             </a>
                         </li>
                         <li>
-                            <a onClick={this.openComments}>
+                            <a onClick={this.openComments.bind(this)}>
                                 <Icon className="comment">mode_comment</Icon>
                             </a>
                         </li>

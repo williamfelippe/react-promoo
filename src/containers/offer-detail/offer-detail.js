@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
 import GoogleMapReact from "google-map-react";
-import Loader from "../../components/util/loader/loader";
 import Marker from "../../components/util/marker/marker";
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
 import * as offerService from "../../services/offer-service";
@@ -50,11 +49,9 @@ export default class OfferDetail extends Component {
 
     treatOfferResponse(response) {
         const statusCode = response.status;
-        console.log(statusCode);
+
         if (statusCode === 200) {
             const offer = response.data;
-            console.log("OFERTA");
-            console.log(offer);
             this.setState({ 
                 offer: offer,
                 center: {
@@ -96,11 +93,18 @@ export default class OfferDetail extends Component {
                     <div className="container">
                         {
                             /* Categoria */
+                            this.state.offer.category.name
                         }
 
-                        {/* Nome */}
+                        {
+                            /* Nome */
+                            this.state.offer.name
+                        }
 
-                        {/* Preço */}
+                        {
+                            /* Preço */
+                            this.state.offer.price
+                        }
                     </div>
                 </Col>
 
@@ -122,8 +126,6 @@ export default class OfferDetail extends Component {
                         }
                     </div>
                 </Col>
-
-                <Loader />
             </Row>
         );
     }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button, Icon} from 'react-materialize';
+import Loader from '../../util/loader/loader';
 import OfferCommentList from '../offer-comment-list/offer-comment-list';
 import * as offerService from '../../../services/offer-service';
 import * as messagesPublisher from "../../../utils/messages-publisher";
@@ -59,7 +60,7 @@ class OfferCommentBox extends Component {
         const data = {
             message: this.state.message,
             user: userInformationStore.getLoggedUserId(),
-            offer: this.props.offer._id
+            offer: this.props.offerId
         }
 
         this.setState({loadingSendComments: true});
@@ -89,8 +90,6 @@ class OfferCommentBox extends Component {
                 <Col s={12}>
                     <h4>Comente:</h4>
 
-                    <OfferCommentList comments={this.state.comments}/>
-
                     <form onSubmit={this.props.sendComment}>
                         <Input s={12} type="textarea" label="Deixe seu comentário"
                             onChange={this.onChangeMessage.bind(this)}/>
@@ -100,6 +99,11 @@ class OfferCommentBox extends Component {
                                 <Icon right>send</Icon>
                             </Button>
                     </form>
+
+                    {
+                        (this.state.loadingComments) ? <Loader />
+                            : <OfferCommentList comments={this.state.comments}/>
+                    }
                 </Col>
             </Row>
         );
