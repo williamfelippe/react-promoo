@@ -1,0 +1,15 @@
+.moo-offer-comment {
+    border-bottom: rgba(0, 0, 0, 0.06) solid thin;
+    margin-bottom: 20px;
+}
+
+.moo-offer-comment .message {
+    font-size: 14px;
+}
+
+.moo-offer-comment .date {
+    color: rgba(90, 95, 190, 0.7);
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}

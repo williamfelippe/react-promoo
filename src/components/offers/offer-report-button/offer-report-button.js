@@ -61,7 +61,7 @@ export default class OfferReportButton extends Component {
 
         return (
             <Modal header='Algum problema?' trigger={reportLink}
-                   actions="&nbsp;">
+                   actions={null}>
 
                 <p className="m-t-40">
                     Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et

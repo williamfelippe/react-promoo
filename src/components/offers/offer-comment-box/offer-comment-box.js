@@ -1,84 +1,113 @@
 import React, {Component} from 'react';
-import {Row, Col, Icon} from 'react-materialize';
-import PubSub from 'pubsub-js';
-//import OfferCommentList from '../offer-comment-list/offer-comment-list';
+import {Row, Col, Input, Button, Icon} from 'react-materialize';
+import OfferCommentList from '../offer-comment-list/offer-comment-list';
 import * as offerService from '../../../services/offer-service';
 import * as messagesPublisher from "../../../utils/messages-publisher";
+import * as userInformationStore from "../../../utils/user-information-store";
 import './offer-comment-box.css';
 
-export default class OfferCommentBox extends Component {
-    constructor() {
-        super();
+class OfferCommentBox extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             offer: {},
-            openCommentBox: false,
             comments: [],
-            loading: false
+            message: '',
+            loadingComments: false,
+            loadingSendComments: false
         }
     }
 
     componentDidMount() {
-        PubSub.subscribe('show-offer-comments', (subject, message) => {
-            if(subject.localeCompare('show-offer-comments') === 0) {
-                this.setState({
-                    offer: message.offer,
-                    openCommentBox: message.openCommentBox
-                });
-
-                (this.state.openCommentBox) ? this.getOfferComments() : this.setState({comments: []});
-            }
-        });
+        this.getOfferComments();
     }
 
     getOfferComments() {
-        this.setState({loadingOffers: true});
+        this.setState({loadingComments: true});
 
         offerService
             .getOfferComments(this.state.offer._id)
             .then((response) => {
                 this.treatOfferCommentsResponse(response);
-                this.setState({loading: false});
+                this.setState({loadingComments: false});
             })
             .catch((error) => {
                 console.log(error);
 
                 messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
 
-                this.setState({loading: false});
+                this.setState({loadingComments: false});
             });
     }
 
     treatOfferCommentsResponse(response) {
         const statusCode = response.status;
 
-        if(statusCode === 200) {
-           this.setState({comments: response.data});
-           console.log(this.state.comments);
-        }
-        else {
+        if (statusCode === 200) {
+            this.setState({comments: response.data});
+            console.log(this.state.comments);
+        } else {
             throw new Error(response.data);
         }
     }
 
+    onChangeMessage(event) {
+        this.setState({message: event.target.value});
+    }
+
+    sendComment() {
+        const data = {
+            message: this.state.message,
+            user: userInformationStore.getLoggedUserId(),
+            offer: this.props.offer._id
+        }
+
+        this.setState({loadingSendComments: true});
+        
+        offerService.postOfferComment(data)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === 200) {
+                    this.setState({comments: response.data});
+                } 
+                else {
+                    throw new Error(response.data);
+                }
+
+                this.setState({loadingSendComments: false});
+            })
+            .catch((error) => {
+                this.setState({loadingSendComments: false});
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+            });
+    }
+
     render() {
-        const openOrCloseScreen = (this.state.openCommentBox)
-            ? 'moo-comments-box open'
-            : 'moo-comments-box close';
-
         return (
-            <Row className={openOrCloseScreen}>
+            <Row>
                 <Col s={12}>
-                    <a onClick={() => this.setState({openCommentBox: false})}>
-                        <Icon className="right">
-                            close
-                        </Icon>
-                    </a>
-                </Col>
+                    <h4>Comente:</h4>
 
-                <Col s={12}>
-                    {/*<OfferCommentList comments={this.props.comments} />*/}
+                    <OfferCommentList comments={this.state.comments}/>
+
+                    <form onSubmit={this.props.sendComment}>
+                        <Input s={12} type="textarea" label="Deixe seu comentário"
+                            onChange={this.onChangeMessage.bind(this)}/>
+                        
+                            <Button waves="light" className="right">
+                                Enviar
+                                <Icon right>send</Icon>
+                            </Button>
+                    </form>
                 </Col>
             </Row>
         );
     }
 }
+
+OfferCommentBox.propTypes = {
+  offerId: React.PropTypes.number
+};
+
+export default OfferCommentBox;

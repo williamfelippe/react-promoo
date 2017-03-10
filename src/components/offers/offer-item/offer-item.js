@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {Icon, CardPanel} from "react-materialize";
-import PubSub from 'pubsub-js';
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import * as dateFormat from "../../../utils/date-format";
@@ -97,11 +96,8 @@ export default class OfferItem extends Component {
         this.setState({likes: likes, dislikes: dislikes});
     }
 
-    openCommentBox() {
-        PubSub.publish('show-offer-comments', {
-            openCommentBox: true,
-            offer: this.props.offer
-        });
+    openComments() {
+        console.log('Abrir os comentários');
     }
 
     render() {
@@ -132,7 +128,9 @@ export default class OfferItem extends Component {
 
                     <div className="date center-align">
                         {/* Data */}
-                        <small>{ dateFormat.format(offer.created_at) }</small>
+                        <small>
+                            { dateFormat.format(offer.created_at) }
+                        </small>
                     </div>
                 </Link>
 
@@ -149,10 +147,8 @@ export default class OfferItem extends Component {
                             </a>
                         </li>
                         <li>
-                            <a onClick={this.openCommentBox.bind(this)}>
-                                <Icon className="comment">
-                                    mode_comment
-                                </Icon>
+                            <a onClick={this.openComments}>
+                                <Icon className="comment">mode_comment</Icon>
                             </a>
                         </li>
                         <li>

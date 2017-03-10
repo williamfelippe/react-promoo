@@ -8,8 +8,11 @@ export function getOffers(limit, offset) {
     return axios.get('offer/' + limit + '/' + offset);
 }
 
-export function getOfferById(_id) {
-    return axios.get('offer/' + _id);
+/**
+ * Get offer by id
+ */
+export function getOfferById(offerId) {
+    return axios.get('offer/' + offerId);
 }
 
 
@@ -41,7 +44,7 @@ export function getOffersByStore(store, limit, offset) {
  */
 
 export function postOffer(data) {
-    axios.post('offer', data, {headers: {'Authorization': ''}});
+    return axios.post('offer', data);
 }
 
 /**
@@ -49,7 +52,7 @@ export function postOffer(data) {
  */
 
 export function getOfferComments(_id) {
-    axios.get('offer_comment/' + _id, {headers: {'Authorization': ''}});
+    return axios.get('offer_comment/' + _id);
 }
 
 /**
@@ -57,7 +60,7 @@ export function getOfferComments(_id) {
  */
 
 export function postOfferComment(data) {
-    axios.post('offer_comment', data, {headers: {'Authorization': ''}});
+    return axios.post('offer_comment', data);
 }
 
 /**
@@ -65,7 +68,7 @@ export function postOfferComment(data) {
  */
 
 export function postOfferReport(data) {
-    axios.post('offer/report', data, {headers: {'Authorization': ''}});
+    return axios.post('offer/report', data);
 }
 
 /**
@@ -73,7 +76,7 @@ export function postOfferReport(data) {
  */
 
 export function postOfferEvaluation(data) {
-    axios.post('offer_evaluation', data, {headers: {'Authorization': ''}});
+    return axios.post('offer_evaluation', data);
 }
 
 /**

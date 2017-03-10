@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
 import GoogleMapReact from "google-map-react";
 import Loader from "../../components/util/loader/loader";
+import Marker from "../../components/util/marker/marker";
+import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
 import * as offerService from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
 import "./offer-detail.css";
@@ -48,9 +50,11 @@ export default class OfferDetail extends Component {
 
     treatOfferResponse(response) {
         const statusCode = response.status;
-
+        console.log(statusCode);
         if (statusCode === 200) {
             const offer = response.data;
+            console.log("OFERTA");
+            console.log(offer);
             this.setState({ 
                 offer: offer,
                 center: {
@@ -65,8 +69,6 @@ export default class OfferDetail extends Component {
     }
 
     render() {
-        const {offer} = this.state;
-
         const mapOptions = {
             panControl: false,
             mapTypeControl: false,
@@ -89,10 +91,12 @@ export default class OfferDetail extends Component {
         };
 
         return (
-            <Row>
+            <Row className="moo-offer-detail">
                 <Col s={12}>
                     <div className="container">
-                        {/* Categoria */}
+                        {
+                            /* Categoria */
+                        }
 
                         {/* Nome */}
 
@@ -100,10 +104,23 @@ export default class OfferDetail extends Component {
                     </div>
                 </Col>
 
-                <Col s={12} className="n-padding">
+                <Col s={12} className="map-wrapper">
                     <GoogleMapReact defaultCenter={this.props.center}
                         center={this.state.center} defaultZoom={this.props.zoom}
-                        options={mapOptions} />
+                        options={mapOptions}>
+                        {
+                            <Marker lat={this.state.center.lat} 
+                                lng={this.state.center.lng} />
+                        }
+                    </GoogleMapReact>
+                </Col>
+
+                <Col s={10} offset="s1">
+                    <div className="container">
+                        {
+                            (this.state.offer) && <OfferCommentBox offerId={this.state.offer._id} />
+                        }
+                    </div>
                 </Col>
 
                 <Loader />
