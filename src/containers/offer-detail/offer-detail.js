@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-materialize';
 import GoogleMapReact from "google-map-react";
+import Loader from "../../components/util/loader/loader";
 import Marker from "../../components/util/marker/marker";
+import OfferDetailInfo from "../../components/offer-detail/offer-detail-info";
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
 import * as offerService from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
@@ -40,6 +42,7 @@ export default class OfferDetail extends Component {
                 this.setState({loadingOffer: false});
             })
             .catch((error) => {
+                console.log('ERRO EM DETAIL');
                 console.log(error);
 
                 messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
@@ -52,6 +55,8 @@ export default class OfferDetail extends Component {
 
         if (statusCode === 200) {
             const offer = response.data;
+            console.log("OFERTA");
+            console.log(offer);
             this.setState({ 
                 offer: offer,
                 center: {
@@ -89,24 +94,11 @@ export default class OfferDetail extends Component {
 
         return (
             <Row className="moo-offer-detail">
-                <Col s={12}>
-                    <div className="container">
-                        {
-                            /* Categoria */
-                            this.state.offer.category.name
-                        }
-
-                        {
-                            /* Nome */
-                            this.state.offer.name
-                        }
-
-                        {
-                            /* Preço */
-                            this.state.offer.price
-                        }
-                    </div>
-                </Col>
+                {
+                    (this.state.offer) ?
+                    <OfferDetailInfo offer={this.state.offer} />
+                    : <Loader />
+                }
 
                 <Col s={12} className="map-wrapper">
                     <GoogleMapReact defaultCenter={this.props.center}

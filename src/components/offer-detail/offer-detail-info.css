@@ -1,0 +1,8 @@
+.moo-offer-detail-info .price {
+    font-family: 'Roboto Slab', serif;
+    font-size: 80px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 10px;
+    color: rgba(255, 83, 83, 0.8) !important;   
+}

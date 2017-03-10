@@ -94,12 +94,11 @@ class OfferCommentBox extends Component {
                         <Input s={12} type="textarea" label="Deixe seu comentário"
                             onChange={this.onChangeMessage.bind(this)}/>
                         
-                        <Col s={12}>
-                            <Button waves="light" className="right">
-                                Enviar
-                                <Icon right>send</Icon>
-                            </Button>
-                        </Col>
+                        <Button waves="light" className="right">
+                            Enviar
+                            <Icon right>send</Icon>
+                        </Button>
+                        <div className="clearfix" />
                     </form>
 
                     {
