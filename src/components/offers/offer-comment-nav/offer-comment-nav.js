@@ -24,7 +24,7 @@ export default class OfferCommentNav extends Component {
     }
 
     closeNav() {
-        this.setState({openNav: false});
+        this.setState({openNav: false, offer: {}});
     }
 
     render() {

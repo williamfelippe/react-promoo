@@ -1,19 +1,4 @@
-.moo-comments-box {
-    width: 250px;
-    right: 0;
-    height: 100vh;
-    position: fixed;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.9);
-}
-
-.moo-comments-box.open {
-    display: block;
-    transition-property: all;
-	transition-duration: .5s;
-	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-}
-
-.moo-comments-box.close {
-    display: none;
+.moo-comments-form {
+    border-bottom: rgba(0, 0, 0, 0.03);
+    margin-bottom: 30px;
 }

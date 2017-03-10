@@ -6,7 +6,7 @@
     z-index: 10; /* Stay on top */
     top: 0;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.9); /* Black*/
+    background-color: rgba(255, 255, 255, 0.96); /* Black*/
     border-left: rgba(255, 83, 83, 0.8) solid thin;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */

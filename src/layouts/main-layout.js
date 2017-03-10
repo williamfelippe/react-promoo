@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Button} from 'react-materialize';
 import ScrollUp from 'react-scroll-up';
-import OfferCommentNav from '../components/offers/offer-comment-sidenav/offer-comment-nav'
-import Header from '../components/system/header/header'
-import Footer from '../components/system/footer/footer'
+import OfferCommentNav from '../components/offers/offer-comment-nav/offer-comment-nav';
+import Header from '../components/system/header/header';
+import Footer from '../components/system/footer/footer';
 import Notification from '../components/util/notification/notification';
 
 export default class MainLayout extends Component {

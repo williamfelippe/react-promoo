@@ -90,14 +90,16 @@ class OfferCommentBox extends Component {
                 <Col s={12}>
                     <h4>Comente:</h4>
 
-                    <form onSubmit={this.props.sendComment}>
+                    <form onSubmit={this.props.sendComment} className="moo-comments-form">
                         <Input s={12} type="textarea" label="Deixe seu comentário"
                             onChange={this.onChangeMessage.bind(this)}/>
                         
+                        <Col s={12}>
                             <Button waves="light" className="right">
                                 Enviar
                                 <Icon right>send</Icon>
                             </Button>
+                        </Col>
                     </form>
 
                     {
