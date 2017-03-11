@@ -2,14 +2,13 @@ import React, {Component} from "react";
 import {Link} from "react-router";
 import {Icon, CardPanel} from "react-materialize";
 import PubSub from 'pubsub-js';
-import ImageWrapper from "../../util/image-wrapper/image-wrapper";
+import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import * as dateFormat from "../../../utils/date-format";
 import * as currencyFormat from "../../../utils/currency-format";
 import * as offerService from "../../../services/offer-service";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
-import avatar from '../../../../public/images/default_avatar.png';
 import "./offer-item.css";
 
 const TAG = "show-or-hide-comment-nav";
@@ -164,17 +163,7 @@ export default class OfferItem extends Component {
                 </div>
 
                 <div>
-                    <Link to={`detalhes-usuario/${offer.user._id}`} className="avatar">
-                        <div className="right valign-wrapper">
-                            <ImageWrapper placeholder={avatar} src={offer.user.photo} alt={offer.user.name}
-                                         className="circle responsive-img right"/>
-
-                            <p className="right">
-                                {offer.user.name}
-                            </p>
-                        </div>
-                        <div className="clearfix"></div>
-                    </Link>
+                    <OfferUserAvatar user={offer.user} className="avatar" />
                 </div>
             </CardPanel>
         )

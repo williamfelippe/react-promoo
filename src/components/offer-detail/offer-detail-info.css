@@ -1,8 +1,61 @@
+.moo-offer-detail-info {
+    text-align: center;
+}
+
+.moo-offer-detail-info .avatar {
+    text-transform: none !important;
+    margin: 20px 0 0 !important;
+    cursor: pointer;
+    font-size: 18px;
+    display: block;
+}
+
+.moo-offer-detail-info .avatar p {
+    color: rgba(90, 95, 190, 0.8);
+}
+
+.moo-offer-detail-info .avatar p:hover,
+.moo-offer-detail-info .avatar p:focus {
+    color: rgba(90, 95, 190, 1);
+}
+
+.moo-offer-detail-info .avatar > div:not(:last-child) {
+    height: 60px;
+    vertical-align: middle;
+}
+
+.moo-offer-detail-info .avatar img {
+    height: 40px;
+    width: 40px;
+    margin: 0 10px;
+}
+
+.moo-offer-detail-info .title {
+    font-weight: 500;
+    margin: 20px 0 5px;
+}
+
+.moo-offer-detail-info .date {
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.moo-offer-detail-info .date span {
+    background-color: rgba(90, 95, 190, 0.6);
+    border-radius: 2px;
+    padding: 3px 7px;
+}
+
 .moo-offer-detail-info .price {
     font-family: 'Roboto Slab', serif;
     font-size: 80px;
     font-weight: 700;
-    text-align: center;
     margin: 0 0 10px;
-    color: rgba(255, 83, 83, 0.8) !important;   
+    color: rgba(255, 83, 83, 0.8);   
+}
+
+.moo-offer-detail-info .category {
+    background-color: rgba(90, 95, 190, 0.8);
 }

@@ -95,7 +95,7 @@ export default class OfferDetail extends Component {
         return (
             <Row className="moo-offer-detail">
                 {
-                    (this.state.offer) ?
+                    (Object.keys(this.state.offer).length !== 0) ?
                     <OfferDetailInfo offer={this.state.offer} />
                     : <Loader />
                 }

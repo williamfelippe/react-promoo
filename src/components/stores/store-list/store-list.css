@@ -2,7 +2,7 @@
     list-style: none;
     padding: 0;
 
-    justify-content: center;
+    justify-content: flex-start;
     display: flex;
     flex-flow: row wrap;
 }
@@ -10,4 +10,10 @@
 .moo-store-list > li {
     float: left;
     margin: 10px;
+}
+
+@media all and (max-width: 760px) {
+    .moo-store-list {
+        justify-content: center;
+    }    
 }
