@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import {CardPanel} from "react-materialize";
 import {Link} from "react-router";
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
-import * as storeService from "../../../services/store-service";
+import {postStoreReport} from "../../../services/store-service";
 import "./store-item.css";
 
 export default class StoreItem extends Component {
     reportStoreDoesNotExist() {
-        storeService.postStoreReport({})
+        postStoreReport({})
             .then((response) => {
 
             })

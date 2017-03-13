@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
+import {getOffersByUser} from "../../../services/offer-service";
 import Loader from "../../../components/util/loader/loader";
 import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
 import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
 import OfferList from "../../../components/offers/offer-list/offer-list";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as userService from "../../../services/user-service";
-import * as offerService from "../../../services/offer-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class UserProfile extends Component {
@@ -59,14 +59,14 @@ export default class UserProfile extends Component {
         }
         else {
             throw new Error(response.data);
-        }                
+        }
     }
 
     getUserOffers(userId) {
         this.setState({loadingOffers: true});
 
-        offerService
-            .getOffersByUser(userId, this.state.limit, this.state.offerOffset)
+
+        getOffersByUser(userId, this.state.limit, this.state.offerOffset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loadingOffers: false});
@@ -89,7 +89,7 @@ export default class UserProfile extends Component {
         }
         else {
             throw new Error(response.data);
-        }        
+        }
     }
 
     moreUserOffers() {
@@ -102,12 +102,12 @@ export default class UserProfile extends Component {
             <Row>
                 {
                     (this.state.user && this.state.user !== undefined) &&
-                        <UserInfoHeader user={this.state.user}/>
+                    <UserInfoHeader user={this.state.user}/>
                 }
 
                 {
                     /* Exibe uma imagem de "loading" */
-                    (this.state.loadingUser) && 
+                    (this.state.loadingUser) &&
                     <p className="center-align">
                         <Loader />
                     </p>
@@ -125,8 +125,8 @@ export default class UserProfile extends Component {
                             <p className="center-align">
                                 {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                    <LoadMoreButton loading={this.state.loadingOffers} 
-                                        onClick={this.moreUserOffers.bind(this)} />
+                                    <LoadMoreButton loading={this.state.loadingOffers}
+                                                    onClick={this.moreUserOffers.bind(this)}/>
                                 }
                             </p>
                         </Col>

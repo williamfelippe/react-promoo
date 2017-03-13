@@ -4,9 +4,9 @@ import {Icon, CardPanel} from "react-materialize";
 import PubSub from 'pubsub-js';
 import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
+import {postOfferEvaluation} from "../../../services/offer-service";
 import * as dateFormat from "../../../utils/date-format";
 import * as currencyFormat from "../../../utils/currency-format";
-import * as offerService from "../../../services/offer-service";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./offer-item.css";
@@ -56,11 +56,11 @@ export default class OfferItem extends Component {
 
         console.log(`Evaluate ${data}`);
 
-        offerService.postOfferEvaluation(data)
+        postOfferEvaluation(data)
             .then((response) => {
                 const statusCode = response.status;
 
-                if(statusCode === 200) {
+                if (statusCode === 200) {
                     console.log(response.data);
                 }
                 else {
@@ -163,7 +163,7 @@ export default class OfferItem extends Component {
                 </div>
 
                 <div>
-                    <OfferUserAvatar user={offer.user} className="avatar" />
+                    <OfferUserAvatar user={offer.user} className="avatar"/>
                 </div>
             </CardPanel>
         )

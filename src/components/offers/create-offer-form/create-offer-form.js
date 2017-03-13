@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Row, Col, Input, Button} from 'react-materialize';
-import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
-import * as offerService from '../../../services/offer-service';
+import React, {Component} from "react";
+import {Row, Col, Input, Button} from "react-materialize";
+import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
+import {getOfferCategories} from "../../../services/offer-service";
 
 export default class CreateOfferForm extends Component {
     constructor(props) {
@@ -22,11 +22,11 @@ export default class CreateOfferForm extends Component {
     }
 
     componentDidMount() {
-        this.getOfferCategories();
+        this.getCategories();
     }
 
-    getOfferCategories() {
-        offerService.getOfferCategories()
+    getCategories() {
+        getOfferCategories()
             .then((response) => {
                 console.log(response);
                 const status = response.status;
@@ -108,7 +108,8 @@ export default class CreateOfferForm extends Component {
             <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
                     { /* Endereço da loja */ }
-                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)} options={options}
+                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
+                                        options={options}
                                         hideLabel>
                         <Input s={12} label="Onde fica a loja?"/>
                     </PlacesAutocomplete>
@@ -117,7 +118,8 @@ export default class CreateOfferForm extends Component {
                 <Row className={ !this.state.storeNotFound ? 'hide' : ''}>
                     <Col s={12}>
                         <Row>
-                            <Input s={12} type="select" label="Categoria" onChange={this.onChangeOfferCategory.bind(this)}>
+                            <Input s={12} type="select" label="Categoria"
+                                   onChange={this.onChangeOfferCategory.bind(this)}>
                                 {listCategories}
                             </Input>
                         </Row>
@@ -136,7 +138,8 @@ export default class CreateOfferForm extends Component {
                         </Row>
 
                         <Row>
-                            <Input s={12} type="textarea" label="Descrição" onChange={this.onChangeDescription.bind(this)}/>
+                            <Input s={12} type="textarea" label="Descrição"
+                                   onChange={this.onChangeDescription.bind(this)}/>
                         </Row>
                     </Col>
                 </Row>

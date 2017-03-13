@@ -4,8 +4,8 @@ import GoogleMapReact from "google-map-react";
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
-import * as storeService from "../../services/store-service";
-import * as offerService from "../../services/offer-service";
+import {getStoreById} from "../../services/store-service";
+import {getOffersByStore, getOfferCategories} from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
 import "./store-detail.css";
 
@@ -36,15 +36,15 @@ export default class StoreDetail extends Component {
     componentDidMount() {
         const {storeId} = this.props.params;
 
-        this.getStores(storeId);
+        this.getStore(storeId);
         this.getOffers(storeId);
-        this.getOffersCategories();
+        this.getCategories();
     }
 
     getOffers(store) {
         this.setState({loadingOffers: true});
 
-        offerService.getOffersByStore(store, this.state.limit, this.state.offset)
+        getOffersByStore(store, this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loadingOffers: false});
@@ -72,10 +72,10 @@ export default class StoreDetail extends Component {
         }
     }
 
-    getStores(storeId) {
+    getStore(storeId) {
         this.setState({loadingStores: true});
 
-        storeService.getStoreById(storeId)
+        getStoreById(storeId)
             .then((response) => {
                 this.treatStoreResponse(response);
                 this.setState({loadingStores: false});
@@ -109,11 +109,10 @@ export default class StoreDetail extends Component {
         }
     }
 
-    getOffersCategories() {
+    getCategories() {
         this.setState({loadingCategories: true});
 
-        offerService
-            .getOfferCategories()
+        getOfferCategories()
             .then((response) => {
                 this.treatOfferCategoriesResponse(response);
                 this.setState({loadingCategories: false});
@@ -172,7 +171,7 @@ export default class StoreDetail extends Component {
                 <Col s={12} className="map-wrapper">
                     <GoogleMapReact defaultCenter={this.props.center}
                                     center={this.state.center} defaultZoom={this.props.zoom}
-                                    options={mapOptions} />
+                                    options={mapOptions}/>
                 </Col>
 
                 <Col s={12}>

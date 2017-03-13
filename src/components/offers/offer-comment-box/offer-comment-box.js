@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Row, Col, Input, Button, Icon} from 'react-materialize';
-import Loader from '../../util/loader/loader';
-import OfferCommentList from '../offer-comment-list/offer-comment-list';
-import * as offerService from '../../../services/offer-service';
+import React, {Component} from "react";
+import {Row, Col, Input, Button, Icon} from "react-materialize";
+import Loader from "../../util/loader/loader";
+import OfferCommentList from "../offer-comment-list/offer-comment-list";
+import {postOfferComment, getOfferComments} from "../../../services/offer-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import * as userInformationStore from "../../../utils/user-information-store";
-import './offer-comment-box.css';
+import "./offer-comment-box.css";
 
 class OfferCommentBox extends Component {
     constructor(props) {
@@ -20,14 +20,13 @@ class OfferCommentBox extends Component {
     }
 
     componentDidMount() {
-        this.getOfferComments();
+        this.getComments();
     }
 
-    getOfferComments() {
+    getComments() {
         this.setState({loadingComments: true});
 
-        offerService
-            .getOfferComments(this.state.offer._id)
+        getOfferComments(this.state.offer._id)
             .then((response) => {
                 this.treatOfferCommentsResponse(response);
                 this.setState({loadingComments: false});
@@ -61,17 +60,17 @@ class OfferCommentBox extends Component {
             message: this.state.message,
             user: userInformationStore.getLoggedUserId(),
             offer: this.props.offerId
-        }
+        };
 
         this.setState({loadingSendComments: true});
-        
-        offerService.postOfferComment(data)
+
+        postOfferComment(data)
             .then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === 200) {
                     this.setState({comments: response.data});
-                } 
+                }
                 else {
                     throw new Error(response.data);
                 }
@@ -92,13 +91,13 @@ class OfferCommentBox extends Component {
 
                     <form onSubmit={this.props.sendComment} className="moo-comments-form">
                         <Input s={12} type="textarea" label="Deixe seu comentário"
-                            onChange={this.onChangeMessage.bind(this)}/>
-                        
+                               onChange={this.onChangeMessage.bind(this)}/>
+
                         <Button waves="light" className="right">
                             Enviar
                             <Icon right>send</Icon>
                         </Button>
-                        <div className="clearfix" />
+                        <div className="clearfix"/>
                     </form>
 
                     {
@@ -112,7 +111,7 @@ class OfferCommentBox extends Component {
 }
 
 OfferCommentBox.propTypes = {
-  offerId: React.PropTypes.number
+    offerId: React.PropTypes.number
 };
 
 export default OfferCommentBox;

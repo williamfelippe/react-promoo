@@ -4,9 +4,9 @@ import Loader from "../../components/util/loader/loader";
 import OfferDetailInfo from "../../components/offer-detail/offer-detail-info/offer-detail-info";
 import OfferDetailStore from "../../components/offer-detail/offer-detail-store/offer-detail-store";
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
-import * as offerService from "../../services/offer-service";
+import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
-import * as userInformationStore from "../../utils/user-information-store"
+import * as userInformationStore from "../../utils/user-information-store";
 import "./offer-detail.css";
 
 export default class OfferDetail extends Component {
@@ -32,7 +32,7 @@ export default class OfferDetail extends Component {
     getOffer(offerId) {
         this.setState({loadingOffer: true});
 
-        offerService.getOfferById(offerId)
+        getOfferById(offerId)
             .then((response) => {
                 this.treatOfferResponse(response);
                 this.setState({loadingOffer: false});
@@ -53,16 +53,16 @@ export default class OfferDetail extends Component {
             const offer = response.data;
             console.log("OFERTA");
             console.log(offer);
-            this.setState({ 
+            this.setState({
                 offer: offer,
                 center: {
                     lat: offer.store.address.latitude,
                     lng: offer.store.address.longitude
                 }
-             });
+            });
 
-             this.countEvaluations();
-        } 
+            this.countEvaluations();
+        }
         else {
             throw new Error(response.data);
         }
@@ -92,11 +92,11 @@ export default class OfferDetail extends Component {
 
         console.log(`Evaluate ${data}`);
 
-        offerService.postOfferEvaluation(data)
+        postOfferEvaluation(data)
             .then((response) => {
                 const statusCode = response.status;
 
-                if(statusCode === 200) {
+                if (statusCode === 200) {
                     console.log(response.data);
                     this.countEvaluations();
                 }
@@ -140,25 +140,25 @@ export default class OfferDetail extends Component {
             <Row className="moo-offer-detail">
                 {
                     (Object.keys(this.state.offer).length !== 0) ?
-                    <OfferDetailInfo offer={this.state.offer} likes={this.state.likes}
-                        dislikes={this.state.dislikes} liked={this.state.liked}
-                        disliked={this.state.disliked} />
-                    : <Loader />
+                        <OfferDetailInfo offer={this.state.offer} likes={this.state.likes}
+                                         dislikes={this.state.dislikes} liked={this.state.liked}
+                                         disliked={this.state.disliked}/>
+                        : <Loader />
                 }
 
                 <Col s={10} offset="s1">
-                    <div className="divider" />
+                    <div className="divider"/>
                 </Col>
 
                 {
-                    (Object.keys(this.state.offer).length !== 0) && 
-                    <OfferDetailStore store={this.state.offer.store} center={this.state.center} />
+                    (Object.keys(this.state.offer).length !== 0) &&
+                    <OfferDetailStore store={this.state.offer.store} center={this.state.center}/>
                 }
 
                 <Col s={10} offset="s1">
                     <div className="container">
                         {
-                            (this.state.offer) && <OfferCommentBox offerId={this.state.offer._id} />
+                            (this.state.offer) && <OfferCommentBox offerId={this.state.offer._id}/>
                         }
                     </div>
                 </Col>

@@ -6,8 +6,8 @@ import StoreFilter from "../../components/stores/store-filter/store-filter";
 import StoreList from "../../components/stores/store-list/store-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
+import {getStores, getStoreCategories} from "../../services/store-service";
 import * as userInformationStore from "../../utils/user-information-store";
-import * as storeService from "../../services/store-service";
 
 export default class Stores extends Component {
     constructor(props) {
@@ -24,14 +24,14 @@ export default class Stores extends Component {
     }
 
     componentDidMount() {
-        this.getStores();
-        this.getCategories();
+        this.getAllStores();
+        this.getAllCategories();
     }
 
-    getStores() {
+    getAllStores() {
         this.setState({loadingStores: true});
 
-        storeService.getStores(this.state.limit, this.state.offset)
+        getStores(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatStoresResponse(response);
                 this.setState({loadingStores: false});
@@ -58,10 +58,10 @@ export default class Stores extends Component {
         }
     }
 
-    getCategories() {
+    getAllCategories() {
         this.setState({loadingCategories: true});
 
-        storeService.getStoreCategories()
+        getStoreCategories()
             .then((response) => {
                 this.treatStoreCategoriesResponse(response);
                 this.setState({loadingCategories: false});
@@ -85,7 +85,7 @@ export default class Stores extends Component {
 
     moreStores() {
         this.setState({offset: this.state.limit});
-        this.getStores();
+        this.getAllStores();
     }
 
     redirectToCreateOffer() {
@@ -97,7 +97,7 @@ export default class Stores extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateOffer}
+                <AddBar amount={this.state.stores.length} redirectToPage={Stores.redirectToCreateOffer}
                             buttonName="Indicar"/>
 
                 <Col s={12}>

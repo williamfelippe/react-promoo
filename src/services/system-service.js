@@ -6,4 +6,4 @@ import axios from 'axios';
 
 export const sendMessage = (data) => {
     return axios.post('system/contact', data);
-}
+};

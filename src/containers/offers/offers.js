@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import {browserHistory} from "react-router";
 import {Row, Col} from "react-materialize";
+import {getOffers, getOfferCategories} from "../../services/offer-service";
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import * as userInformationStore from "../../utils/user-information-store";
-import * as offerService from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
 
 export default class Offers extends Component {
@@ -25,15 +25,15 @@ export default class Offers extends Component {
     }
 
     componentDidMount() {
-        this.getOffers();
-        this.getOffersCategories();
+        this.getAllOffers();
+        this.getAllOffersCategories();
     }
 
-    getOffers() {
+    getAllOffers() {
         this.setState({loadingOffers: true});
 
-        offerService
-            .getOffers(this.state.limit, this.state.offset)
+
+        getOffers(this.state.limit, this.state.offset)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loadingOffers: false});
@@ -55,17 +55,16 @@ export default class Offers extends Component {
             this.setState({
                 offers: offers.concat(response.data)
             });
-        } 
+        }
         else {
             throw new Error(response.data);
         }
     }
 
-    getOffersCategories() {
+    getAllOffersCategories() {
         this.setState({loadingCategories: true});
 
-        offerService
-            .getOfferCategories()
+        getOfferCategories()
             .then((response) => {
                 this.treatOfferCategoriesResponse(response);
                 this.setState({loadingCategories: false});
@@ -105,7 +104,7 @@ export default class Offers extends Component {
         return (
             <Row className="m-b-40">
                 <AddBar amount={this.state.offers.length} redirectToPage={this.redirectToCreateOfferPage}
-                         buttonName="Divulgar"/>
+                        buttonName="Divulgar"/>
 
                 <Col s={12}>
                     <Row>
@@ -113,7 +112,7 @@ export default class Offers extends Component {
 
                             <Col s={12} m={3}>
                                 {
-                                    (this.state.categories.length > 0) && 
+                                    (this.state.categories.length > 0) &&
                                     <OfferFilter categories={this.state.categories}/>
                                 }
 
@@ -126,14 +125,14 @@ export default class Offers extends Component {
                             <Col s={12} m={9}>
                                 {
                                     /* Listagem das ofertas */
-                                    (this.state.offers.length > 0) && 
+                                    (this.state.offers.length > 0) &&
                                     <OfferList offers={this.state.offers}/>
                                 }
 
                                 {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                    <LoadMoreButton loading={this.state.loadingOffers} 
-                                        onClick={this.moreOffers.bind(this)} />
+                                    <LoadMoreButton loading={this.state.loadingOffers}
+                                                    onClick={this.moreOffers.bind(this)}/>
                                 }
                             </Col>
                         </div>

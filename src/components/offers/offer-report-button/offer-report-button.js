@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Row, Col, Input, Button, Icon, Modal} from 'react-materialize';
-import * as offerService from '../../../services/offer-service';
-import * as userInformationStore from '../../../utils/user-information-store';
-import './offer-report-button.css';
+import React, {Component} from "react";
+import {Row, Col, Input, Button, Icon, Modal} from "react-materialize";
+import {postOfferReport} from "../../../services/offer-service";
+import * as userInformationStore from "../../../utils/user-information-store";
+import "./offer-report-button.css";
 
 export default class OfferReportButton extends Component {
     constructor(props) {
@@ -36,10 +36,10 @@ export default class OfferReportButton extends Component {
 
         console.log(this.state);
 
-        offerService.postOfferReport(data)
+        postOfferReport(data)
             .then((response) => {
                 const statusCode = response.status;
-                if(statusCode === 200) {
+                if (statusCode === 200) {
                     console.log(response.data);
                 }
                 else {
