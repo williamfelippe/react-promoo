@@ -3,7 +3,7 @@ import {Row, Col, Input, Button} from 'react-materialize';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Loader from "../../util/loader/loader";
 import * as Validator from '../../../utils/validator';
-import * as systemService from '../../../services/system-service';
+import {sendMessage} from '../../../services/system-service';
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
 const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
@@ -78,9 +78,8 @@ export default class ContactForm extends Component {
     sendMessage() {
         this.setState({loading: true});
 
-        systemService
-            .sendMessage(this.state)
-            .then((response) => {
+        
+        sendMessage(this.state).then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === 200) {

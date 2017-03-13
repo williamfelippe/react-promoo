@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CryptoJS from "crypto-js";
 import {Row, Input, Button} from 'react-materialize';
-import * as userService from '../../../services/user-service';
+import {putPassword} from '../../../services/user-service';
 import * as userInformationStore from '../../../utils/user-information-store';
 
 export default class ChangePasswordForm extends Component {
@@ -30,8 +30,7 @@ export default class ChangePasswordForm extends Component {
 
         console.log(data);
 
-        userService.putPassword(data)
-            .then((response) => {
+        putPassword(data).then((response) => {
                 const statusCode = response.status;
                 console.log(response);
 

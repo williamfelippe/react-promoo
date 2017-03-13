@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Modal, Col, Row, Input} from 'react-materialize';
-import * as userService from '../../../services/user-service';
+import {postUserReport} from '../../../services/user-service';
 import * as userInformationStore from '../../../utils/user-information-store';
 
 export default class UserReportButton extends Component {
@@ -30,8 +30,7 @@ export default class UserReportButton extends Component {
             report_by: userInformationStore.getLoggedUserId()
         };
 
-        userService.postUserReport(data)
-            .then((response) => {
+        postUserReport(data).then((response) => {
                 const statusCode = response.status;
                 
                 if(statusCode === 200) {

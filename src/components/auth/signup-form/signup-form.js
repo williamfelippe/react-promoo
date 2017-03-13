@@ -3,8 +3,8 @@ import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
+import {signup} from "../../../services/auth-service";
 import * as Validator from '../../../utils/validator';
-import * as loginService from "../../../services/auth-service";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -51,7 +51,7 @@ export default class SignupForm extends Component {
 
         if(validator.passes())
         {
-            this.signup({
+            this.submitSignup({
                 name: this.state.name,
                 email: this.state.email,
                 password: CryptoJS.MD5(this.state.password).toString(),
@@ -70,10 +70,10 @@ export default class SignupForm extends Component {
         }
     }
 
-    signup(data) {
+    submitSignup(data) {
         this.setState({loading: true});
 
-        loginService.signup(data)
+        signup(data)
             .then((response) => {
                 const statusCode = response.status;
 

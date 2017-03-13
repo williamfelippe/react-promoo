@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export function signin(data) {
+export const signin = (data) => {
     return axios.post('authentication/signin', data);
 }
 
-export function signup(data) {
+export const signup = (data) => {
     return axios.post('authentication/signup', data);
 }
 
-export function forgotPassword(data) {
+export const forgotPassword = (data) => {
     return axios.post('authentication/forgot_password', data);
 }

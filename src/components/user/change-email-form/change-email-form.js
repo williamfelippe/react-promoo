@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Input, Button} from 'react-materialize';
-import * as userService from '../../../services/user-service';
+import {putEmail} from '../../../services/user-service';
 import * as userInformationStore from '../../../utils/user-information-store';
 
 export default class ChangeEmailForm extends Component {
@@ -21,8 +21,7 @@ export default class ChangeEmailForm extends Component {
             email: this.state.email
         };
         
-        userService.putEmail(data)
-            .then((response) => {
+        putEmail(data).then((response) => {
                 const statusCode = response.status;
                 if(statusCode === 200) {
                     console.log(response.data);

@@ -3,8 +3,8 @@ import {Row, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
+import {signin} from "../../../services/auth-service";
 import * as Validator from '../../../utils/validator';
-import * as loginService from "../../../services/auth-service";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -44,7 +44,7 @@ export default class SigninForm extends Component {
 
         if(validator.passes())
         {
-            this.signin({
+            this.submitSignin({
                 email: this.state.email,
                 password: CryptoJS.MD5(this.state.password).toString(),
                 device_type: 'web',
@@ -57,11 +57,10 @@ export default class SigninForm extends Component {
         }
     }
 
-    signin(data) {
+    submitSignin(data) {
         this.setState({loading: true});
 
-        loginService.signin(data)
-            .then((response) => {
+        signin(data).then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === 200) {

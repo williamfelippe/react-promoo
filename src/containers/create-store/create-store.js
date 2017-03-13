@@ -5,17 +5,17 @@ import CreateStoreForm from '../../components/stores/create-store-form/create-st
 export default class CreateStore extends Component {
     render() {
         return (
-            <div className="container">
-                <Row>
-                    <Col s={12}>
+            <Row>
+                <Col s={12}>
+                    <div className="container">
                         <h4 className="center-align">
                             Indique uma loja
                         </h4>
-                    </Col>
+                    </div>
+                </Col>
 
-                    <CreateStoreForm />
-                </Row>
-            </div>
+                <CreateStoreForm/>
+            </Row>
         )
     }
 }

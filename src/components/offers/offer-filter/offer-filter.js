@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button} from 'react-materialize';
+import {browserHistory} from "react-router";
 import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
 import './offer-filter.css';
 
@@ -13,7 +14,8 @@ export default class OfferFilter extends Component {
             minPrice: 0,
             maxPrice: Number.POSITIVE_INFINITY,
             address: '',
-            addressLocation: {}
+            addressLocation: {},
+            filterQuery: {}
         };
     }
 
@@ -44,19 +46,7 @@ export default class OfferFilter extends Component {
         this.setState({address: address});
     }
 
-    cleanFilter() {
-        this.setState = {
-            name: '',
-            checkedCategories: [],
-            minPrice: 0,
-            maxPrice: Number.POSITIVE_INFINITY,
-            address: ''
-        };
-
-        // Descobrir como desmarcar os itens
-    }
-
-    filter() {
+    onSelectPlace() {
         const address = this.state.address;
         geocodeByAddress(address, (err, {lat, lng}) => {
             if (err) {
@@ -65,6 +55,25 @@ export default class OfferFilter extends Component {
 
             this.setState({addressLocation: {lat: lat, lng: lng}});
         });
+    }
+
+    cleanFilter() {
+        this.setState = {
+            name: '',
+            checkedCategories: [],
+            minPrice: 0,
+            maxPrice: Number.POSITIVE_INFINITY,
+            address: '',
+            filterQuery: {}
+        };
+
+        // Descobrir como desmarcar os itens
+    }
+
+    filter() {
+        const location = Object.assign({}, browserHistory.getCurrentLocation());
+        //Object.assign(location.query, query);
+        browserHistory.push(location);
     }
 
     render() {

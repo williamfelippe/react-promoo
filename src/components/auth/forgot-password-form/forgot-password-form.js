@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import Loader from "../../util/loader/loader";
 import * as Validator from "../../../utils/validator";
-import * as loginService from "../../../services/auth-service";
+import {forgotPassword} from "../../../services/auth-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class ForgotPasswordForm extends Component {
@@ -31,8 +31,7 @@ export default class ForgotPasswordForm extends Component {
 
         const validator = Validator.validate(data, rules);
 
-        if(validator.passes())
-        {
+        if(validator.passes()) {
             this.sendEmail(data);
         }
         else {
@@ -44,9 +43,7 @@ export default class ForgotPasswordForm extends Component {
     sendEmail(data) {
         this.setState({loading: true});
 
-        loginService
-            .forgotPassword(data)
-            .then((response) => {
+        forgotPassword(data).then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === 200) {
