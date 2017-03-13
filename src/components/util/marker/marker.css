@@ -1,11 +1,9 @@
 .moo-map-marker {
-  background: url("../../../../public/images/marker.png") no-repeat center;
-  background-size: contain;
-  height: 50px;
-  width: 50px;
+    font-size: 60px;
+    color: rgba(255, 83, 83, 1);
 
-  -webkit-animation: budge 1s infinite alternate;
-  animation: budge 1s infinite alternate;
+    -webkit-animation: budge 1s infinite alternate;
+    animation: budge 1s infinite alternate;
 }
 
 @-webkit-keyframes budge {

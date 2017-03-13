@@ -3,3 +3,7 @@
     height: 350px;
     padding: 0;
 }
+
+.moo-offer-detail .divider {
+    background-color: rgba(90, 95, 190, 0.3);
+}

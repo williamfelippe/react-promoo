@@ -1,0 +1,18 @@
+.moo-offer-detail-store .highlight {
+    font-weight: 300;
+}
+
+.moo-offer-detail-store .address {
+    text-align: center;
+    margin: 15px 0 15px;
+    font-size: 22px;
+}
+
+.moo-offer-detail-store .address .name {
+    color: rgba(255, 83, 83, 0.8);
+    color: rgba(38, 166, 154, 0.9);
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    margin: 5px 0 0;
+}

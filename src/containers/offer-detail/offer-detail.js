@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import GoogleMapReact from "google-map-react";
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
 import Loader from "../../components/util/loader/loader";
-import Marker from "../../components/util/marker/marker";
-import OfferDetailInfo from "../../components/offer-detail/offer-detail-info";
+import OfferDetailInfo from "../../components/offer-detail/offer-detail-info/offer-detail-info";
+import OfferDetailStore from "../../components/offer-detail/offer-detail-store/offer-detail-store";
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
 import * as offerService from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
+import * as userInformationStore from "../../utils/user-information-store"
 import "./offer-detail.css";
 
 export default class OfferDetail extends Component {
@@ -16,17 +16,13 @@ export default class OfferDetail extends Component {
             offer: {},
             center: {},
             loadingOffer: false,
-            loadingComments: false
+            loadingComments: false,
+            likes: 0,
+            dislikes: 0,
+            liked: false,
+            disliked: false
         }
     }
-
-    static defaultProps = {
-        center: {
-            lat: -20.377138,
-            lng: -43.4363368
-        },
-        zoom: 15
-    };
 
     componentDidMount() {
         const {offerId} = this.props.params;
@@ -64,52 +60,100 @@ export default class OfferDetail extends Component {
                     lng: offer.store.address.longitude
                 }
              });
+
+             this.countEvaluations();
         } 
         else {
             throw new Error(response.data);
         }
     }
 
-    render() {
-        const mapOptions = {
-            panControl: false,
-            mapTypeControl: false,
-            scrollwheel: false,
-            styles: [
-                {
-                    stylers: [
-                        {
-                            'saturation': -65
-                        }, {
-                            'gamma': 0.8
-                        }, {
-                            'lightness': 4
-                        }, {
-                            'visibility': 'on'
-                        }
-                    ]
-                }
-            ]
+    likeOffer() {
+        if (!this.state.liked) {
+            this.setState({liked: true, disliked: false});
+            this.evaluate();
+        }
+    }
+
+    dislikeOffer() {
+        if (!this.state.disliked) {
+            this.setState({liked: false, disliked: true});
+            this.evaluate();
+        }
+    }
+
+    evaluate() {
+        const data = {
+            like: this.state.liked,
+            dislike: this.state.disliked,
+            user_id: userInformationStore.getLoggedUserId(),
+            offer_id: this.props.offer._id
         };
 
+        console.log(`Evaluate ${data}`);
+
+        offerService.postOfferEvaluation(data)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if(statusCode === 200) {
+                    console.log(response.data);
+                    this.countEvaluations();
+                }
+                else {
+                    throw new Error(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+            });
+    }
+
+    countEvaluations() {
+        const evaluations = this.state.offer.evaluations;
+
+        let likes = 0, dislikes = 0;
+        evaluations.forEach((evaluation) => {
+            if (userInformationStore.isLoggedIn()) {
+                if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.like) {
+                    this.setState({liked: true});
+                }
+                else if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.dislike) {
+                    this.setState({disliked: true});
+                }
+            }
+
+            if (evaluation.like) {
+                likes++;
+            }
+            else if (evaluation.dislike) {
+                dislikes++;
+            }
+        });
+
+        this.setState({likes: likes, dislikes: dislikes});
+    }
+
+    render() {
         return (
             <Row className="moo-offer-detail">
                 {
                     (Object.keys(this.state.offer).length !== 0) ?
-                    <OfferDetailInfo offer={this.state.offer} />
+                    <OfferDetailInfo offer={this.state.offer} likes={this.state.likes}
+                        dislikes={this.state.dislikes} liked={this.state.liked}
+                        disliked={this.state.disliked} />
                     : <Loader />
                 }
 
-                <Col s={12} className="map-wrapper">
-                    <GoogleMapReact defaultCenter={this.props.center}
-                        center={this.state.center} defaultZoom={this.props.zoom}
-                        options={mapOptions}>
-                        {
-                            <Marker lat={this.state.center.lat} 
-                                lng={this.state.center.lng} />
-                        }
-                    </GoogleMapReact>
+                <Col s={10} offset="s1">
+                    <div className="divider" />
                 </Col>
+
+                {
+                    (Object.keys(this.state.offer).length !== 0) && 
+                    <OfferDetailStore store={this.state.offer.store} center={this.state.center} />
+                }
 
                 <Col s={10} offset="s1">
                     <div className="container">

@@ -126,7 +126,7 @@ export default class OfferFilter extends Component {
                 <Col s={12} className="n-padding">
                     <b className="place">Endereço</b>
 
-                    <div className="m-l-20 m-r-20">
+                    <div className="place-filter">
                         {placeFilter}
                     </div>
                 </Col>

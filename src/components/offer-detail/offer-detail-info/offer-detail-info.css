@@ -7,7 +7,8 @@
     margin: 20px 0 0 !important;
     cursor: pointer;
     font-size: 18px;
-    display: block;
+    display: table;
+    float: right;
 }
 
 .moo-offer-detail-info .avatar p {
@@ -36,16 +37,17 @@
 }
 
 .moo-offer-detail-info .date {
-    text-align: center;
+    text-align: left;
     font-weight: 500;
     font-size: 12px;
+    margin: 35px 0 0;
     color: rgba(255, 255, 255, 1);
 }
 
 .moo-offer-detail-info .date span {
     background-color: rgba(90, 95, 190, 0.6);
-    border-radius: 2px;
-    padding: 3px 7px;
+    border-radius: 10px;
+    padding: 3px 10px;
 }
 
 .moo-offer-detail-info .price {
@@ -57,5 +59,51 @@
 }
 
 .moo-offer-detail-info .category {
-    background-color: rgba(90, 95, 190, 0.8);
+    font-size: 13px;
+    margin: 0;
+}
+
+.moo-offer-detail-info .category > span {
+    color: rgba(90, 95, 190, 0.8);
+    font-weight: 700;
+}
+
+.moo-offer-detail-info .evaluate {
+    list-style: none;
+}
+
+.moo-offer-detail-info .evaluate > li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.moo-offer-detail-info .evaluate > li > a {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.moo-offer-detail-info .evaluate > li > a:hover {
+    color: rgba(90, 95, 190, 0.8) !important;
+}
+
+.moo-offer-detail-info .evaluate > li > a.active {
+    color: rgba(90, 95, 190, 1) !important;
+}
+
+.moo-offer-detail-info .store:before {
+    display:block;
+	position:absolute;
+	content:'';
+	bottom: 30px;
+	width: 140px;
+	height: 2px;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+	background: #fff;
+	box-shadow: 0 30px 0 #fff;
+}
+
+.moo-offer-detail-info .store {
+
 }

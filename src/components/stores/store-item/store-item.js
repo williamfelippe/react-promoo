@@ -20,7 +20,7 @@ export default class StoreItem extends Component {
         const {store} = this.props;
 
         const formatedAddress =
-            `${store.address.street} - ${store.address.neighborhood}. ${store.address.city}`
+            `${store.address.street} - ${store.address.neighborhood}. ${store.address.city}`;
 
         return (
             <CardPanel className="moo-store-card">
