@@ -1,0 +1,8 @@
+.moo-create-offer .price {
+    text-align: center;
+    font-family: 'Roboto Slab', serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: rgba(255, 83, 83, 0.8);
+}

@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import {Row, Col, Input, Button} from "react-materialize";
-import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
+//import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
 import {getOfferCategories} from "../../../services/offer-service";
+import * as currencyFormat from "../../../utils/currency-format";
+import "./create-offer-form.css";
 
 export default class CreateOfferForm extends Component {
     constructor(props) {
@@ -49,6 +51,7 @@ export default class CreateOfferForm extends Component {
     }
 
     onChangePrice(event) {
+        console.log("ué");
         this.setState({price: event.target.value});
     }
 
@@ -76,14 +79,14 @@ export default class CreateOfferForm extends Component {
         event.preventDefault();
 
         const {address} = this.state;
-        geocodeByAddress(address, (err, {lat, lng}, results) => {
+        /*geocodeByAddress(address, (err, {lat, lng}, results) => {
             if (err) {
                 console.log('Oh no!', err);
             }
 
             console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng});
             console.log('Entire payload from Google API', results);
-        });
+        });*/
     }
 
     render() {
@@ -105,58 +108,33 @@ export default class CreateOfferForm extends Component {
         };
 
         return (
-            <form onSubmit={this.submit.bind(this)} className="col s12">
-                <Row>
-                    { /* Endereço da loja */ }
-                    <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                        options={options}
-                                        hideLabel>
-                        <Input s={12} label="Onde fica a loja?"/>
-                    </PlacesAutocomplete>
-                </Row>
+            <Row className="moo-create-offer">
+                <form onSubmit={this.submit.bind(this)} className="col s12">
+                    { /* Nome do produto */ }
+                    <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)} />
 
-                <Row className={ !this.state.storeNotFound ? 'hide' : ''}>
+                    {/* Preço */}
                     <Col s={12}>
-                        <Row>
-                            <Input s={12} type="select" label="Categoria"
-                                   onChange={this.onChangeOfferCategory.bind(this)}>
-                                {listCategories}
-                            </Input>
-                        </Row>
-
-                        <Row>
-                            <Input s={8} label="Nome do produto" onChange={this.onChangeName.bind(this)}/>
-
-                            <Input s={4} type="number" label="Preço" onChange={this.onChangePrice.bind(this)} min="0"
-                                   step="0.01"/>
-                        </Row>
-
-                        <Row>
-                            <Input s={12} type="select" label="Loja" onChange={this.onChangeStore.bind(this)}>
-                                {listStores}
-                            </Input>
-                        </Row>
-
-                        <Row>
-                            <Input s={12} type="textarea" label="Descrição"
-                                   onChange={this.onChangeDescription.bind(this)}/>
-                        </Row>
+                        <p className="price">
+                            {currencyFormat.format(this.state.price)}
+                        </p>
+                        <p className="range-field">
+                            <input type="range" min="0" max="100" step="0.1" onChange={this.onChangePrice.bind(this)} />
+                        </p>
                     </Col>
-                </Row>
 
-                <Row className="center-align">
-                    {
-                        !this.state.storeNotFound &&
-                        <Button onClick={this.storeNotFound.bind(this)} flat waves="light" className="m-r-20">
-                            Não encontrei a loja
+                    { /* Descrição do produto */ }
+                    <Input s={12} type="textarea" label="Algo mais a nos dizer sobre esse produto?"
+                           onChange={this.onChangeDescription.bind(this)}/>
+
+                    <Col s={12}>
+                        <Button waves="light" type="submit">
+                            Divulgar
                         </Button>
-                    }
+                    </Col>
+                </form>
+            </Row>
 
-                    <Button type="submit" waves="light" className={this.state.storeNotFound ? 'w-100' : ''}>
-                        Salvar
-                    </Button>
-                </Row>
-            </form>
         )
     }
 }

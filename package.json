@@ -23,6 +23,7 @@
     "google-map-react": "^0.22.3",
     "immutable": "^3.8.1",
     "moment": "^2.17.1",
+    "numeral": "^2.0.4",
     "pubsub-js": "^1.5.5",
     "react": "^15.4.2",
     "react-cropper": "^0.10.1",
