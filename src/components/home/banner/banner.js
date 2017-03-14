@@ -8,7 +8,7 @@ import './banner.css';
 export default class Banner extends Component {
     createOffer() {
         browserHistory.push((userInformationStore.isLoggedIn())
-            ? 'dashboard/criar_oferta'
+            ? 'dashboard/criar-oferta'
             : 'entrar');
     }
 
@@ -24,7 +24,7 @@ export default class Banner extends Component {
                         <p>Ajude outras pessoas a realizar uma compra mais barata.</p>
                         <p>
                             <Button waves="light" onClick={this.createOffer.bind(this)}>
-                                Indique aqui
+                                Divulgue
                             </Button>
                         </p>
                         

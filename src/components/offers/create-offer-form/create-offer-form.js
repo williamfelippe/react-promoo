@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import {Row, Col, Input, Button} from "react-materialize";
 //import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
+import Loader from "../../util/loader/loader";
 import {getOfferCategories} from "../../../services/offer-service";
 import * as currencyFormat from "../../../utils/currency-format";
+import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./create-offer-form.css";
 
 export default class CreateOfferForm extends Component {
@@ -16,10 +18,13 @@ export default class CreateOfferForm extends Component {
             address: '',
             store: {},
             description: '',
+
             offerCategories: [],
             stores: [],
             storeNotFound: false,
-            placeType: 'establishment'
+            placeType: 'establishment',
+
+            loadingCategories: false
         };
     }
 
@@ -28,22 +33,28 @@ export default class CreateOfferForm extends Component {
     }
 
     getCategories() {
+        this.setState({loadingCategories: true});
+
         getOfferCategories()
             .then((response) => {
                 console.log(response);
                 const status = response.status;
 
-                (status === 200)
-                    ? this.setState({offerCategories: response.data})
-                    : this.treatOfferCategoriesError(status);
+                if(status === 200) {
+                    this.setState({offerCategories: response.data})
+                }
+                else {
+                    throw new Error(response.data);
+                }
+
+                this.setState({loadingCategories: false});
             })
             .catch((error) => {
                 console.log(error);
-            });
-    }
+                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
 
-    treatOfferCategoriesError(status) {
-        console.log(status);
+                this.setState({loadingCategories: false});
+            });
     }
 
     onChangeName(event) {
@@ -51,7 +62,6 @@ export default class CreateOfferForm extends Component {
     }
 
     onChangePrice(event) {
-        console.log("ué");
         this.setState({price: event.target.value});
     }
 
@@ -78,8 +88,8 @@ export default class CreateOfferForm extends Component {
     submit(event) {
         event.preventDefault();
 
-        const {address} = this.state;
-        /*geocodeByAddress(address, (err, {lat, lng}, results) => {
+        /*const {address} = this.state;
+        geocodeByAddress(address, (err, {lat, lng}, results) => {
             if (err) {
                 console.log('Oh no!', err);
             }
@@ -96,7 +106,7 @@ export default class CreateOfferForm extends Component {
             </option>
         );
 
-        const listStores = this.state.stores.map((store) =>
+        /*const listStores = this.state.stores.map((store) =>
             <option value={store._id} key={store._id}>
                 {store.name}
             </option>
@@ -105,33 +115,58 @@ export default class CreateOfferForm extends Component {
         const options = {
             types: [this.state.placeType],
             componentRestrictions: {'country': 'br'}
-        };
+        };*/
 
         return (
             <Row className="moo-create-offer">
                 <form onSubmit={this.submit.bind(this)} className="col s12">
-                    { /* Nome do produto */ }
-                    <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)} />
+                    <Row>
+                        { /* Nome do produto */ }
+                        <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)} />
+                    </Row>
 
-                    {/* Preço */}
-                    <Col s={12}>
-                        <p className="price">
-                            {currencyFormat.format(this.state.price)}
-                        </p>
-                        <p className="range-field">
-                            <input type="range" min="0" max="100" step="0.1" onChange={this.onChangePrice.bind(this)} />
-                        </p>
-                    </Col>
+                    <Row>
+                        {
+                            /* Categoria do produto */
+                            (this.state.loadingCategories) ?
+                            <Loader /> :
+                            <Input s={12} type="select" label="Escolha uma categoria" onChange={this.onChangeOfferCategory.bind(this)}>
+                                {listCategories}
+                            </Input>
+                        }
+                     </Row>
 
-                    { /* Descrição do produto */ }
-                    <Input s={12} type="textarea" label="Algo mais a nos dizer sobre esse produto?"
-                           onChange={this.onChangeDescription.bind(this)}/>
+                     <Row>
+                        {/* Preço */}
 
-                    <Col s={12}>
-                        <Button waves="light" type="submit">
-                            Divulgar
-                        </Button>
-                    </Col>
+                        <Col s={12}>
+                            <p className="title">
+                                Qual o preço?
+                            </p>
+                            <p className="price">
+                                {currencyFormat.format(this.state.price)}
+                            </p>
+
+                            <p className="price-help">
+                                Escolha o preço do produto, deslizando a barra ou se estiver no computador, usando as setas do teclado para maior precisão
+                            </p>
+                            <Input s={12} value={this.state.price} type="range" min="0" max="10000" step="0.01" onChange={this.onChangePrice.bind(this)} />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        { /* Descrição do produto */ }
+                        <Input s={12} type="textarea" label="Algo mais a nos dizer sobre esse produto?"
+                            onChange={this.onChangeDescription.bind(this)}/>
+                    </Row>
+
+                    <Row>
+                        <Col s={12}>
+                            <Button waves="light" type="submit" className="right">
+                                Divulgar
+                            </Button>
+                        </Col>
+                    </Row>
                 </form>
             </Row>
 
