@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Row, Col, Input, Button} from "react-materialize";
-//import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
+import {Row, Col, Input, Button, Modal} from "react-materialize";
 import Loader from "../../util/loader/loader";
 import {getOfferCategories} from "../../../services/offer-service";
+import CreateStoreForm from '../../stores/create-store-form/create-store-form';
 import * as currencyFormat from "../../../utils/currency-format";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./create-offer-form.css";
@@ -69,10 +69,6 @@ export default class CreateOfferForm extends Component {
         this.setState({category: event.target.value});
     }
 
-    onChangePlace(address) {
-        this.setState({address: address});
-    }
-
     onChangeStore(event) {
         this.setState({store: event.target.value});
     }
@@ -87,16 +83,6 @@ export default class CreateOfferForm extends Component {
 
     submit(event) {
         event.preventDefault();
-
-        /*const {address} = this.state;
-        geocodeByAddress(address, (err, {lat, lng}, results) => {
-            if (err) {
-                console.log('Oh no!', err);
-            }
-
-            console.log(`Yay! got latitude and longitude for ${address}`, {lat, lng});
-            console.log('Entire payload from Google API', results);
-        });*/
     }
 
     render() {
@@ -110,12 +96,7 @@ export default class CreateOfferForm extends Component {
             <option value={store._id} key={store._id}>
                 {store.name}
             </option>
-        );
-
-        const options = {
-            types: [this.state.placeType],
-            componentRestrictions: {'country': 'br'}
-        };*/
+        );*/
 
         return (
             <Row className="moo-create-offer">
@@ -148,10 +129,17 @@ export default class CreateOfferForm extends Component {
                             </p>
 
                             <p className="price-help">
-                                Escolha o preço do produto, deslizando a barra ou se estiver no computador, usando as setas do teclado para maior precisão
+                                Escolha o preço do produto, digitando o valor ou, se estiver no computador, usando as setas do teclado
                             </p>
-                            <Input s={12} value={this.state.price} type="range" min="0" max="10000" step="0.01" onChange={this.onChangePrice.bind(this)} />
+                            <Input s={12} value={this.state.price} type="number" min="0" max="10000" step="0.01" onChange={this.onChangePrice.bind(this)} />
                         </Col>
+                    </Row>
+
+                    <Row>
+                        Não encontrou a loja?
+                        <Modal header='Indicar loja' trigger={<a> Cadastre-a aqui</a>} actions={null}>
+                            <CreateStoreForm />
+                        </Modal>
                     </Row>
 
                     <Row>
