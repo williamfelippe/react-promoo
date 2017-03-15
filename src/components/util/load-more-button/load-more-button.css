@@ -13,7 +13,6 @@
 .moo-loader-more:hover,
 .moo-loader-more.active {
     cursor: pointer;
-    display: inline-block;
     color: rgba(255, 83, 83, 1);
 
     animation: bounce 1s infinite;

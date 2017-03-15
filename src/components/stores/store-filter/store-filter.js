@@ -96,7 +96,7 @@ export default class StoreFilter extends Component {
             );
 
         const options = {
-            types: ['address'],
+            types: [('cities')],
             componentRestrictions: {'country': 'br'}
         };
 
@@ -123,7 +123,7 @@ export default class StoreFilter extends Component {
                 </Col>
 
                 <Col s={12} className="n-padding">
-                    <b className="place">Endereço</b>
+                    <b className="place">Cidade</b>
 
                     <div className="place-filter">
                         {placeFilter}
