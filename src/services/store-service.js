@@ -8,8 +8,8 @@ export const getStoresByUser = (user, limit, offset) => {
     return axios.get('store/by_user/' + user + '/' + limit + '/' + offset);
 };
 
-export const getStoresByCity = (city, limit, offset) => {
-    return axios.get('store/by_city/' + city + '/' + limit + '/' + offset);
+export const getStoresByCity = (city) => {
+    return axios.get('store/by_city/' + city);
 };
 
 export const getStoreById = (storeId) => {

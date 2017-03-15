@@ -20,13 +20,20 @@
     text-align: center;
 }
 
-.moo-create-offer .price-help a {
+.moo-create-offer .price-help a,
+.moo-create-offer .new-store {
     cursor: pointer;
     font-weight: 700;
     color: rgba(90, 95, 190, 0.8) !important;
 }
 
 .moo-create-offer .price-help a:hover,
-.moo-create-offer .price-help a:focus {
+.moo-create-offer .price-help a:focus,
+.moo-create-offer .new-store:hover,
+.moo-create-offer .new-store:focus {
     color: rgba(90, 95, 190, 1) !important;
+}
+
+.moo-create-offer .new-store {
+    margin-left: 5px;
 }

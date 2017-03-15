@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Row, Col, Input, Button, Modal} from "react-materialize";
-import Loader from "../../util/loader/loader";
+import {Row, Col, Input, Button} from "react-materialize";
+import PlacesAutocomplete from 'react-places-autocomplete';
 import {getOfferCategories} from "../../../services/offer-service";
-import CreateStoreForm from '../../stores/create-store-form/create-store-form';
+import {getStoresByCity} from "../../../services/store-service";
+import Loader from "../../util/loader/loader";
+import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
 import * as currencyFormat from "../../../utils/currency-format";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./create-offer-form.css";
@@ -15,16 +17,16 @@ export default class CreateOfferForm extends Component {
             name: '',
             price: 0,
             category: {},
-            address: '',
+            city: '',
+            cityId: '',
             store: {},
             description: '',
 
             offerCategories: [],
             stores: [],
-            storeNotFound: false,
-            placeType: 'establishment',
 
-            loadingCategories: false
+            loadingCategories: false,
+            loadingStores: false
         };
     }
 
@@ -51,7 +53,7 @@ export default class CreateOfferForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingCategories: false});
             });
@@ -69,6 +71,37 @@ export default class CreateOfferForm extends Component {
         this.setState({category: event.target.value});
     }
 
+    onChangeCity(city) {
+        this.setState({city: city});
+    }
+
+    onSelectCity(address, placeId) {
+        this.setState({ city: address, cityId: placeId, loadingStores: true});
+
+        console.log(`PlaceId ${placeId}`);
+
+        getStoresByCity(placeId)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if(statusCode === 200) {
+                    console.log(response.data);
+                    this.setState({stores: response.data});
+                }
+                else {
+                    throw new Error(response.data);
+                }
+
+                this.setState({loadingStores: false});
+            })
+            .catch((error) => {
+                console.log(error);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+
+                this.setState({loadingStores: false});
+            });
+    }
+
     onChangeStore(event) {
         this.setState({store: event.target.value});
     }
@@ -77,12 +110,10 @@ export default class CreateOfferForm extends Component {
         this.setState({description: event.target.value});
     }
 
-    storeNotFound() {
-        this.setState({storeNotFound: true, placeType: 'address'});
-    }
-
     submit(event) {
         event.preventDefault();
+
+        console.log(this.state);
     }
 
     render() {
@@ -92,11 +123,20 @@ export default class CreateOfferForm extends Component {
             </option>
         );
 
-        /*const listStores = this.state.stores.map((store) =>
+        const listStores = this.state.stores.map((store) =>
             <option value={store._id} key={store._id}>
                 {store.name}
             </option>
-        );*/
+        );
+
+        const options = {
+            types: ['(cities)'],
+            componentRestrictions: {'country': 'br'}
+        };
+
+        const storeSuggest = (this.state.loadingStores) 
+            ? <Loader /> 
+            : <StoreSuggest listStores={listStores} onChangeStore={this.onChangeStore} />;
 
         return (
             <Row className="moo-create-offer">
@@ -120,7 +160,7 @@ export default class CreateOfferForm extends Component {
                      <Row>
                         {/* Preço */}
 
-                        <Col s={12}>
+                        <Col s={12} className="n-padding">
                             <p className="title">
                                 Qual o preço?
                             </p>
@@ -136,11 +176,22 @@ export default class CreateOfferForm extends Component {
                     </Row>
 
                     <Row>
-                        Não encontrou a loja?
-                        <Modal header='Indicar loja' trigger={<a> Cadastre-a aqui</a>} actions={null}>
-                            <CreateStoreForm />
-                        </Modal>
+                        <Col s={12} className="n-padding">
+                            <b className="place">Cidade</b>
+
+                            <div className="place-filter">
+                                <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
+                                        onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
+                                    <Input s={12} label="Procurar por endereço"/>
+                                </PlacesAutocomplete>
+                            </div>
+                        </Col>
                     </Row>
+
+                    {
+                        /* Loja */
+                        this.state.city && {storeSuggest}
+                    }
 
                     <Row>
                         { /* Descrição do produto */ }

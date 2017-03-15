@@ -96,7 +96,7 @@ export default class SignupForm extends Component {
                 console.log(error);
 
                 this.setState({loading: false});
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

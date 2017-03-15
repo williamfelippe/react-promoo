@@ -52,7 +52,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingOffers: false});
             })
@@ -83,7 +83,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingStores: false});
             })
@@ -120,7 +120,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingCategories: false});
             })
@@ -170,8 +170,8 @@ export default class StoreDetail extends Component {
             <Row className="moo-store-detail">
                 <Col s={12} className="map-wrapper">
                     <GoogleMapReact defaultCenter={this.props.center}
-                                    center={this.state.center} defaultZoom={this.props.zoom}
-                                    options={mapOptions}/>
+                        center={this.state.center} defaultZoom={this.props.zoom}
+                        options={mapOptions}/>
                 </Col>
 
                 <Col s={12}>

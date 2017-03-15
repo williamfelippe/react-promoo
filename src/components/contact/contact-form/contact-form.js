@@ -94,7 +94,7 @@ export default class ContactForm extends Component {
             })
             .catch((error) => {
                 this.setState({loading: false});
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

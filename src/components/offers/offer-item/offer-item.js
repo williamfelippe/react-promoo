@@ -69,7 +69,7 @@ export default class OfferItem extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

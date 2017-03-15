@@ -14,7 +14,9 @@ export default class Notification extends Component {
 
     componentDidMount() {
         PubSub.subscribe('show-message', (subject, message) => {
-            if(subject.localeCompare('show-message') === 0) this.addNotification(message);
+            if(subject && subject.localeCompare('show-message') === 0) {
+                this.addNotification(message);
+            }
         });
     }
 

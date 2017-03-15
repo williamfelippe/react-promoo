@@ -41,7 +41,7 @@ export default class OfferDetail extends Component {
                 console.log('ERRO EM DETAIL');
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
                 this.setState({loadingOffer: false});
             })
     }
@@ -106,7 +106,7 @@ export default class OfferDetail extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

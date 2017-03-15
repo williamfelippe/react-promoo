@@ -34,7 +34,7 @@ class OfferCommentBox extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingComments: false});
             });
@@ -79,7 +79,7 @@ class OfferCommentBox extends Component {
             })
             .catch((error) => {
                 this.setState({loadingSendComments: false});
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 
@@ -87,7 +87,7 @@ class OfferCommentBox extends Component {
         return (
             <Row>
                 <Col s={12}>
-                    <h4>Comente:</h4>
+                    <h4>Comente aí ;)</h4>
 
                     <form onSubmit={this.props.sendComment} className="moo-comments-form">
                         <Input s={12} type="textarea" label="Deixe seu comentário"

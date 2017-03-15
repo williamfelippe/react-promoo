@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Row, Col} from 'react-materialize';
+import {Row, Col, Input, Button} from 'react-materialize';
 import "./create-store-form.css";
 
 export default class CreateStoreForm extends Component {
@@ -13,15 +13,27 @@ export default class CreateStoreForm extends Component {
         this.state = {location: {}, name: ''};
     }
 
+    onChangeName(event) {
+        this.setState({name: event.target.value});
+    }
+
     submit(event) {
         event.preventDefault();
+        console.log(this.state);
     }
 
     render() {
         return (
             <form onSubmit={this.submit.bind(this)}>
                 <Row>
-                    <Col s={12} className="n-padding">
+                    <Input s={12} type="text" label="Nome da loja" onChange={this.onChangeName.bind(this)}/>
+                </Row>
+
+                <Row>
+                    <Col s={12}>
+                        <Button waves="light" type="submit" className="right">
+                            Indicar
+                        </Button>
                     </Col>
                 </Row>
             </form>

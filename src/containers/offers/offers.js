@@ -41,7 +41,7 @@ export default class Offers extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingOffers: false});
             });
@@ -72,7 +72,7 @@ export default class Offers extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage(["Ops... Parece que estamos com alguns problemas"]);
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingCategories: false});
             });
