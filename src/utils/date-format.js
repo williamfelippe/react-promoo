@@ -1,5 +1,5 @@
 import Moment from 'moment';
 
-export function format(date) {
+export const formatDate = (date) => {
     return Moment().utc(date).format('[Dia] D/MM/YY [às] h[h]mm');
 }

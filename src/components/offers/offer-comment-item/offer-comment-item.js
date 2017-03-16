@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Row, Col, Chip} from "react-materialize";
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
-import * as dateFormat from "../../../utils/date-format";
+import {formatDate} from "../../../utils/date-format";
 import avatar from "../../../../public/images/default_avatar.png";
 import "./offer-comment-item.css";
 
@@ -20,7 +20,7 @@ export default class OfferCommentItem extends Component {
                         {comment.message}
                     </p>
                     <small className="date">
-                        { dateFormat.format(comment.created_at) }
+                        { formatDate(comment.created_at) }
                     </small>
                 </Col>
             </Row>

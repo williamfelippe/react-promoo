@@ -5,8 +5,8 @@ import PubSub from 'pubsub-js';
 import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import {postOfferEvaluation} from "../../../services/offer-service";
-import * as dateFormat from "../../../utils/date-format";
-import * as currencyFormat from "../../../utils/currency-format";
+import {formatDate} from "../../../utils/date-format";
+import {formatCurrency} from "../../../utils/currency-format";
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./offer-item.css";
@@ -128,13 +128,13 @@ export default class OfferItem extends Component {
 
                     <div className="price center-align">
                         {/* Preço */}
-                        { currencyFormat.format(offer.price) }
+                        { formatCurrency(offer.price) }
                     </div>
 
                     <div className="date center-align">
                         {/* Data */}
                         <small>
-                            { dateFormat.format(offer.created_at) }
+                            { formatDate(offer.created_at) }
                         </small>
                     </div>
                 </Link>

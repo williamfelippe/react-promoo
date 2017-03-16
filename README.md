@@ -6,7 +6,9 @@
 
 <p>
     <ul>
-        <li>Faltando criação de oferta e loja <i>(pensando uma maneira intuitiva, rápida e bonita de fazer)</i></li>
+        <li>Faltando criação de oferta <i>(Em andamento)</i></li>
+
+        <li>Faltando criação de oferta e loja</li>
 
         <li>Falta criar filtragem das ofertas e lojas</li>
 

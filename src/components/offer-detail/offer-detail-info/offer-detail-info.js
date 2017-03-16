@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Row, Col, Icon} from "react-materialize";
 import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
-import * as dateFormat from "../../../utils/date-format";
-import * as currencyFormat from "../../../utils/currency-format";
+import {formatDate} from "../../../utils/date-format";
+import {formatCurrency} from "../../../utils/currency-format";
 import "./offer-detail-info.css";
 
 export default class OfferDetailInfo extends Component {
@@ -15,7 +15,7 @@ export default class OfferDetailInfo extends Component {
                     <Row className="n-margin-bottom">
                         <Col s={6}>
                             <p className="date">
-                                <span>{dateFormat.format(offer.created_at)}</span>
+                                <span>{formatDate(offer.created_at)}</span>
                             </p>
 
                         </Col>
@@ -36,7 +36,7 @@ export default class OfferDetailInfo extends Component {
                             </p>
 
                             <p className="price">
-                                {currencyFormat.format(offer.price)}
+                                {formatCurrency(offer.price)}
                             </p>
                         </Col>
 

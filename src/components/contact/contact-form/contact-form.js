@@ -118,7 +118,8 @@ export default class ContactForm extends Component {
 
                     <Row>
                         <Input s={12} type="select" label="Assunto"
-                            defaultValue="Dúvida" onChange={this.onChangeSubject.bind(this)}>
+                            defaultValue="" onChange={this.onChangeSubject.bind(this)}>
+                            <option value="" disabled>No que podemos ajudar?</option>
                             <option value="Dúvida">Dúvida</option>
                             <option value="Bug">Bug</option>
                             <option value="Parceria">Parceria</option>

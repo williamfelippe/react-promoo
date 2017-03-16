@@ -7,7 +7,7 @@ import {getOfferCategories, postOffer} from "../../../services/offer-service";
 import {getStoresByCity} from "../../../services/store-service";
 import Loader from "../../util/loader/loader";
 import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
-import * as currencyFormat from "../../../utils/currency-format";
+import {formatCurrency} from "../../../utils/currency-format";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./create-offer-form.css";
 
@@ -209,7 +209,9 @@ export default class CreateOfferForm extends Component {
                             /* Categoria do produto */
                             (this.state.loadingCategories) ?
                             <Loader /> :
-                            <Input s={12} type="select" label="Escolha uma categoria" onChange={this.onChangeOfferCategory.bind(this)}>
+                            <Input s={12} type="select" defaultValue="" label="Escolha uma categoria" 
+                                onChange={this.onChangeOfferCategory.bind(this)}>
+                                <option value="" disabled>Escolhe uma aí =)</option>
                                 {listCategories}
                             </Input>
                         }
@@ -222,7 +224,7 @@ export default class CreateOfferForm extends Component {
                                 Qual o preço?
                             </p>
                             <p className="price">
-                                {currencyFormat.format(this.state.price)}
+                                {formatCurrency(this.state.price)}
                             </p>
 
                             <p className="help">
