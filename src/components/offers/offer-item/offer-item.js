@@ -7,7 +7,7 @@ import OfferReportButton from "../../../components/offers/offer-report-button/of
 import {postOfferEvaluation} from "../../../services/offer-service";
 import {formatDate} from "../../../utils/date-format";
 import {formatCurrency} from "../../../utils/currency-format";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 import "./offer-item.css";
 
@@ -50,7 +50,7 @@ export default class OfferItem extends Component {
         const data = {
             like: this.state.liked,
             dislike: this.state.disliked,
-            user_id: userInformationStore.getLoggedUserId(),
+            user_id: getLoggedUserId(),
             offer_id: this.props.offer._id
         };
 
@@ -78,11 +78,11 @@ export default class OfferItem extends Component {
 
         let likes = 0, dislikes = 0;
         evaluations.forEach((evaluation) => {
-            if (userInformationStore.isLoggedIn()) {
-                if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.like) {
+            if (getLoggedUserId()) {
+                if (evaluation.user === getLoggedUserId() && evaluation.like) {
                     this.setState({liked: true});
                 }
-                else if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.dislike) {
+                else if (evaluation.user === getLoggedUserId() && evaluation.dislike) {
                     this.setState({disliked: true});
                 }
             }
@@ -157,7 +157,7 @@ export default class OfferItem extends Component {
                             </a>
                         </li>
                         <li>
-                            {userInformationStore.isLoggedIn() && <OfferReportButton/>}
+                            {isLoggedIn() && <OfferReportButton/>}
                         </li>
                     </ul>
                 </div>

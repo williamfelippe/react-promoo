@@ -7,7 +7,7 @@ import StoreList from "../../components/stores/store-list/store-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import {getStores, getStoreCategories} from "../../services/store-service";
-import * as userInformationStore from "../../utils/user-information-store";
+import {isLoggedIn} from "../../utils/user-information-store";
 
 export default class Stores extends Component {
     constructor(props) {
@@ -89,7 +89,7 @@ export default class Stores extends Component {
     }
 
     redirectToCreateOffer() {
-        browserHistory.push((userInformationStore.isLoggedIn())
+        browserHistory.push((isLoggedIn())
             ? 'dashboard/criar-loja'
             : 'entrar');
     }

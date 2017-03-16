@@ -5,7 +5,7 @@ import Loader from "../../../components/util/loader/loader";
 import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
 import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
 import OfferList from "../../../components/offers/offer-list/offer-list";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import * as userService from "../../../services/user-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -26,7 +26,7 @@ export default class UserProfile extends Component {
     componentDidMount() {
         const userId = (this.props.params.userId)
             ? this.props.params.userId
-            : userInformationStore.getLoggedUserId();
+            : getLoggedUserId();
 
         this.getUser(userId);
         this.getUserOffers(userId);

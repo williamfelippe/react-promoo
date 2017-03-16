@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Row, Col, Input, Button, Icon, Modal} from "react-materialize";
 import {postOfferReport} from "../../../services/offer-service";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./offer-report-button.css";
 
 export default class OfferReportButton extends Component {
@@ -30,7 +30,7 @@ export default class OfferReportButton extends Component {
     indicateExpiredOffer() {
         const data = {
             'reason': (this.state.subject.localeCompare('Outro') === 0) ? this.state.message : this.state.subject,
-            'report_by': userInformationStore.getLoggedUserId(),
+            'report_by': getLoggedUserId(),
             'offer_id': this.props.offer._id
         };
 

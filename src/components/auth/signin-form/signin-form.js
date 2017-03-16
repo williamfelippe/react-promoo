@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import {signin} from "../../../services/auth-service";
 import {validate} from '../../../utils/validator';
-import * as userInformationStore from "../../../utils/user-information-store";
+import {createUserStore} from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
 export default class SigninForm extends Component {
@@ -69,7 +69,7 @@ export default class SigninForm extends Component {
                     const token = userInformations.token;
                     const user = userInformations.user;
 
-                    userInformationStore.createUserStore(user._id, user.name, user.email,
+                    createUserStore(user._id, user.name, user.email,
                         user.photo, token, user.settings);
 
                     browserHistory.push('/');

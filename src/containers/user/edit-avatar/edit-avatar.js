@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import FileProcessor from "react-file-processor";
 import Cropper from "react-cropper";
 import {Row, Col, Button} from "react-materialize";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {getLoggedUserAvatar} from "../../../utils/user-information-store";
 import "cropperjs/dist/cropper.css";
 import "./edit-avatar.css";
 
@@ -10,7 +10,7 @@ export default class EditAvatar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            src: userInformationStore.getLoggedUserAvatar(),
+            src: getLoggedUserAvatar(),
             cropResult: null,
         };
     }
@@ -64,7 +64,7 @@ export default class EditAvatar extends Component {
     }
 
     useDefaultImage() {
-        this.setState({src: userInformationStore.getLoggedUserAvatar()});
+        this.setState({src: getLoggedUserAvatar()});
     }
 
     render() {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Input, Button} from 'react-materialize';
 import {putEmail} from '../../../services/user-service';
-import * as userInformationStore from '../../../utils/user-information-store';
+import {getLoggedUserId} from '../../../utils/user-information-store';
 
 export default class ChangeEmailForm extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ export default class ChangeEmailForm extends Component {
         event.preventDefault();
 
         const data = {
-            user_id: userInformationStore.getLoggedUserId(),
+            user_id: getLoggedUserId(),
             email: this.state.email
         };
         

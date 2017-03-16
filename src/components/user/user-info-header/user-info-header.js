@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
 import ImageLoader from "../../util/image-wrapper/image-wrapper";
 import UserReportButton from "../user-report-button/user-report-button";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./user-info-header.css";
 
 export default class UserInfoHeader extends Component {
@@ -21,7 +21,7 @@ export default class UserInfoHeader extends Component {
                     </h2>
 
                     {
-                        (userInformationStore.getLoggedUserId() === user._id) &&
+                        (getLoggedUserId() === user._id) &&
                         <p className="email">
                             <small>
                                 {user.email}
@@ -31,7 +31,7 @@ export default class UserInfoHeader extends Component {
                 </Col>
 
                 {
-                    (userInformationStore.getLoggedUserId() !== user._id) &&
+                    (getLoggedUserId() !== user._id) &&
                     <Col s={12} className="n-padding center-align">
                         <UserReportButton user={user}/>
                     </Col>

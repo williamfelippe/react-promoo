@@ -2,17 +2,16 @@ import React, {Component} from "react";
 import {Link} from "react-router";
 import {browserHistory} from "react-router";
 import {Row, Col, Button} from "react-materialize";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {clearUserStore, isLoggedIn} from "../../../utils/user-information-store";
 import "./header.css";
 
 export default class Header extends Component {
     signout() {
-        userInformationStore.clear();
+        clearUserStore();
         browserHistory.push('/');
     }
 
     render() {
-        const isLoggedIn = userInformationStore.isLoggedIn();
         return (
             <section className="moo-nav-bar">
                 <div className="container">
@@ -38,15 +37,15 @@ export default class Header extends Component {
                                 <li>
                                     <Link activeClassName="active" to="contato">Contato</Link>
                                 </li>
-                                <li className={isLoggedIn ? 'hide' : ''}>
+                                <li className={isLoggedIn() ? 'hide' : ''}>
                                     <Link activeClassName="active" to="registrar" className="signup-button">Registrar</Link>
                                 </li>
-                                <li className={isLoggedIn ? 'hide' : ''}>
+                                <li className={isLoggedIn() ? 'hide' : ''}>
                                     <Link to="entrar" className="waves-effect waves-light btn">
                                         Entrar
                                     </Link>
                                 </li>
-                                <li className={!isLoggedIn ? 'hide' : ''}>
+                                <li className={!isLoggedIn() ? 'hide' : ''}>
                                     <Button onClick={this.signout.bind(this)} waves="light" className="btn">
                                         Sair
                                     </Button>

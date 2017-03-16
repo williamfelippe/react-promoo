@@ -7,7 +7,7 @@ import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
-import * as userInformationStore from "../../utils/user-information-store";
+import {isLoggedIn} from "../../utils/user-information-store";
 import * as messagesPublisher from "../../utils/messages-publisher";
 
 export default class Offers extends Component {
@@ -95,7 +95,7 @@ export default class Offers extends Component {
     }
 
     redirectToCreateOfferPage() {
-        browserHistory.push((userInformationStore.isLoggedIn())
+        browserHistory.push((isLoggedIn())
             ? 'dashboard/criar-oferta'
             : 'entrar');
     }

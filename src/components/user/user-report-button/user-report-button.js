@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Modal, Col, Row, Input} from 'react-materialize';
 import {postUserReport} from '../../../services/user-service';
-import * as userInformationStore from '../../../utils/user-information-store';
+import {getLoggedUserId} from '../../../utils/user-information-store';
 
 export default class UserReportButton extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ export default class UserReportButton extends Component {
         const data = {
             user_id: this.props.user._id,
             reason: this.state.reason,
-            report_by: userInformationStore.getLoggedUserId()
+            report_by: getLoggedUserId()
         };
 
         postUserReport(data).then((response) => {

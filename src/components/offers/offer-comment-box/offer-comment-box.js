@@ -4,7 +4,7 @@ import Loader from "../../util/loader/loader";
 import OfferCommentList from "../offer-comment-list/offer-comment-list";
 import {postOfferComment, getOfferComments} from "../../../services/offer-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
-import * as userInformationStore from "../../../utils/user-information-store";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./offer-comment-box.css";
 
 class OfferCommentBox extends Component {
@@ -58,7 +58,7 @@ class OfferCommentBox extends Component {
     sendComment() {
         const data = {
             message: this.state.message,
-            user: userInformationStore.getLoggedUserId(),
+            user: getLoggedUserId(),
             offer: this.props.offerId
         };
 

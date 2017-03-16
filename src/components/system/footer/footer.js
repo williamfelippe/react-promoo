@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {Row, Col} from 'react-materialize';
-import * as userInformationStore from '../../../utils/user-information-store';
+import {isLoggedIn} from '../../../utils/user-information-store';
 import './footer.css';
 
 export default class Footer extends Component {
     render() {
-        const isLoggedIn = userInformationStore.isLoggedIn();
         return (
             <footer className="page-footer">
                 <div className="container">
@@ -35,10 +34,10 @@ export default class Footer extends Component {
                                         <li>
                                             <Link to="termos-de-uso">Termos de uso</Link>
                                         </li>
-                                        <li className={isLoggedIn ? 'hide' : ''}>
+                                        <li className={isLoggedIn() ? 'hide' : ''}>
                                             <Link to="registrar">Registrar</Link>
                                         </li>
-                                        <li className={isLoggedIn ? 'hide' : ''}>
+                                        <li className={isLoggedIn() ? 'hide' : ''}>
                                             <Link to="entrar">Entrar</Link>
                                         </li>
                                     </ul>

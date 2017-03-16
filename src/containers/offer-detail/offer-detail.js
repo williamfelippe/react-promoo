@@ -6,7 +6,7 @@ import OfferDetailStore from "../../components/offer-detail/offer-detail-store/o
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
 import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
 import * as messagesPublisher from "../../utils/messages-publisher";
-import * as userInformationStore from "../../utils/user-information-store";
+import {isLoggedIn, getLoggedUserId} from "../../utils/user-information-store";
 import "./offer-detail.css";
 
 export default class OfferDetail extends Component {
@@ -86,7 +86,7 @@ export default class OfferDetail extends Component {
         const data = {
             like: this.state.liked,
             dislike: this.state.disliked,
-            user_id: userInformationStore.getLoggedUserId(),
+            user_id: getLoggedUserId(),
             offer_id: this.props.offer._id
         };
 
@@ -115,11 +115,11 @@ export default class OfferDetail extends Component {
 
         let likes = 0, dislikes = 0;
         evaluations.forEach((evaluation) => {
-            if (userInformationStore.isLoggedIn()) {
-                if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.like) {
+            if (isLoggedIn()) {
+                if (evaluation.user === getLoggedUserId() && evaluation.like) {
                     this.setState({liked: true});
                 }
-                else if (evaluation.user === userInformationStore.getLoggedUserId() && evaluation.dislike) {
+                else if (evaluation.user === getLoggedUserId() && evaluation.dislike) {
                     this.setState({disliked: true});
                 }
             }

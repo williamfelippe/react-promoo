@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import {Row, Col, Button, Icon} from 'react-materialize';
-import * as userInformationStore from "../../../utils/user-information-store";
+import {isLoggedIn} from "../../../utils/user-information-store";
 import logo from '../../../../public/images/logo.png';
 import './banner.css';
 
 export default class Banner extends Component {
     createOffer() {
-        browserHistory.push((userInformationStore.isLoggedIn())
+        browserHistory.push((isLoggedIn())
             ? 'dashboard/criar-oferta'
             : 'entrar');
     }
