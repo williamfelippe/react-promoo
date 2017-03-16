@@ -8,7 +8,7 @@ import {getStoresByCity} from "../../../services/store-service";
 import Loader from "../../util/loader/loader";
 import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
 import {formatCurrency} from "../../../utils/currency-format";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 import "./create-offer-form.css";
 
 export default class CreateOfferForm extends Component {
@@ -56,7 +56,7 @@ export default class CreateOfferForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingCategories: false});
             });
@@ -99,7 +99,7 @@ export default class CreateOfferForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingStores: false});
             });
@@ -143,7 +143,7 @@ export default class CreateOfferForm extends Component {
             console.log("CREATE ERROR");
             console.log(errors);
 
-            messagesPublisher.showMessage(...errors.get('nome'), ...errors.get('valor'));
+            publishMessage(...errors.get('nome'), ...errors.get('valor'));
         }
     }
 
@@ -160,7 +160,7 @@ export default class CreateOfferForm extends Component {
                     const location = Object.assign({}, browserHistory.getCurrentLocation());
                     browserHistory.push(location);
 
-                    messagesPublisher.showMessage("=) Obrigado pela ajuda");
+                    publishMessage("=) Obrigado pela ajuda");
                 }
                 else {
                     throw new Error(response.data);
@@ -171,7 +171,7 @@ export default class CreateOfferForm extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
                 this.setState({loadingSubmit: false});
             });
     }

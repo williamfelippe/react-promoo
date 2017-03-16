@@ -3,7 +3,7 @@ import {Row, Col, Input, Button, Icon} from "react-materialize";
 import Loader from "../../util/loader/loader";
 import OfferCommentList from "../offer-comment-list/offer-comment-list";
 import {postOfferComment, getOfferComments} from "../../../services/offer-service";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./offer-comment-box.css";
 
@@ -34,7 +34,7 @@ class OfferCommentBox extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingComments: false});
             });
@@ -79,7 +79,7 @@ class OfferCommentBox extends Component {
             })
             .catch((error) => {
                 this.setState({loadingSendComments: false});
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

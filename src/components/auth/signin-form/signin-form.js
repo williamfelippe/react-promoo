@@ -6,7 +6,7 @@ import Loader from "../../util/loader/loader";
 import {signin} from "../../../services/auth-service";
 import {validate} from '../../../utils/validator';
 import {createUserStore} from "../../../utils/user-information-store";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 
 export default class SigninForm extends Component {
     constructor(props) {
@@ -53,7 +53,7 @@ export default class SigninForm extends Component {
         }
         else {
             const errors = validator.errors;
-            messagesPublisher.showMessage(...errors.get('email'), ...errors.get('senha'));
+            publishMessage(...errors.get('email'), ...errors.get('senha'));
         }
     }
 
@@ -83,7 +83,7 @@ export default class SigninForm extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loading: false});
             });

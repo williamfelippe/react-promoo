@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Row, Col, Input, Button} from 'react-materialize';
+import React, {Component} from "react";
+import {Row, Col, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
-import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
-import './offer-filter.css';
+import queryString from "query-string";
+import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
+import "./offer-filter.css";
 
 export default class OfferFilter extends Component {
     constructor(props) {
@@ -13,9 +14,8 @@ export default class OfferFilter extends Component {
             checkedCategories: [],
             minPrice: 0,
             maxPrice: Number.POSITIVE_INFINITY,
-            address: '',
-            addressLocation: {},
-            filterQuery: {}
+            city: '',
+            cityId: ''
         };
     }
 
@@ -42,19 +42,11 @@ export default class OfferFilter extends Component {
         this.setState({maxPrice: event.target.value});
     }
 
-    onChangePlace(address) {
-        this.setState({address: address});
+    onChangeCity(address) {
+        this.setState({city: address});
     }
 
-    onSelectPlace() {
-        const address = this.state.address;
-        geocodeByAddress(address, (err, {lat, lng}) => {
-            if (err) {
-                console.log('Oh no!', err);
-            }
-
-            this.setState({addressLocation: {lat: lat, lng: lng}});
-        });
+    onSelectCity(address, placeId) {
     }
 
     cleanFilter() {
@@ -63,16 +55,25 @@ export default class OfferFilter extends Component {
             checkedCategories: [],
             minPrice: 0,
             maxPrice: Number.POSITIVE_INFINITY,
-            address: '',
-            filterQuery: {}
+            city: ''
         };
 
         // Descobrir como desmarcar os itens
     }
 
     filter() {
+        const parsed = {
+            name: this.state.name,
+            checkedCategories: this.state.checkedCategories,
+            minPrice: this.state.minPrice,
+            maxPrice: this.state.maxPrice,
+            city: this.state.cityId
+        };
+
+        const query = queryString.stringify(parsed);
+
         const location = Object.assign({}, browserHistory.getCurrentLocation());
-        //Object.assign(location.query, query);
+        Object.assign(location.query, query);
         browserHistory.push(location);
     }
 
@@ -105,8 +106,8 @@ export default class OfferFilter extends Component {
         };
 
         const placeFilter =
-            <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                options={options} placeholder="&nbsp;" hideLabel>
+            <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
+                onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
                 <Input s={12} label="Procurar por endereço"/>
             </PlacesAutocomplete>;
 

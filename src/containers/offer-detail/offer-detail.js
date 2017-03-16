@@ -5,7 +5,7 @@ import OfferDetailInfo from "../../components/offer-detail/offer-detail-info/off
 import OfferDetailStore from "../../components/offer-detail/offer-detail-store/offer-detail-store";
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
 import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
-import * as messagesPublisher from "../../utils/messages-publisher";
+import {publishMessage} from "../../utils/messages-publisher";
 import {isLoggedIn, getLoggedUserId} from "../../utils/user-information-store";
 import "./offer-detail.css";
 
@@ -41,7 +41,7 @@ export default class OfferDetail extends Component {
                 console.log('ERRO EM DETAIL');
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
                 this.setState({loadingOffer: false});
             })
     }
@@ -106,7 +106,7 @@ export default class OfferDetail extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

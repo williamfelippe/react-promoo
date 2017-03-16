@@ -7,7 +7,7 @@ import UserInfoHeader from "../../../components/user/user-info-header/user-info-
 import OfferList from "../../../components/offers/offer-list/offer-list";
 import {getLoggedUserId} from "../../../utils/user-information-store";
 import * as userService from "../../../services/user-service";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -43,7 +43,7 @@ export default class UserProfile extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingUser: false});
             })
@@ -74,7 +74,7 @@ export default class UserProfile extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingOffers: false});
             })

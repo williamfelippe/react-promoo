@@ -3,7 +3,7 @@ import {Row, Input, Button} from "react-materialize";
 import Loader from "../../util/loader/loader";
 import {validate} from "../../../utils/validator";
 import {forgotPassword} from "../../../services/auth-service";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 
 export default class ForgotPasswordForm extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ export default class ForgotPasswordForm extends Component {
         }
         else {
             const errors = validator.errors;
-            messagesPublisher.showMessage(...errors.get('email'));
+            publishMessage(...errors.get('email'));
         } 
     }
 
@@ -48,7 +48,7 @@ export default class ForgotPasswordForm extends Component {
 
                 if (statusCode === 200) {
                     console.log(response.data);
-                    messagesPublisher.showMessage(["Senha alterada com sucesso"]);
+                    publishMessage(["Senha alterada com sucesso"]);
                 } 
                 else {
                     throw new Error(response.data);
@@ -61,7 +61,7 @@ export default class ForgotPasswordForm extends Component {
 
                 this.setState({loading: false});
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

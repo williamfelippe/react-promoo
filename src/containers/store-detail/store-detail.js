@@ -6,7 +6,7 @@ import OfferList from "../../components/offers/offer-list/offer-list";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import {getStoreById} from "../../services/store-service";
 import {getOffersByStore, getOfferCategories} from "../../services/offer-service";
-import * as messagesPublisher from "../../utils/messages-publisher";
+import {publishMessage} from "../../utils/messages-publisher";
 import "./store-detail.css";
 
 export default class StoreDetail extends Component {
@@ -52,7 +52,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingOffers: false});
             })
@@ -83,7 +83,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingStores: false});
             })
@@ -120,7 +120,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingCategories: false});
             })

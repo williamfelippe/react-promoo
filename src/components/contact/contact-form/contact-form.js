@@ -4,7 +4,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import Loader from "../../util/loader/loader";
 import * as Validator from '../../../utils/validator';
 import {sendMessage} from '../../../services/system-service';
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 
 const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
 
@@ -70,7 +70,7 @@ export default class ContactForm extends Component {
             //Inserir mensagem de erro
             const errors = validator.errors;
 
-            messagesPublisher.showMessage(...errors.get('nome'), ...errors.get('email'),
+            publishMessage(...errors.get('nome'), ...errors.get('email'),
                 ...errors.get('assunto'), ...errors.get('mensagem'), ...errors.get('captcha'));
         }
     }
@@ -84,7 +84,7 @@ export default class ContactForm extends Component {
 
                 if (statusCode === 200) {
                     console.log(response.data);
-                    messagesPublisher.showMessage(["Mensagem enviada com sucesso"]);
+                    publishMessage(["Mensagem enviada com sucesso"]);
                 } 
                 else {
                     throw new Error(response.data);
@@ -94,7 +94,7 @@ export default class ContactForm extends Component {
             })
             .catch((error) => {
                 this.setState({loading: false});
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

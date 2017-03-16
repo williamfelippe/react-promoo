@@ -1,5 +1,5 @@
 import PubSub from 'pubsub-js';
 
-export function showMessage(...messages) {
+export const publishMessage = (...messages) => {
     messages.map((message) => PubSub.publish('show-message', message));
 }

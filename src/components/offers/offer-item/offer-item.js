@@ -8,7 +8,7 @@ import {postOfferEvaluation} from "../../../services/offer-service";
 import {formatDate} from "../../../utils/date-format";
 import {formatCurrency} from "../../../utils/currency-format";
 import {getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 import "./offer-item.css";
 
 const TAG = "show-or-hide-comment-nav";
@@ -69,7 +69,7 @@ export default class OfferItem extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
             });
     }
 

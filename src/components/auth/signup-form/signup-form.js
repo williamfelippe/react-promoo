@@ -6,7 +6,7 @@ import Loader from "../../util/loader/loader";
 import {signup} from "../../../services/auth-service";
 import {validate} from '../../../utils/validator';
 import {createUserStore} from "../../../utils/user-information-store";
-import * as messagesPublisher from "../../../utils/messages-publisher";
+import {publishMessage} from "../../../utils/messages-publisher";
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -66,7 +66,7 @@ export default class SignupForm extends Component {
             console.log("SIGNUP ERROR");
             console.log(errors);
 
-            messagesPublisher.showMessage(...errors.get('nome'), ...errors.get('email'), ...errors.get('senha'));
+            publishMessage(...errors.get('nome'), ...errors.get('email'), ...errors.get('senha'));
         }
     }
 
@@ -95,7 +95,7 @@ export default class SignupForm extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loading: false});
             });

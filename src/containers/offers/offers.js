@@ -8,7 +8,7 @@ import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import {isLoggedIn} from "../../utils/user-information-store";
-import * as messagesPublisher from "../../utils/messages-publisher";
+import {publishMessage} from "../../utils/messages-publisher";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ export default class Offers extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingOffers: false});
             });
@@ -72,7 +72,7 @@ export default class Offers extends Component {
             .catch((error) => {
                 console.log(error);
 
-                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage("Ops... Parece que estamos com alguns problemas");
 
                 this.setState({loadingCategories: false});
             });
