@@ -6,7 +6,7 @@ const messages = {
     min: 'Olho no campo :attribute!. Precisamos de pelo menos :min caracteres'
 }
 
-export function validate(data, rules) {
+export const validate = (data, rules) => {
     Validator.useLang('pt');
     return new Validator(data, rules, messages);
 }

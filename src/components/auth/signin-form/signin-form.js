@@ -4,7 +4,7 @@ import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import {signin} from "../../../services/auth-service";
-import * as Validator from '../../../utils/validator';
+import {validate} from '../../../utils/validator';
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -40,7 +40,7 @@ export default class SigninForm extends Component {
             senha: 'min:6'
         };
 
-        const validator = Validator.validate(data, rules);
+        const validator = validate(data, rules);
 
         if(validator.passes())
         {

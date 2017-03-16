@@ -4,7 +4,7 @@ import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import {signup} from "../../../services/auth-service";
-import * as Validator from '../../../utils/validator';
+import {validate} from '../../../utils/validator';
 import * as userInformationStore from "../../../utils/user-information-store";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -47,7 +47,7 @@ export default class SignupForm extends Component {
             senha: 'required|min:6'
         };
 
-        const validator = Validator.validate(data, rules);
+        const validator = validate(data, rules);
 
         if(validator.passes())
         {
@@ -95,8 +95,9 @@ export default class SignupForm extends Component {
             .catch((error) => {
                 console.log(error);
 
-                this.setState({loading: false});
                 messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+
+                this.setState({loading: false});
             });
     }
 

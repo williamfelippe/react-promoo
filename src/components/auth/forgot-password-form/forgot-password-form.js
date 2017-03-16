@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
 import Loader from "../../util/loader/loader";
-import * as Validator from "../../../utils/validator";
+import {validate} from "../../../utils/validator";
 import {forgotPassword} from "../../../services/auth-service";
 import * as messagesPublisher from "../../../utils/messages-publisher";
 
@@ -29,7 +29,7 @@ export default class ForgotPasswordForm extends Component {
             email: 'required|email'
         };
 
-        const validator = Validator.validate(data, rules);
+        const validator = validate(data, rules);
 
         if(validator.passes()) {
             this.sendEmail(data);

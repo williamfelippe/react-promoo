@@ -1,7 +1,9 @@
 import React, {Component} from "react";
-import {Row, Col, Input, Button} from "react-materialize";
+import {Row, Col, Icon, Input, Button} from "react-materialize";
 import PlacesAutocomplete from 'react-places-autocomplete';
-import {getOfferCategories} from "../../../services/offer-service";
+import {browserHistory} from "react-router";
+import {validate} from '../../../utils/validator';
+import {getOfferCategories, postOffer} from "../../../services/offer-service";
 import {getStoresByCity} from "../../../services/store-service";
 import Loader from "../../util/loader/loader";
 import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
@@ -16,15 +18,16 @@ export default class CreateOfferForm extends Component {
         this.state = {
             name: '',
             price: 0,
-            category: {},
+            category: '',
             city: '',
             cityId: '',
-            store: {},
+            store: '',
             description: '',
 
             offerCategories: [],
             stores: [],
 
+            loadingSubmit: false,
             loadingCategories: false,
             loadingStores: false
         };
@@ -114,29 +117,84 @@ export default class CreateOfferForm extends Component {
         event.preventDefault();
 
         console.log(this.state);
+
+        const data = { 
+            nome: this.state.name,
+            valor: this.state.price,
+            categoria: this.state.category,
+            loja: this.state.store
+        }
+
+        const rules = {
+            nome: 'required',
+            valor: 'required|numeric',
+            categoria: 'required',
+            loja: 'required'
+        }
+
+        const validator = validate(data, rules);
+
+        if(validator.passes()) {
+            //this.divulgeOffer({name: this.state.name});
+        }
+        else {
+            const errors = validator.errors;
+
+            console.log("CREATE ERROR");
+            console.log(errors);
+
+            messagesPublisher.showMessage(...errors.get('nome'), ...errors.get('valor'));
+        }
+    }
+
+    divulgeOffer(data) {
+        this.setState({loadingSubmit: true});
+
+        postOffer(data)
+            .then((response) => {
+                console.log(response);
+
+                const statusCode = response.status;
+
+                if(statusCode === 200) {
+                    const location = Object.assign({}, browserHistory.getCurrentLocation());
+                    browserHistory.push(location);
+
+                    messagesPublisher.showMessage("=) Obrigado pela ajuda");
+                }
+                else {
+                    throw new Error(response.data);
+                }
+
+                this.setState({loadingSubmit: false});
+            })
+            .catch((error) => {
+                console.log(error);
+
+                messagesPublisher.showMessage("Ops... Parece que estamos com alguns problemas");
+                this.setState({loadingSubmit: false});
+            });
     }
 
     render() {
+        const options = {
+            types: ['(cities)'],
+            componentRestrictions: {'country': 'br'}
+        };
+
         const listCategories = this.state.offerCategories.map((offerCategory) =>
             <option value={offerCategory._id} key={offerCategory._id}>
                 {offerCategory.name}
             </option>
         );
 
-        const listStores = this.state.stores.map((store) =>
-            <option value={store._id} key={store._id}>
-                {store.name}
-            </option>
-        );
-
-        const options = {
-            types: ['(cities)'],
-            componentRestrictions: {'country': 'br'}
-        };
-
         const storeSuggest = (this.state.loadingStores) 
             ? <Loader /> 
-            : <StoreSuggest listStores={listStores} onChangeStore={this.onChangeStore} />;
+            : <StoreSuggest stores={this.state.stores} onChangeStore={this.onChangeStore} />;
+
+        const submitButton = (this.state.loadingSubmit)
+            ? <Loader />
+            : <Button waves="light" type="submit" className="right">Divulgar</Button>;
 
         return (
             <Row className="moo-create-offer">
@@ -159,7 +217,6 @@ export default class CreateOfferForm extends Component {
 
                      <Row>
                         {/* Preço */}
-
                         <Col s={12} className="n-padding">
                             <p className="title">
                                 Qual o preço?
@@ -168,7 +225,7 @@ export default class CreateOfferForm extends Component {
                                 {currencyFormat.format(this.state.price)}
                             </p>
 
-                            <p className="price-help">
+                            <p className="help">
                                 Escolha o preço do produto, digitando o valor ou, se estiver no computador, usando as setas do teclado
                             </p>
                             <Input s={12} value={this.state.price} type="number" min="0" max="10000" step="0.01" onChange={this.onChangePrice.bind(this)} />
@@ -177,7 +234,13 @@ export default class CreateOfferForm extends Component {
 
                     <Row>
                         <Col s={12} className="n-padding">
-                            <b className="place">Cidade</b>
+                            <p className="place">
+                                <Icon>pin_drop</Icon>
+                            </p>
+
+                            <p className="help">
+                                Escolha o preço do produto, digitando o valor ou, se estiver no computador, usando as setas do teclado
+                            </p>
 
                             <div className="place-filter">
                                 <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
@@ -190,7 +253,7 @@ export default class CreateOfferForm extends Component {
 
                     {
                         /* Loja */
-                        this.state.city && {storeSuggest}
+                        this.state.city && storeSuggest
                     }
 
                     <Row>
@@ -201,14 +264,11 @@ export default class CreateOfferForm extends Component {
 
                     <Row>
                         <Col s={12}>
-                            <Button waves="light" type="submit" className="right">
-                                Divulgar
-                            </Button>
+                            {submitButton}
                         </Col>
                     </Row>
                 </form>
             </Row>
-
         )
     }
 }
