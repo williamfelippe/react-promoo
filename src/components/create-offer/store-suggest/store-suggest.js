@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Row, Col, Input, Modal} from "react-materialize";
-import CreateStoreForm from '../../stores/create-store-form/create-store-form';
+import CreateStoreForm from "../../create-store/create-store-form/create-store-form";
 
 export default class StoreSuggest extends Component {
     render() {

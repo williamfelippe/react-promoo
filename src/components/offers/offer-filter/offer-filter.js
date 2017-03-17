@@ -43,11 +43,13 @@ export default class OfferFilter extends Component {
         this.setState({maxPrice: event.target.value});
     }
 
-    onChangeCity(address) {
-        this.setState({city: address});
+    onChangeCity(city) {
+        this.setState({city});
     }
 
-    onSelectCity(address, placeId) {
+    onSelectCity(city, cityId) {
+        console.log(`Cidade selecionada: ${city} - ${cityId}`);
+        this.setState({ city, cityId });
     }
 
     cleanFilter() {

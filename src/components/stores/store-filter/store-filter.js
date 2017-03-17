@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Row, Col, Input, Button} from 'react-materialize';
-import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
-import * as Validator from '../../../utils/validator';
+import {browserHistory} from "react-router";
+import queryString from "query-string";
+import PlacesAutocomplete from 'react-places-autocomplete';
 
 export default class StoreFilter extends Component {
     constructor(props) {
@@ -10,8 +11,8 @@ export default class StoreFilter extends Component {
         this.state = {
             name: '',
             checkedCategories: [],
-            address: '',
-            addressLocation: {}
+            city: '',
+            cityId: ''
         };
     }
 
@@ -30,55 +31,34 @@ export default class StoreFilter extends Component {
         this.setState({checkedCategories: checkedCategories});
     }
 
-    onChangePlace(address) {
-        this.setState({address: address});
+    onChangeCity(city) {
+        this.setState({city});
     }
 
-    onSelectPlace() {
-        const address = this.state.address;
-        geocodeByAddress(address, (err, {lat, lng}) => {
-            if (err) {
-                console.log('Oh no!', err);
-            }
-
-            this.setState({addressLocation: {lat: lat, lng: lng}});
-        });
+    onSelectCity(city, cityId) {
+        this.setState({ city, cityId });
     }
 
     cleanFilter() {
         this.setState = {
             name: '',
             checkedCategories: [],
-            address: ''
+            city: ''
         };
 
         // Descobrir como desmarcar os itens
     }
 
     filter() {
-        const data = {
-            nome: this.state.name,
-            endereco: this.state.address,
-            categorias: this.state.checkedCategories,
+        const parsed = {
+            name: this.state.name,
+            checkedCategories: this.state.checkedCategories,
+            city: this.state.cityId
         };
 
-        const rules = {
-            nome: 'min:1',
-            endereco: 'min:1',
-            categorias: 'array',
-        };
-
-        const validator = Validator.validate(data, rules);
-
-        if(validator.passes()) {
-            console.log("It works");
-            this.onSelectPlace();
-        }
-        else {
-            //Inserir mensagem de erro
-            const errors = validator.errors;
-            console.log(errors);
-        }
+        const query = queryString.stringify(parsed);
+        const location = `${browserHistory.getCurrentLocation().pathname}?${query}`;
+        browserHistory.push(location);
     }
 
     render() {
@@ -96,13 +76,13 @@ export default class StoreFilter extends Component {
             );
 
         const options = {
-            types: [('cities')],
+            types: ['(cities)'],
             componentRestrictions: {'country': 'br'}
         };
 
         const placeFilter =
-            <PlacesAutocomplete value={this.state.address} onChange={this.onChangePlace.bind(this)}
-                                options={options} placeholder="&nbsp;" hideLabel>
+            <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
+                onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
                 <Input s={12} label="Procurar por endereço"/>
             </PlacesAutocomplete>;
 

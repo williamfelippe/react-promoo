@@ -89,7 +89,7 @@ export default class Stores extends Component {
         this.getAllStores();
     }
 
-    redirectToCreateOffer() {
+    redirectToCreateStore() {
         browserHistory.push((isLoggedIn())
             ? 'dashboard/criar-loja'
             : 'entrar');
@@ -98,7 +98,7 @@ export default class Stores extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.stores.length} redirectToPage={Stores.redirectToCreateOffer}
+                <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateStore}
                             buttonName="Indicar"/>
 
                 <Col s={12}>
