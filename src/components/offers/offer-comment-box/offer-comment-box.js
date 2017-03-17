@@ -11,7 +11,6 @@ class OfferCommentBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            offer: {},
             comments: [],
             message: '',
             loadingComments: false,
@@ -20,13 +19,16 @@ class OfferCommentBox extends Component {
     }
 
     componentDidMount() {
-        this.getComments();
+        const {offerId} = this.props;
+        if(offerId && offerId !== undefined) {
+            this.getComments(offerId);
+        }
     }
 
-    getComments() {
+    getComments(offerId) {
         this.setState({loadingComments: true});
 
-        getOfferComments(this.state.offer._id)
+        getOfferComments(offerId)
             .then((response) => {
                 this.treatOfferCommentsResponse(response);
                 this.setState({loadingComments: false});

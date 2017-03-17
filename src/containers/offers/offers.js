@@ -9,6 +9,7 @@ import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import {isLoggedIn} from "../../utils/user-information-store";
 import {publishMessage} from "../../utils/messages-publisher";
+import {REQUEST_SUCCESS} from "../../utils/constants";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -27,6 +28,8 @@ export default class Offers extends Component {
     componentDidMount() {
         this.getAllOffers();
         this.getAllOffersCategories();
+
+        console.log(this.props.location);
     }
 
     getAllOffers() {
@@ -50,7 +53,7 @@ export default class Offers extends Component {
     treatOffersResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             let offers = this.state.offers;
             this.setState({
                 offers: offers.concat(response.data)
@@ -81,7 +84,7 @@ export default class Offers extends Component {
     treatOfferCategoriesResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             this.setState({categories: response.data});
         }
         else {

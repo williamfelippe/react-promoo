@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {Row, Col, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
 import queryString from "query-string";
-import PlacesAutocomplete, {geocodeByAddress} from "react-places-autocomplete";
+import PlacesAutocomplete from "react-places-autocomplete";
+import {MAX_PRICE_VALUE} from "../../../utils/constants";
 import "./offer-filter.css";
 
 export default class OfferFilter extends Component {
@@ -13,7 +14,7 @@ export default class OfferFilter extends Component {
             name: '',
             checkedCategories: [],
             minPrice: 0,
-            maxPrice: Number.POSITIVE_INFINITY,
+            maxPrice: MAX_PRICE_VALUE,
             city: '',
             cityId: ''
         };
@@ -54,7 +55,7 @@ export default class OfferFilter extends Component {
             name: '',
             checkedCategories: [],
             minPrice: 0,
-            maxPrice: Number.POSITIVE_INFINITY,
+            maxPrice: MAX_PRICE_VALUE,
             city: ''
         };
 
@@ -71,9 +72,7 @@ export default class OfferFilter extends Component {
         };
 
         const query = queryString.stringify(parsed);
-
-        const location = Object.assign({}, browserHistory.getCurrentLocation());
-        Object.assign(location.query, query);
+        const location = `${browserHistory.getCurrentLocation().pathname}?${query}`;
         browserHistory.push(location);
     }
 

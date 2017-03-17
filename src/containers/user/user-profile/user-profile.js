@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
-import {getOffersByUser} from "../../../services/offer-service";
 import Loader from "../../../components/util/loader/loader";
 import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
 import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
 import OfferList from "../../../components/offers/offer-list/offer-list";
 import {getLoggedUserId} from "../../../utils/user-information-store";
-import * as userService from "../../../services/user-service";
+import {getOffersByUser} from "../../../services/offer-service";
+import {getUser} from "../../../services/user-service";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -28,14 +29,14 @@ export default class UserProfile extends Component {
             ? this.props.params.userId
             : getLoggedUserId();
 
-        this.getUser(userId);
+        this.getUserById(userId);
         this.getUserOffers(userId);
     }
 
-    getUser(userId) {
+    getUserById(userId) {
         this.setState({loadingUser: true});
 
-        userService.getUser(userId)
+        getUser(userId)
             .then((response) => {
                 this.treatUserResponse(response);
                 this.setState({loadingUser: false});
@@ -52,7 +53,7 @@ export default class UserProfile extends Component {
     treatUserResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             this.setState({user: response.data});
             console.log("USER");
             console.log(this.state.user);
@@ -83,7 +84,7 @@ export default class UserProfile extends Component {
     treatOffersResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             this.setState({offers: response.data});
             console.log(this.state.offers);
         }

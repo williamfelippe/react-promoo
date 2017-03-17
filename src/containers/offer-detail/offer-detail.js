@@ -7,6 +7,7 @@ import OfferCommentBox from "../../components/offers/offer-comment-box/offer-com
 import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
 import {publishMessage} from "../../utils/messages-publisher";
 import {isLoggedIn, getLoggedUserId} from "../../utils/user-information-store";
+import {REQUEST_SUCCESS} from "../../utils/constants";
 import "./offer-detail.css";
 
 export default class OfferDetail extends Component {
@@ -49,7 +50,7 @@ export default class OfferDetail extends Component {
     treatOfferResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             const offer = response.data;
             console.log("OFERTA");
             console.log(offer);
@@ -96,7 +97,7 @@ export default class OfferDetail extends Component {
             .then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                     this.countEvaluations();
                 }

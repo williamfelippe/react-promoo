@@ -3,6 +3,7 @@ import FileProcessor from "react-file-processor";
 import Cropper from "react-cropper";
 import {Row, Col, Button} from "react-materialize";
 import {getLoggedUserAvatar} from "../../../utils/user-information-store";
+//import {REQUEST_SUCCESS} from "../../../utils/constants";
 import "cropperjs/dist/cropper.css";
 import "./edit-avatar.css";
 
@@ -56,11 +57,6 @@ export default class EditAvatar extends Component {
         this.setState({
             cropResult: this.cropper.getCroppedCanvas().toDataURL(),
         });
-
-        setInterval(() => {
-            console.log('RESULT: ' + this.state.cropResult);
-        }, 2000);
-
     }
 
     useDefaultImage() {

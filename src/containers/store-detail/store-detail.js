@@ -7,6 +7,7 @@ import LoadMoreButton from "../../components/util/load-more-button/load-more-but
 import {getStoreById} from "../../services/store-service";
 import {getOffersByStore, getOfferCategories} from "../../services/offer-service";
 import {publishMessage} from "../../utils/messages-publisher";
+import {REQUEST_SUCCESS} from "../../utils/constants";
 import "./store-detail.css";
 
 export default class StoreDetail extends Component {
@@ -61,7 +62,7 @@ export default class StoreDetail extends Component {
     treatOffersResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             let offers = this.state.offers;
             this.setState({
                 offers: offers.concat(response.data)
@@ -92,7 +93,7 @@ export default class StoreDetail extends Component {
     treatStoreResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             const store = response.data;
 
             this.setState({
@@ -129,7 +130,7 @@ export default class StoreDetail extends Component {
     treatOfferCategoriesResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             this.setState({categories: response.data});
         }
         else {

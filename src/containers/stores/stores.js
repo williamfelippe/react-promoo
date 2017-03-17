@@ -8,6 +8,7 @@ import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import {getStores, getStoreCategories} from "../../services/store-service";
 import {isLoggedIn} from "../../utils/user-information-store";
+import {REQUEST_SUCCESS} from "../../utils/constants";
 
 export default class Stores extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ export default class Stores extends Component {
     treatStoresResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             let stores = this.state.stores;
             response.data.forEach((item) => {
                 stores.push(item);
@@ -75,7 +76,7 @@ export default class Stores extends Component {
     treatStoreCategoriesResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             this.setState({categories: response.data});
         }
         else {
