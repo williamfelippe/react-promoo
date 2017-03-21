@@ -201,7 +201,13 @@ export default class CreateOfferForm extends Component {
                 <form onSubmit={this.submit.bind(this)} className="col s12">
                     <Row>
                         { /* Nome do produto */ }
-                        <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)} />
+                        <Col s={12} className="n-padding">
+                            <p className="icon">
+                                <Icon>local_offer</Icon>
+                            </p>
+
+                            <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)} />
+                        </Col>
                     </Row>
 
                     <Row>
@@ -236,12 +242,12 @@ export default class CreateOfferForm extends Component {
 
                     <Row>
                         <Col s={12} className="n-padding">
-                            <p className="place">
+                            <p className="icon">
                                 <Icon>pin_drop</Icon>
                             </p>
 
                             <p className="help">
-                                Escolha o preço do produto, digitando o valor ou, se estiver no computador, usando as setas do teclado
+                                Conte-nos em qual cidade você encontrou essa promoção
                             </p>
 
                             <div className="place-filter">

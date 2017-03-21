@@ -38,11 +38,11 @@
     margin-left: 5px;
 }
 
-.moo-create-offer .place {    
+.moo-create-offer .icon {    
     text-align: center;
     color: rgba(255, 83, 83, 0.8);
 }
 
-.moo-create-offer .place i {
-    font-size: 60px !important;
+.moo-create-offer .icon i {
+    font-size: 40px !important;
 }

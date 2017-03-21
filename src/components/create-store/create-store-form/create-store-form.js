@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Row, Col, Input, Button} from "react-materialize";
+import {Row, Col, Input, Icon, Button} from "react-materialize";
 import PlacesAutocomplete from "react-places-autocomplete";
 import "./create-store-form.css";
 
@@ -38,17 +38,35 @@ export default class CreateStoreForm extends Component {
         };
 
         return (
-            <Row>
+            <Row className="moo-create-store">
                 <form onSubmit={this.submit.bind(this)} className="col s12">
                     <Row>
-                        <Input s={12} type="text" label="Nome da loja" onChange={this.onChangeName.bind(this)}/>
+                        <Col s={12} className="n-padding">
+                            <p className="icon">
+                                <Icon>store</Icon>
+                            </p>
+
+                            <Input s={12} type="text" label="Nome da loja" onChange={this.onChangeName.bind(this)}/>
+                        </Col>
                     </Row>
 
                     <Row>
-                        <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
-                            onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
-                            <Input s={12} label="Procurar por endereço" className="m-l-20 m-r-20"/>
-                        </PlacesAutocomplete>
+                        <Col s={12} className="n-padding">
+                            <p className="icon">
+                                <Icon>place</Icon>
+                            </p>
+
+                            <p className="help">
+                                Conte-nos em qual cidade você encontrou essa promoção
+                            </p>
+
+                            <div className="place-filter">
+                                <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
+                                    onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
+                                    <Input s={12} label="Procurar por endereço" className="m-l-20 m-r-20"/>
+                                </PlacesAutocomplete>
+                            </div>
+                        </Col>
                     </Row>
 
                     <Row>
