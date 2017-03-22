@@ -141,9 +141,10 @@ export default class OfferDetail extends Component {
             <Row className="moo-offer-detail">
                 {
                     (Object.keys(this.state.offer).length !== 0) ?
-                        <OfferDetailInfo offer={this.state.offer} likes={this.state.likes}
-                                         dislikes={this.state.dislikes} liked={this.state.liked}
-                                         disliked={this.state.disliked}/>
+                        <OfferDetailInfo
+                            offer={this.state.offer} likes={this.state.likes}
+                            dislikes={this.state.dislikes} liked={this.state.liked}
+                            disliked={this.state.disliked}/>
                         : <Loader />
                 }
 
