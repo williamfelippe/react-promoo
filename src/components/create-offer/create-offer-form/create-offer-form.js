@@ -123,14 +123,14 @@ export default class CreateOfferForm extends Component {
             valor: this.state.price,
             categoria: this.state.category,
             loja: this.state.store
-        }
+        };
 
         const rules = {
             nome: 'required',
             valor: 'required|numeric',
             categoria: 'required',
             loja: 'required'
-        }
+        };
 
         const validator = validate(data, rules);
 
@@ -140,10 +140,15 @@ export default class CreateOfferForm extends Component {
         else {
             const errors = validator.errors;
 
-            console.log("CREATE ERROR");
+            console.log("CREATE OFFER ERROR");
             console.log(errors);
 
-            publishMessage(...errors.get('nome'), ...errors.get('valor'));
+            publishMessage(
+                ...errors.get('nome'),
+                ...errors.get('valor'),
+                ...errors.get('categoria'),
+                ...errors.get('loja')
+            );
         }
     }
 

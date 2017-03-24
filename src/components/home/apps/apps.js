@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import './apps.css';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import "./apps.css";
 
 export default class Apps extends Component {
     render() {
@@ -9,7 +9,7 @@ export default class Apps extends Component {
                 <Col s={12}>
                     <div className="container">
                         <h3 className="center-align">
-                            promoo<b>app</b>
+                            promoo<strong>app</strong>
                         </h3>
 
                         <Row className="n-margin-bottom">
@@ -32,7 +32,7 @@ export default class Apps extends Component {
                                 </ul>
                             </Col>
                             <Col s={12} m={7}>
-                                <div className="phone"></div>
+                                <div className="phone" />
                             </Col>
                         </Row>
                     </div>

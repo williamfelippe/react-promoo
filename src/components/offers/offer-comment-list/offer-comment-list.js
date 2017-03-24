@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import OfferCommentItem from '../offer-comment-item/offer-comment-item';
+import React, {Component} from "react";
+import OfferCommentItem from "../offer-comment-item/offer-comment-item";
 import "./offer-comment-list.css";
 
 export default class OfferCommentList extends Component {
