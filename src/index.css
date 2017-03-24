@@ -71,6 +71,14 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     padding: 0 !important;
 }
 
+.n-padding-left {
+    padding-left: 0 !important;
+}
+
+.n-padding-right {
+    padding-right: 0 !important;
+}
+
 .n-margin {
     margin: 0 !important;
 }
