@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Row, Col, Input, Icon, Button} from "react-materialize";
 import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
 import {browserHistory} from "react-router";
+import {validate} from '../../../utils/validator';
 import {getStoreCategories, postStore} from "../../../services/store-service";
 import {publishMessage} from "../../../utils/messages-publisher";
 import Loader from "../../util/loader/loader";
