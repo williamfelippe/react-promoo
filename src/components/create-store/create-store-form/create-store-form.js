@@ -235,7 +235,7 @@ export default class CreateStoreFormTest extends Component {
                     </Row>
 
                     {
-                        (this.city) &&
+                        (this.state.city) &&
                         <Row>
                             <Input s={12} type="text" label="Bairro" onChange={this.onChangeNeighborhood.bind(this)}/>
 
@@ -246,7 +246,7 @@ export default class CreateStoreFormTest extends Component {
                     }
 
                     {
-                        (this.city) &&
+                        (this.state.city) &&
                         <Row>
                             <Input s={12} type="text" label="Rua" onChange={this.onChangeStreet.bind(this)}/>
 
