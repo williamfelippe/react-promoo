@@ -15,7 +15,7 @@ export default class StoreSuggest extends Component {
         return (
             <Row>
                 <Input s={12} type="select" label="Escolha a loja" defaultValue=""
-                    onChange={onChangeStore.bind(this)}>
+                    onChange={onChangeStore}>
                     <option value="" disabled>Dê uma olhadinha nas opções ;)</option>
                     {listStores}
                 </Input>

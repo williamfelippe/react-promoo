@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const signin = (data) => {
     return axios.post('authentication/signin', data);

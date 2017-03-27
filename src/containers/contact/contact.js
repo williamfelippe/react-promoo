@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import ContactForm from '../../components/contact/contact-form/contact-form';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import ContactForm from "../../components/contact/contact-form/contact-form";
 
 export default class Contact extends Component {
     render() {

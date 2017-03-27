@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import PubSub from 'pubsub-js';
-import {NotificationStack} from 'react-notification';
-import {OrderedSet} from 'immutable'; // Optional library used for example
+import React, {Component} from "react";
+import PubSub from "pubsub-js";
+import {NotificationStack} from "react-notification";
+import {OrderedSet} from "immutable"; // Optional library used for example
 
 export default class Notification extends Component {
     constructor() {

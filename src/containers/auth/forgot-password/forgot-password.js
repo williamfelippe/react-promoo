@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {Row, Col} from 'react-materialize';
-import ForgotPasswordForm from '../../../components/auth/forgot-password-form/forgot-password-form';
-import logo from '../../../../public/images/logo.png';
+import React, {Component} from "react";
+import {Link} from "react-router";
+import {Row, Col} from "react-materialize";
+import ForgotPasswordForm from "../../../components/auth/forgot-password-form/forgot-password-form";
+import logo from "../../../../public/images/logo.png";
 
 export default class ForgotPassword extends Component {
     render() {

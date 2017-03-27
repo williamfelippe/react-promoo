@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import UserBar from '../components/system/user-bar/user-bar';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import UserBar from "../components/system/user-bar/user-bar";
 
 export default class UserLayout extends Component {
     render() {

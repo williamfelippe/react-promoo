@@ -9,6 +9,7 @@ import Loader from "../../util/loader/loader";
 import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
 import {formatCurrency} from "../../../utils/currency-format";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./create-offer-form.css";
 
 export default class CreateOfferForm extends Component {
@@ -45,7 +46,7 @@ export default class CreateOfferForm extends Component {
                 console.log(response);
                 const status = response.status;
 
-                if(status === 200) {
+                if (status === 200) {
                     this.setState({offerCategories: response.data})
                 }
                 else {
@@ -78,16 +79,16 @@ export default class CreateOfferForm extends Component {
         this.setState({city: city});
     }
 
-    onSelectCity(address, placeId) {
-        this.setState({ city: address, cityId: placeId, loadingStores: true});
+    onSelectCity(city, cityId) {
+        this.setState({city, cityId, loadingStores: true});
 
-        console.log(`PlaceId ${placeId}`);
+        console.log(`PlaceId ${cityId}`);
 
-        getStoresByCity(placeId)
+        getStoresByCity(cityId)
             .then((response) => {
                 const statusCode = response.status;
 
-                if(statusCode === 200) {
+                if (statusCode === 200) {
                     console.log(response.data);
                     this.setState({stores: response.data});
                 }
@@ -107,6 +108,7 @@ export default class CreateOfferForm extends Component {
 
     onChangeStore(event) {
         this.setState({store: event.target.value});
+        console.log(`Loja: ${this.state.store}`);
     }
 
     onChangeDescription(event) {
@@ -118,7 +120,7 @@ export default class CreateOfferForm extends Component {
 
         console.log(this.state);
 
-        const data = { 
+        const data = {
             nome: this.state.name,
             valor: this.state.price,
             categoria: this.state.category,
@@ -134,8 +136,16 @@ export default class CreateOfferForm extends Component {
 
         const validator = validate(data, rules);
 
-        if(validator.passes()) {
-            //this.divulgeOffer({name: this.state.name});
+        if (validator.passes()) {
+            this.divulgeOffer({
+                name: this.state.name,
+                price: this.state.price,
+                category: this.state.category,
+                store: this.state.store,
+                user: getLoggedUserId(),
+                description: this.state.description,
+            });
+
         }
         else {
             const errors = validator.errors;
@@ -161,7 +171,7 @@ export default class CreateOfferForm extends Component {
 
                 const statusCode = response.status;
 
-                if(statusCode === 200) {
+                if (statusCode === 200) {
                     const location = Object.assign({}, browserHistory.getCurrentLocation());
                     browserHistory.push(location);
 
@@ -193,9 +203,9 @@ export default class CreateOfferForm extends Component {
             </option>
         );
 
-        const storeSuggest = (this.state.loadingStores) 
-            ? <Loader /> 
-            : <StoreSuggest stores={this.state.stores} onChangeStore={this.onChangeStore} />;
+        const storeSuggest = (this.state.loadingStores)
+            ? <Loader />
+            : <StoreSuggest stores={this.state.stores} onChangeStore={this.onChangeStore.bind(this)}/>;
 
         const submitButton = (this.state.loadingSubmit)
             ? <Loader />
@@ -211,7 +221,7 @@ export default class CreateOfferForm extends Component {
                                 <Icon>local_offer</Icon>
                             </p>
 
-                            <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)} />
+                            <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)}/>
                         </Col>
                     </Row>
 
@@ -219,16 +229,16 @@ export default class CreateOfferForm extends Component {
                         {
                             /* Categoria do produto */
                             (this.state.loadingCategories) ?
-                            <Loader /> :
-                            <Input s={12} type="select" defaultValue="" label="Escolha uma categoria" 
-                                onChange={this.onChangeOfferCategory.bind(this)}>
-                                <option value="" disabled>Escolhe uma aí =)</option>
-                                {listCategories}
-                            </Input>
+                                <Loader /> :
+                                <Input s={12} type="select" defaultValue="" label="Escolha uma categoria"
+                                       onChange={this.onChangeOfferCategory.bind(this)}>
+                                    <option value="" disabled>Escolhe uma aí =)</option>
+                                    {listCategories}
+                                </Input>
                         }
-                     </Row>
+                    </Row>
 
-                     <Row>
+                    <Row>
                         {/* Preço */}
                         <Col s={12} className="n-padding">
                             <p className="title">
@@ -239,9 +249,11 @@ export default class CreateOfferForm extends Component {
                             </p>
 
                             <p className="help">
-                                Escolha o preço do produto, digitando o valor ou, se estiver no computador, usando as setas do teclado
+                                Escolha o preço do produto, digitando o valor ou, se estiver no computador, usando as
+                                setas do teclado
                             </p>
-                            <Input s={12} value={this.state.price} type="number" min="0" max="10000" step="0.01" onChange={this.onChangePrice.bind(this)} />
+                            <Input s={12} value={this.state.price} type="number" min="0" max="10000" step="0.01"
+                                   onChange={this.onChangePrice.bind(this)}/>
                         </Col>
                     </Row>
 
@@ -257,7 +269,8 @@ export default class CreateOfferForm extends Component {
 
                             <div className="place-filter">
                                 <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
-                                        onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
+                                                    onSelect={this.onSelectCity.bind(this)} options={options}
+                                                    placeholder="&nbsp;" hideLabel>
                                     <Input s={12} label="Procurar por endereço"/>
                                 </PlacesAutocomplete>
                             </div>
@@ -272,7 +285,7 @@ export default class CreateOfferForm extends Component {
                     <Row>
                         { /* Descrição do produto */ }
                         <Input s={12} type="textarea" label="Algo mais a nos dizer sobre esse produto?"
-                            onChange={this.onChangeDescription.bind(this)}/>
+                               onChange={this.onChangeDescription.bind(this)}/>
                     </Row>
 
                     <Row>

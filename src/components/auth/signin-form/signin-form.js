@@ -53,7 +53,10 @@ export default class SigninForm extends Component {
         }
         else {
             const errors = validator.errors;
-            publishMessage(...errors.get('email'), ...errors.get('senha'));
+            publishMessage(
+                ...errors.get('email'),
+                ...errors.get('senha')
+            );
         }
     }
 

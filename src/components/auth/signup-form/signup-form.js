@@ -66,7 +66,11 @@ export default class SignupForm extends Component {
             console.log("SIGNUP ERROR");
             console.log(errors);
 
-            publishMessage(...errors.get('nome'), ...errors.get('email'), ...errors.get('senha'));
+            publishMessage(
+                ...errors.get('nome'),
+                ...errors.get('email'),
+                ...errors.get('senha')
+            );
         }
     }
 

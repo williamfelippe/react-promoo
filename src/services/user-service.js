@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const getUser = (_id) => {
     return axios.get('user/' + _id);

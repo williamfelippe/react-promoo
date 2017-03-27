@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import ChangeEmailForm from '../../../components/user/change-email-form/change-email-form';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import ChangeEmailForm from "../../../components/user/change-email-form/change-email-form";
 
 export default class EditEmail extends Component {
     render() {

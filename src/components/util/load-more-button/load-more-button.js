@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import Loader from "../loader/loader";
 import "./load-more-button.css";
 

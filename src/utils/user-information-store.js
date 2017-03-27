@@ -1,4 +1,4 @@
-import Store from 'store';
+import Store from "store";
 
 export const createUserStore = (_id, name, email, photo, token, settings) => {
     const data = {

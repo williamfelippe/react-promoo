@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {Row, Col} from 'react-materialize';
-import SigninForm from '../../../components/auth/signin-form/signin-form';
-import logo from '../../../../public/images/logo.png';
-import '../auth.css';
+import React, {Component} from "react";
+import {Link} from "react-router";
+import {Row, Col} from "react-materialize";
+import SigninForm from "../../../components/auth/signin-form/signin-form";
+import logo from "../../../../public/images/logo.png";
+import "../auth.css";
 
 export default class Signin extends Component {
     render() {

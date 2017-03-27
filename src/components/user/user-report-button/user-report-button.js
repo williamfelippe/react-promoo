@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Button, Modal, Col, Row, Input} from 'react-materialize';
-import {postUserReport} from '../../../services/user-service';
-import {getLoggedUserId} from '../../../utils/user-information-store';
+import React, {Component} from "react";
+import {Button, Modal, Col, Row, Input} from "react-materialize";
+import {postUserReport} from "../../../services/user-service";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 
 export default class UserReportButton extends Component {
     constructor(props) {

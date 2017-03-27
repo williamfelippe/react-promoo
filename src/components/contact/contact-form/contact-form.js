@@ -70,8 +70,13 @@ export default class ContactForm extends Component {
             //Inserir mensagem de erro
             const errors = validator.errors;
 
-            publishMessage(...errors.get('nome'), ...errors.get('email'),
-                ...errors.get('assunto'), ...errors.get('mensagem'), ...errors.get('captcha'));
+            publishMessage(
+                ...errors.get('nome'),
+                ...errors.get('email'),
+                ...errors.get('assunto'),
+                ...errors.get('mensagem'),
+                ...errors.get('captcha')
+            );
         }
     }
 

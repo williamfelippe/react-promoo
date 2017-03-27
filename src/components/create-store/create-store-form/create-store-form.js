@@ -6,6 +6,7 @@ import {validate} from '../../../utils/validator';
 import {getStoreCategories, postStore} from "../../../services/store-service";
 import {publishMessage} from "../../../utils/messages-publisher";
 import Loader from "../../util/loader/loader";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import "../create-store-form/create-store-form.css";
 
 export default class CreateStoreFormTest extends Component {
@@ -19,6 +20,7 @@ export default class CreateStoreFormTest extends Component {
             street: '',
             state: '',
             neighborhood: '',
+            description: '',
             lat: 0,
             lng: 0,
             storeCategories: [],
@@ -69,7 +71,7 @@ export default class CreateStoreFormTest extends Component {
     }
 
     onChangeStreet(event) {
-        this.setState({neighborhood: event.target.value});
+        this.setState({street: event.target.value});
     }
 
     onChangeCity(city) {
@@ -91,10 +93,11 @@ export default class CreateStoreFormTest extends Component {
                 lng: lng,
                 city: location[0].long_name,
                 state: location[2].short_name,
-                cityId,
+                cityId
             });
 
-            console.log('Novo estado ' + this.state);
+            console.log('NOVO ESTADO');
+            console.log(this.state);
         });
     }
 
@@ -122,7 +125,19 @@ export default class CreateStoreFormTest extends Component {
         const validator = validate(data, rules);
 
         if (validator.passes()) {
-            //this.indicateStore({name: this.state.name});
+            this.indicateStore({
+                name: this.state.name,
+                address: {
+                    street: this.state.street,
+                    neighborhood: this.state.neighborhood,
+                    city: this.state.city,
+                    latitude: this.state.lat,
+                    longitude: this.state.lng,
+                    user: getLoggedUserId(),
+                },
+                category: this.state.category,
+                description: this.state.description,
+            });
         }
         else {
             const errors = validator.errors;
@@ -235,7 +250,7 @@ export default class CreateStoreFormTest extends Component {
                     </Row>
 
                     {
-                        (this.state.city) &&
+                        (this.state.cityId) &&
                         <Row>
                             <Input s={12} type="text" label="Bairro" onChange={this.onChangeNeighborhood.bind(this)}/>
 
@@ -246,7 +261,7 @@ export default class CreateStoreFormTest extends Component {
                     }
 
                     {
-                        (this.state.city) &&
+                        (this.state.cityId) &&
                         <Row>
                             <Input s={12} type="text" label="Rua" onChange={this.onChangeStreet.bind(this)}/>
 

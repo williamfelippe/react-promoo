@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const getStores = (limit, offset) => {
     return axios.get('store/' + limit + '/' + offset);

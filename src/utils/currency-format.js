@@ -8,4 +8,4 @@ export const formatCurrency = (value) => {
 
     numeral.locale('pt-br');
     return numeral(currency).format('$0.00');
-}
+};

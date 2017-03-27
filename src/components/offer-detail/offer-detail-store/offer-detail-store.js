@@ -24,11 +24,14 @@ export default class OfferDetailStore extends Component {
                     stylers: [
                         {
                             'saturation': -65
-                        }, {
+                        },
+                        {
                             'gamma': 0.8
-                        }, {
+                        },
+                        {
                             'lightness': 4
-                        }, {
+                        },
+                        {
                             'visibility': 'on'
                         }
                     ]

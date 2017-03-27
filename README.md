@@ -6,9 +6,7 @@
 
 <p>
     <ul>
-        <li>Faltando criação de oferta <i>(Em andamento)</i></li>
-
-        <li>Faltando criação de oferta e loja</li>
+        <li>Faltando criação de oferta e loja <i>(Em teste)</i></li>
 
         <li>Falta criar filtragem das ofertas e lojas</li>
 

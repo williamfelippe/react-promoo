@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-materialize';
-import ChangePasswordForm from '../../../components/user/change-password-form/change-password-form';
+import React, {Component} from "react";
+import {Row, Col} from "react-materialize";
+import ChangePasswordForm from "../../../components/user/change-password-form/change-password-form";
 
 export default class EditPassword extends Component {
     render() {
