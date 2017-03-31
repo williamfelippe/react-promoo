@@ -6,6 +6,7 @@ import StoreFilter from "../../components/stores/store-filter/store-filter";
 import StoreList from "../../components/stores/store-list/store-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
+import NoContent from "../../components/util/no-content/no-content";
 import {getStores, getStoreCategories} from "../../services/store-service";
 import {isLoggedIn} from "../../utils/user-information-store";
 import {REQUEST_SUCCESS} from "../../utils/constants";
@@ -105,7 +106,10 @@ export default class Stores extends Component {
                     <Row>
                         <div className="container">
                             <Col s={12} m={3}>
-                                { this.state.categories.length > 0 && <StoreFilter categories={this.state.categories}/> }
+                                {
+                                    (this.state.categories.length > 0) &&
+                                        <StoreFilter categories={this.state.categories}/>
+                                }
 
                                 {
                                     /* Exibe uma imagem de "loading" */
@@ -120,9 +124,14 @@ export default class Stores extends Component {
                                 }
 
                                 {
+                                    (this.state.stores.length <= 0 && !this.state.loadingStores) &&
+                                    <NoContent message="Nenhuma loja até o momento" />
+                                }
+
+                                {
                                     /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                    <LoadMoreButton loading={this.state.loadingStores}
-                                                    onClick={this.moreStores.bind(this)}/>
+                                    (this.state.stores.length > 0) &&
+                                    <LoadMoreButton loading={this.state.loadingStores} onClick={this.moreStores.bind(this)}/>
                                 }
                             </Col>
                         </div>

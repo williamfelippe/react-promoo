@@ -2,8 +2,10 @@ import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
 import OfferList from "../../offers/offer-list/offer-list";
 import Loader from "../../util/loader/loader";
+import NoContent from "../../util/no-content/no-content";
 import {getOffers} from "../../../services/offer-service";
 import "./offers.css";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -24,7 +26,7 @@ export default class Offers extends Component {
             .then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     this.setState({offers: response.data});
                 }
                 else {
@@ -56,6 +58,11 @@ export default class Offers extends Component {
                         </p>
 
                         {offers}
+
+                        {
+                            (this.state.offers.length <= 0 && !this.state.loading) &&
+                            <NoContent message="Nenhuma oferta no momento =/" />
+                        }
                     </div>
                 </Col>
             </Row>

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Button, Modal, Col, Row, Input} from "react-materialize";
 import {postUserReport} from "../../../services/user-service";
 import {getLoggedUserId} from "../../../utils/user-information-store";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class UserReportButton extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class UserReportButton extends Component {
         postUserReport(data).then((response) => {
                 const statusCode = response.status;
                 
-                if(statusCode === 200) {
+                if(statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                 }
                 else {

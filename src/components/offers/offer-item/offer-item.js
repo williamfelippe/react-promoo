@@ -1,14 +1,15 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {Icon, CardPanel} from "react-materialize";
-import PubSub from 'pubsub-js';
-import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
-import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import {postOfferEvaluation} from "../../../services/offer-service";
 import {formatDate} from "../../../utils/date-format";
 import {formatCurrency} from "../../../utils/currency-format";
 import {getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
+import PubSub from 'pubsub-js';
+import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
+import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import "./offer-item.css";
 
 const TAG = "show-or-hide-comment-nav";
@@ -60,7 +61,7 @@ export default class OfferItem extends Component {
             .then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                 }
                 else {

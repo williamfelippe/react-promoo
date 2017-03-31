@@ -1,9 +1,11 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
-import Loader from "../../util/loader/loader";
 import {validate} from "../../../utils/validator";
 import {forgotPassword} from "../../../services/auth-service";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {opsInternalError, passwordChangedSuccess} from "../../../utils/strings";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
+import Loader from "../../util/loader/loader";
 
 export default class ForgotPasswordForm extends Component {
     constructor(props) {
@@ -46,22 +48,19 @@ export default class ForgotPasswordForm extends Component {
         forgotPassword(data).then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
-                    publishMessage(["Senha alterada com sucesso"]);
+                    publishMessage(passwordChangedSuccess);
                 } 
                 else {
                     throw new Error(response.data);
                 }
-
-                this.setState({loading: false});
             })
             .catch((error) => {
                 console.log(error);
 
                 this.setState({loading: false});
-
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage(opsInternalError);
             });
     }
 

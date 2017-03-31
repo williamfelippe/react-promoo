@@ -3,6 +3,7 @@ import CryptoJS from "crypto-js";
 import {Row, Input, Button} from 'react-materialize';
 import {putPassword} from '../../../services/user-service';
 import {getLoggedId} from '../../../utils/user-information-store';
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class ChangePasswordForm extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ export default class ChangePasswordForm extends Component {
                 const statusCode = response.status;
                 console.log(response);
 
-                if(statusCode === 200) {
+                if(statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                 }
                 else {

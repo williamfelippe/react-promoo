@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Row, Input, Button} from 'react-materialize';
 import {putEmail} from '../../../services/user-service';
 import {getLoggedUserId} from '../../../utils/user-information-store';
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class ChangeEmailForm extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ export default class ChangeEmailForm extends Component {
         
         putEmail(data).then((response) => {
                 const statusCode = response.status;
-                if(statusCode === 200) {
+                if(statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                 }
                 else {

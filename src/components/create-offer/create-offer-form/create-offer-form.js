@@ -1,15 +1,17 @@
 import React, {Component} from "react";
-import {Row, Col, Icon, Input, Button} from "react-materialize";
-import PlacesAutocomplete from 'react-places-autocomplete';
+import {Button, Col, Icon, Input, Row} from "react-materialize";
+import PlacesAutocomplete from "react-places-autocomplete";
 import {browserHistory} from "react-router";
-import {validate} from '../../../utils/validator';
+import {validate} from "../../../utils/validator";
 import {getOfferCategories, postOffer} from "../../../services/offer-service";
 import {getStoresByCity} from "../../../services/store-service";
-import Loader from "../../util/loader/loader";
-import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
 import {formatCurrency} from "../../../utils/currency-format";
 import {publishMessage} from "../../../utils/messages-publisher";
-import {getLoggedUserId} from "../../../utils/user-information-store";
+import {clearUserStore, getLoggedUser, getLoggedUserId} from "../../../utils/user-information-store";
+import {expiredSessionError, opsInternalError, thanksForHelpSuccess} from "../../../utils/strings";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import Loader from "../../util/loader/loader";
+import StoreSuggest from "../../create-offer/store-suggest/store-suggest";
 import "./create-offer-form.css";
 
 export default class CreateOfferForm extends Component {
@@ -18,6 +20,7 @@ export default class CreateOfferForm extends Component {
 
         this.state = {
             name: '',
+            brand: '',
             price: 0,
             category: '',
             city: '',
@@ -32,6 +35,8 @@ export default class CreateOfferForm extends Component {
             loadingCategories: false,
             loadingStores: false
         };
+
+        console.log(getLoggedUser());
     }
 
     componentDidMount() {
@@ -46,7 +51,7 @@ export default class CreateOfferForm extends Component {
                 console.log(response);
                 const status = response.status;
 
-                if (status === 200) {
+                if (status === REQUEST_SUCCESS) {
                     this.setState({offerCategories: response.data})
                 }
                 else {
@@ -57,7 +62,7 @@ export default class CreateOfferForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage(opsInternalError);
 
                 this.setState({loadingCategories: false});
             });
@@ -65,6 +70,10 @@ export default class CreateOfferForm extends Component {
 
     onChangeName(event) {
         this.setState({name: event.target.value});
+    }
+
+    onChangeBrand(event) {
+        this.setState({brand: event.target.value});
     }
 
     onChangePrice(event) {
@@ -88,7 +97,7 @@ export default class CreateOfferForm extends Component {
             .then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                     this.setState({stores: response.data});
                 }
@@ -100,7 +109,7 @@ export default class CreateOfferForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage(opsInternalError);
 
                 this.setState({loadingStores: false});
             });
@@ -139,13 +148,13 @@ export default class CreateOfferForm extends Component {
         if (validator.passes()) {
             this.divulgeOffer({
                 name: this.state.name,
+                brand: this.state.brand,
                 price: this.state.price,
                 category: this.state.category,
                 store: this.state.store,
                 user: getLoggedUserId(),
-                description: this.state.description,
+                description: this.state.description
             });
-
         }
         else {
             const errors = validator.errors;
@@ -165,29 +174,37 @@ export default class CreateOfferForm extends Component {
     divulgeOffer(data) {
         this.setState({loadingSubmit: true});
 
+        console.log(data);
+
         postOffer(data)
             .then((response) => {
                 console.log(response);
 
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
-                    const location = Object.assign({}, browserHistory.getCurrentLocation());
-                    browserHistory.push(location);
-
-                    publishMessage("=) Obrigado pela ajuda");
+                if (statusCode === REQUEST_SUCCESS) {
+                    publishMessage(thanksForHelpSuccess);
+                    browserHistory.push('dashboard/ofertas');
                 }
                 else {
                     throw new Error(response.data);
                 }
-
-                this.setState({loadingSubmit: false});
             })
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-                this.setState({loadingSubmit: false});
+                const status = error.response.status;
+                console.log(status);
+                if(status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage("Ops... Parece que estamos com alguns problemas");
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 
@@ -223,6 +240,10 @@ export default class CreateOfferForm extends Component {
 
                             <Input s={12} type="text" label="Qual o produto?" onChange={this.onChangeName.bind(this)}/>
                         </Col>
+                    </Row>
+
+                    <Row>
+                        <Input s={12} type="text" label="De qual marca?" onChange={this.onChangeBrand.bind(this)}/>
                     </Row>
 
                     <Row>
@@ -268,9 +289,10 @@ export default class CreateOfferForm extends Component {
                             </p>
 
                             <div className="place-filter">
-                                <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
-                                                    onSelect={this.onSelectCity.bind(this)} options={options}
-                                                    placeholder="&nbsp;" hideLabel>
+                                <PlacesAutocomplete
+                                    value={this.state.city} onChange={this.onChangeCity.bind(this)}
+                                    onSelect={this.onSelectCity.bind(this)} options={options}
+                                    placeholder="&nbsp;" hideLabel>
                                     <Input s={12} label="Procurar por endereço"/>
                                 </PlacesAutocomplete>
                             </div>
@@ -284,7 +306,9 @@ export default class CreateOfferForm extends Component {
 
                     <Row>
                         { /* Descrição do produto */ }
-                        <Input s={12} type="textarea" label="Algo mais a nos dizer sobre esse produto?"
+                        <Input s={12}
+                               type="textarea"
+                               label="Algo mais a nos dizer sobre esse produto?"
                                onChange={this.onChangeDescription.bind(this)}/>
                     </Row>
 

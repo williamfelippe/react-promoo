@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
-import Loader from "../../../components/util/loader/loader";
-import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
-import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
-import OfferList from "../../../components/offers/offer-list/offer-list";
 import {getLoggedUserId} from "../../../utils/user-information-store";
 import {getOffersByUser} from "../../../services/offer-service";
 import {getUser} from "../../../services/user-service";
 import {publishMessage} from "../../../utils/messages-publisher";
+import Loader from "../../../components/util/loader/loader";
+import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
+import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
+import OfferList from "../../../components/offers/offer-list/offer-list";
+import NoContent from "../../../components/util/no-content/no-content";
 import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class UserProfile extends Component {
@@ -123,9 +124,15 @@ export default class UserProfile extends Component {
 
                             <OfferList offers={this.state.offers}/>
 
+                            {
+                                (this.state.offers.length <= 0 && !this.state.loadingOffers) &&
+                                <NoContent message="Você ainda não divulgou nenhuma oferta =(" />
+                            }
+
                             <p className="center-align">
                                 {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
+                                    (this.state.offers.length > 0) &&
                                     <LoadMoreButton loading={this.state.loadingOffers}
                                                     onClick={this.moreUserOffers.bind(this)}/>
                                 }

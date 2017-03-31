@@ -1,12 +1,14 @@
 import React, {Component} from "react";
-import {Row, Input, Button} from "react-materialize";
+import {Button, Input, Row} from "react-materialize";
 import {browserHistory} from "react-router";
 import CryptoJS from "crypto-js";
 import Loader from "../../util/loader/loader";
 import {signin} from "../../../services/auth-service";
-import {validate} from '../../../utils/validator';
+import {validate} from "../../../utils/validator";
 import {createUserStore} from "../../../utils/user-information-store";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {opsInternalError} from "../../../utils/strings";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class SigninForm extends Component {
     constructor(props) {
@@ -66,7 +68,7 @@ export default class SigninForm extends Component {
         signin(data).then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     const userInformations = response.data;
 
                     const token = userInformations.token;
@@ -86,8 +88,7 @@ export default class SigninForm extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loading: false});
             });
     }

@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {Row, Col, Input, Button} from 'react-materialize';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, {Component} from "react";
+import {Button, Col, Input, Row} from "react-materialize";
+import ReCAPTCHA from "react-google-recaptcha";
 import Loader from "../../util/loader/loader";
-import * as Validator from '../../../utils/validator';
-import {sendMessage} from '../../../services/system-service';
+import {sendMessage} from "../../../services/system-service";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {messageSendedSuccess, opsInternalError} from "../../../utils/strings";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
+import {validate} from "../../../utils/validator";
 
 const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
 
@@ -61,7 +63,7 @@ export default class ContactForm extends Component {
             captcha: 'required'
         };
 
-        const validator = Validator.validate(data, rules);
+        const validator = validate(data, rules);
 
         if(validator.passes()) {
             this.sendMessage();
@@ -83,13 +85,12 @@ export default class ContactForm extends Component {
     sendMessage() {
         this.setState({loading: true});
 
-        
         sendMessage(this.state).then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
-                    publishMessage(["Mensagem enviada com sucesso"]);
+                    publishMessage(messageSendedSuccess);
                 } 
                 else {
                     throw new Error(response.data);
@@ -98,8 +99,10 @@ export default class ContactForm extends Component {
                 this.setState({loading: false});
             })
             .catch((error) => {
+                console.log(error);
+
                 this.setState({loading: false});
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage(opsInternalError);
             });
     }
 

@@ -2,14 +2,15 @@ import React, {Component} from "react";
 import {browserHistory} from "react-router";
 import {Row, Col} from "react-materialize";
 import {getOffers, getOfferCategories} from "../../services/offer-service";
+import {isLoggedIn} from "../../utils/user-information-store";
+import {publishMessage} from "../../utils/messages-publisher";
+import {REQUEST_SUCCESS} from "../../utils/constants";
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
-import {isLoggedIn} from "../../utils/user-information-store";
-import {publishMessage} from "../../utils/messages-publisher";
-import {REQUEST_SUCCESS} from "../../utils/constants";
+import NoContent from "../../components/util/no-content/no-content";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -133,7 +134,13 @@ export default class Offers extends Component {
                                 }
 
                                 {
+                                    (this.state.offers.length <= 0 && !this.state.loadingOffers) &&
+                                    <NoContent message="Nenhuma oferta no momento =/"/>
+                                }
+
+                                {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
+                                    (this.state.offers.length > 0) &&
                                     <LoadMoreButton loading={this.state.loadingOffers}
                                                     onClick={this.moreOffers.bind(this)}/>
                                 }

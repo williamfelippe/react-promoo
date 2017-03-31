@@ -5,8 +5,10 @@ import {browserHistory} from "react-router";
 import {validate} from '../../../utils/validator';
 import {getStoreCategories, postStore} from "../../../services/store-service";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {opsInternalError, expiredSessionError, thanksForHelpSuccess} from "../../../utils/strings";
+import {REQUEST_SUCCESS, FORBIDDEN} from "../../../utils/constants";
 import Loader from "../../util/loader/loader";
-import {getLoggedUserId} from "../../../utils/user-information-store";
 import "../create-store-form/create-store-form.css";
 
 export default class CreateStoreFormTest extends Component {
@@ -41,7 +43,7 @@ export default class CreateStoreFormTest extends Component {
                 console.log(response);
                 const status = response.status;
 
-                if (status === 200) {
+                if (status === REQUEST_SUCCESS) {
                     this.setState({storeCategories: response.data})
                 }
                 else {
@@ -133,10 +135,10 @@ export default class CreateStoreFormTest extends Component {
                     city: this.state.city,
                     latitude: this.state.lat,
                     longitude: this.state.lng,
-                    user: getLoggedUserId(),
                 },
                 category: this.state.category,
                 description: this.state.description,
+                user: getLoggedUserId()
             });
         }
         else {
@@ -158,17 +160,23 @@ export default class CreateStoreFormTest extends Component {
     indicateStore(data) {
         this.setState({loadingSubmit: true});
 
+        console.log(data);
+
         postStore(data)
             .then((response) => {
                 console.log(response);
 
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
-                    const location = Object.assign({}, browserHistory.getCurrentLocation());
-                    browserHistory.push(location);
+                if (statusCode === REQUEST_SUCCESS) {
+                    publishMessage(thanksForHelpSuccess);
+                    browserHistory.push('/dashboard/lojas');
+                }
+                else if(statusCode === FORBIDDEN) {
+                    publishMessage(expiredSessionError);
 
-                    publishMessage("=) Obrigado pela ajuda");
+                    clearUserStore();
+                    browserHistory.push('/');
                 }
                 else {
                     throw new Error(response.data);
@@ -179,7 +187,7 @@ export default class CreateStoreFormTest extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage(opsInternalError);
                 this.setState({loadingSubmit: false});
             });
     }

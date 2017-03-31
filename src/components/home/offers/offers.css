@@ -1,27 +1,27 @@
 /* Últimas ofertas */
 .moo-home-last-offers {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .moo-home-last-offers h2 {
-  display: table;
-  white-space: nowrap;
+    display: table;
+    white-space: nowrap;
 }
 
 .moo-home-last-offers h2:before,
 .moo-home-last-offers h2:after {
-  border-top: 1px solid rgba(90, 95, 190, 0.2);
-  content: '';
-  display: table-cell;
-  position: relative;
-  top: 0.6em;
-  width: 45%;
+    border-top: 1px solid rgba(90, 95, 190, 0.2);
+    content: '';
+    display: table-cell;
+    position: relative;
+    top: 0.6em;
+    width: 45%;
 }
 
 .moo-home-last-offers h2:before {
-  right: 1.5%;
+    right: 1.5%;
 }
 
 .moo-home-last-offers h2:after {
-  left: 1.5%;
+    left: 1.5%;
 }

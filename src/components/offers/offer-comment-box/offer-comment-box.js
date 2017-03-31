@@ -6,6 +6,7 @@ import {postOfferComment, getOfferComments} from "../../../services/offer-servic
 import {publishMessage} from "../../../utils/messages-publisher";
 import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./offer-comment-box.css";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 class OfferCommentBox extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class OfferCommentBox extends Component {
     treatOfferCommentsResponse(response) {
         const statusCode = response.status;
 
-        if (statusCode === 200) {
+        if (statusCode === REQUEST_SUCCESS) {
             this.setState({comments: response.data});
             console.log(this.state.comments);
         } else {
@@ -70,7 +71,7 @@ class OfferCommentBox extends Component {
             .then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     this.setState({comments: response.data});
                 }
                 else {

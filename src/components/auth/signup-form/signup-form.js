@@ -7,6 +7,8 @@ import {signup} from "../../../services/auth-service";
 import {validate} from '../../../utils/validator';
 import {createUserStore} from "../../../utils/user-information-store";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {opsInternalError} from "../../../utils/strings";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -81,7 +83,7 @@ export default class SignupForm extends Component {
             .then((response) => {
                 const statusCode = response.status;
 
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     const userInformations = response.data;
 
                     const token = userInformations.token;
@@ -93,14 +95,11 @@ export default class SignupForm extends Component {
                 else {
                     throw new Error(response.data);
                 }
-
-                this.setState({loading: false});
             })
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loading: false});
             });
     }

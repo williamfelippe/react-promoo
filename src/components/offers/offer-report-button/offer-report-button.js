@@ -3,6 +3,7 @@ import {Row, Col, Input, Button, Icon, Modal} from "react-materialize";
 import {postOfferReport} from "../../../services/offer-service";
 import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./offer-report-button.css";
+import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class OfferReportButton extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ export default class OfferReportButton extends Component {
         postOfferReport(data)
             .then((response) => {
                 const statusCode = response.status;
-                if (statusCode === 200) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                 }
                 else {
@@ -52,7 +53,7 @@ export default class OfferReportButton extends Component {
     }
 
     render() {
-        const reportLink = <a className="report"><Icon>block</Icon></a>;
+        const reportLink = <a className="report"><Icon>bug_report</Icon></a>;
 
         const message =
             this.state.subject.localeCompare('Outro') === 0 &&
