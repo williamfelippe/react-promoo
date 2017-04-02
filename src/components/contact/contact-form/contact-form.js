@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {Button, Col, Input, Row} from "react-materialize";
-import ReCAPTCHA from "react-google-recaptcha";
-import Loader from "../../util/loader/loader";
 import {sendMessage} from "../../../services/system-service";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {messageSendedSuccess, opsInternalError} from "../../../utils/strings";
 import {REQUEST_SUCCESS} from "../../../utils/constants";
 import {validate} from "../../../utils/validator";
+import ReCAPTCHA from "react-google-recaptcha";
+import Loader from "../../util/loader/loader";
 
 const reCaptchaKey = '6LcVtA8UAAAAAEEONePamE7B14G232zIToKOleYS';
 

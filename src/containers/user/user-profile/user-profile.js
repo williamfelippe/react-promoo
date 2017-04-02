@@ -1,15 +1,17 @@
 import React, {Component} from "react";
-import {Row, Col} from "react-materialize";
-import {getLoggedUserId} from "../../../utils/user-information-store";
+import {Col, Row} from "react-materialize";
+import {browserHistory} from "react-router";
+import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
 import {getOffersByUser} from "../../../services/offer-service";
 import {getUser} from "../../../services/user-service";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 import Loader from "../../../components/util/loader/loader";
 import LoadMoreButton from "../../../components/util/load-more-button/load-more-button";
 import UserInfoHeader from "../../../components/user/user-info-header/user-info-header";
 import OfferList from "../../../components/offers/offer-list/offer-list";
 import NoContent from "../../../components/util/no-content/no-content";
-import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 export default class UserProfile extends Component {
     constructor(props) {
@@ -45,9 +47,18 @@ export default class UserProfile extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
 
-                this.setState({loadingUser: false});
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             })
     }
 
@@ -76,9 +87,18 @@ export default class UserProfile extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
 
-                this.setState({loadingOffers: false});
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             })
     }
 
@@ -109,10 +129,7 @@ export default class UserProfile extends Component {
 
                 {
                     /* Exibe uma imagem de "loading" */
-                    (this.state.loadingUser) &&
-                    <p className="center-align">
-                        <Loader />
-                    </p>
+                    (this.state.loadingUser) && <Loader />
                 }
 
                 <div className="container">
@@ -126,7 +143,7 @@ export default class UserProfile extends Component {
 
                             {
                                 (this.state.offers.length <= 0 && !this.state.loadingOffers) &&
-                                <NoContent message="Você ainda não divulgou nenhuma oferta =(" />
+                                <NoContent message="Você ainda não divulgou nenhuma oferta =("/>
                             }
 
                             <p className="center-align">

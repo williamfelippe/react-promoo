@@ -1,14 +1,15 @@
 import React, {Component} from "react";
-import {Row, Col} from "react-materialize";
+import {Col, Row} from "react-materialize";
 import GoogleMapReact from "google-map-react";
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import {getStoreById} from "../../services/store-service";
-import {getOffersByStore, getOfferCategories} from "../../services/offer-service";
+import {getOfferCategories, getOffersByStore} from "../../services/offer-service";
 import {publishMessage} from "../../utils/messages-publisher";
 import {REQUEST_SUCCESS} from "../../utils/constants";
 import "./store-detail.css";
+import {opsInternalError} from "../../utils/strings";
 
 export default class StoreDetail extends Component {
     constructor(props) {
@@ -53,8 +54,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loadingOffers: false});
             })
     }
@@ -84,8 +84,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loadingStores: false});
             })
     }
@@ -121,8 +120,7 @@ export default class StoreDetail extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loadingCategories: false});
             })
     }
@@ -171,8 +169,8 @@ export default class StoreDetail extends Component {
             <Row className="moo-store-detail">
                 <Col s={12} className="map-wrapper">
                     <GoogleMapReact defaultCenter={this.props.center}
-                        center={this.state.center} defaultZoom={this.props.zoom}
-                        options={mapOptions}/>
+                                    center={this.state.center} defaultZoom={this.props.zoom}
+                                    options={mapOptions}/>
                 </Col>
 
                 <Col s={12}>

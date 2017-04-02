@@ -1,18 +1,18 @@
-import axios from "axios";
-
 /**
  * Get offers
  */
+import axios from "axios";
+import {getLoggedUserToken} from "../utils/user-information-store";
 
 export const getOffers = (limit, offset) => {
-    return axios.get('offer/' + limit + '/' + offset);
+    return axios.get(`offer/${limit}/${offset}`);
 };
 
 /**
  * Get offer by id
  */
 export const getOfferById = (offerId) => {
-    return axios.get('offer/' + offerId);
+    return axios.get(`offer/${offerId}`);
 };
 
 
@@ -21,7 +21,7 @@ export const getOfferById = (offerId) => {
  */
 
 export const getOffersByCity = (city, limit, offset) => {
-    return axios.get('offer/by_city/' + city + '/' + limit + '/' + offset);
+    return axios.get(`offer/by_city/${city}/${limit}/${offset}`);
 };
 
 /**
@@ -29,14 +29,15 @@ export const getOffersByCity = (city, limit, offset) => {
  */
 
 export const getOffersByUser = (user, limit, offset) => {
-    return axios.get('offer/by_user/' + user + '/' + limit + '/' + offset);
+    axios.defaults.headers.common['Authorization'] = getLoggedUserToken();
+    return axios.get(`offer/by_user/${user}/${limit}/${offset}`);
 };
 
 /**
  * Get offers by user
  */
 export const getOffersByStore = (store, limit, offset) => {
-    return axios.get('offer/by_store/' + store + '/' + limit + '/' + offset);
+    return axios.get(`offer/by_store/${store}/${limit}/${offset}`);
 };
 
 /**
@@ -44,6 +45,7 @@ export const getOffersByStore = (store, limit, offset) => {
  */
 
 export const postOffer = (data) => {
+    axios.defaults.headers.common['Authorization'] = getLoggedUserToken();
     return axios.post('offer', data);
 };
 
@@ -52,7 +54,7 @@ export const postOffer = (data) => {
  */
 
 export const getOfferComments = (_id) => {
-    return axios.get('offer_comment/' + _id);
+    return axios.get(`offer_comment/${_id}`);
 };
 
 /**
@@ -68,6 +70,7 @@ export const postOfferComment = (data) => {
  */
 
 export const postOfferReport = (data) => {
+    axios.defaults.headers.common['Authorization'] = getLoggedUserToken();
     return axios.post('offer/report', data);
 };
 
@@ -76,6 +79,7 @@ export const postOfferReport = (data) => {
  */
 
 export const postOfferEvaluation = (data) => {
+    axios.defaults.headers.common['Authorization'] = getLoggedUserToken();
     return axios.post('offer_evaluation', data);
 };
 

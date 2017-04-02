@@ -1,9 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import CryptoJS from "crypto-js";
-import {Row, Input, Button} from 'react-materialize';
-import {putPassword} from '../../../services/user-service';
-import {getLoggedId} from '../../../utils/user-information-store';
-import {REQUEST_SUCCESS} from "../../../utils/constants";
+import {Button, Input, Row} from "react-materialize";
+import {putPassword} from "../../../services/user-service";
+import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {browserHistory} from "react-router";
+import {publishMessage} from "../../../utils/messages-publisher";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 
 export default class ChangePasswordForm extends Component {
     constructor(props) {
@@ -24,18 +27,19 @@ export default class ChangePasswordForm extends Component {
         event.preventDefault();
 
         const data = {
-            user_id: getLoggedId(),
+            user_id: getLoggedUserId(),
             current_password: CryptoJS.MD5(this.state.currentPassword).toString(),
             new_password: CryptoJS.MD5(this.state.newPassword).toString()
         };
 
         console.log(data);
 
-        putPassword(data).then((response) => {
+        putPassword(data)
+            .then((response) => {
                 const statusCode = response.status;
                 console.log(response);
 
-                if(statusCode === REQUEST_SUCCESS) {
+                if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
                 }
                 else {
@@ -44,6 +48,19 @@ export default class ChangePasswordForm extends Component {
             })
             .catch((error) => {
                 console.log(error);
+
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 

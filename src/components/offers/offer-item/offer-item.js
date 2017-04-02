@@ -4,10 +4,12 @@ import {Icon, CardPanel} from "react-materialize";
 import {postOfferEvaluation} from "../../../services/offer-service";
 import {formatDate} from "../../../utils/date-format";
 import {formatCurrency} from "../../../utils/currency-format";
-import {getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
+import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import {publishMessage} from "../../../utils/messages-publisher";
-import {REQUEST_SUCCESS} from "../../../utils/constants";
-import PubSub from 'pubsub-js';
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {browserHistory} from "react-router";
+import PubSub from "pubsub-js";
 import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
 import OfferReportButton from "../../../components/offers/offer-report-button/offer-report-button";
 import "./offer-item.css";
@@ -70,7 +72,19 @@ export default class OfferItem extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 

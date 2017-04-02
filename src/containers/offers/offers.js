@@ -11,6 +11,7 @@ import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import NoContent from "../../components/util/no-content/no-content";
+import {opsInternalError} from "../../utils/strings";
 
 export default class Offers extends Component {
     constructor(props) {
@@ -45,8 +46,7 @@ export default class Offers extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loadingOffers: false});
             });
     }
@@ -76,8 +76,7 @@ export default class Offers extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loadingCategories: false});
             });
     }

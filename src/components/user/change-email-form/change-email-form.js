@@ -1,8 +1,11 @@
-import React, {Component} from 'react';
-import {Row, Input, Button} from 'react-materialize';
-import {putEmail} from '../../../services/user-service';
-import {getLoggedUserId} from '../../../utils/user-information-store';
-import {REQUEST_SUCCESS} from "../../../utils/constants";
+import React, {Component} from "react";
+import {Button, Input, Row} from "react-materialize";
+import {putEmail} from "../../../services/user-service";
+import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {browserHistory} from "react-router";
+import {publishMessage} from "../../../utils/messages-publisher";
 
 export default class ChangeEmailForm extends Component {
     constructor(props) {
@@ -21,18 +24,31 @@ export default class ChangeEmailForm extends Component {
             user_id: getLoggedUserId(),
             email: this.state.email
         };
-        
+
         putEmail(data).then((response) => {
-                const statusCode = response.status;
-                if(statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
-                }
-                else {
-                    throw new Error(response.data);
-                }
-            })
+            const statusCode = response.status;
+            if (statusCode === REQUEST_SUCCESS) {
+                console.log(response.data);
+            }
+            else {
+                throw new Error(response.data);
+            }
+        })
             .catch((error) => {
                 console.log(error);
+
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 

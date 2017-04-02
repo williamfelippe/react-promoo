@@ -89,21 +89,21 @@ export default class StoreFilter extends Component {
         return (
             <Row>
                 <Col s={12}>
-                    <b>Nome da oferta</b>
+                    <strong>Nome da oferta</strong>
 
                     {nameFilter}
                 </Col>
 
                 <Col s={12} className="m-b-20">
                     <p>
-                        <b>Categorias</b>
+                        <strong>Categorias</strong>
                     </p>
 
                     {listCategoriesFilter}
                 </Col>
 
                 <Col s={12} className="n-padding">
-                    <b className="place">Cidade</b>
+                    <strong className="place">Cidade</strong>
 
                     <div className="place-filter">
                         {placeFilter}

@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-import {Row, Col, Input, Icon, Button} from "react-materialize";
+import {Button, Col, Icon, Input, Row} from "react-materialize";
 import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
 import {browserHistory} from "react-router";
-import {validate} from '../../../utils/validator';
+import {validate} from "../../../utils/validator";
 import {getStoreCategories, postStore} from "../../../services/store-service";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
-import {opsInternalError, expiredSessionError, thanksForHelpSuccess} from "../../../utils/strings";
-import {REQUEST_SUCCESS, FORBIDDEN} from "../../../utils/constants";
+import {expiredSessionError, opsInternalError, thanksForHelpSuccess} from "../../../utils/strings";
+import {FORBIDDEN, REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import Loader from "../../util/loader/loader";
 import "../create-store-form/create-store-form.css";
 
@@ -17,8 +17,8 @@ export default class CreateStoreFormTest extends Component {
         this.state = {
             name: '',
             category: '',
+            address: '',
             city: '',
-            cityId: '',
             street: '',
             state: '',
             neighborhood: '',
@@ -54,8 +54,8 @@ export default class CreateStoreFormTest extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                publishMessage("Ops... Parece que estamos com alguns problemas");
 
+                publishMessage(opsInternalError);
                 this.setState({loadingCategories: false});
             });
     }
@@ -68,39 +68,52 @@ export default class CreateStoreFormTest extends Component {
         this.setState({category: event.target.value});
     }
 
-    onChangeNeighborhood(event) {
-        this.setState({neighborhood: event.target.value});
+    onChangeAddress(address) {
+        this.setState({address});
     }
 
-    onChangeStreet(event) {
-        this.setState({street: event.target.value});
-    }
+    onSelectAddress(address, addressId) {
+        console.log(`Cidade selecionada: ${address} - ${addressId}`);
+        this.setState({address});
 
-    onChangeCity(city) {
-        this.setState({city});
-    }
-
-    onSelectCity(city, cityId) {
-        console.log(`Cidade selecionada: ${city} - ${cityId}`);
-
-        geocodeByPlaceId(cityId, (error, {lat, lng}, results) => {
+        geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
             if (error) {
                 return
             }
 
+            this.setState({lat, lng});
             const location = results[0].address_components;
 
-            this.setState({
-                lat: lat,
-                lng: lng,
-                city: location[0].long_name,
-                state: location[2].short_name,
-                cityId
-            });
+            location.forEach((item) => {
+                const placeType = this.verifyPlaceType(item.types);
 
-            console.log('NOVO ESTADO');
-            console.log(this.state);
+                switch (placeType) {
+                    case 'street':
+                        this.setState({street: item.long_name});
+                        break;
+                    case 'neighborhood':
+                        this.setState({neighborhood: item.long_name});
+                        break;
+                    case 'city':
+                        this.setState({city: item.long_name});
+                        break;
+                    case 'state':
+                        this.setState({state: item.long_name});
+                        break;
+                    default:
+                        break;
+                }
+            });
         });
+    }
+
+    verifyPlaceType(types) {
+        if (types.indexOf('route') !== -1) return 'street';
+        else if (types.indexOf('sublocality') !== -1) return 'neighborhood';
+        else if (types.indexOf('administrative_area_level_2') !== -1) return 'city';
+        else if (types.indexOf('administrative_area_level_1') !== -1) return 'state';
+
+        return '';
     }
 
     submit(event) {
@@ -172,7 +185,7 @@ export default class CreateStoreFormTest extends Component {
                     publishMessage(thanksForHelpSuccess);
                     browserHistory.push('/dashboard/lojas');
                 }
-                else if(statusCode === FORBIDDEN) {
+                else if (statusCode === FORBIDDEN) {
                     publishMessage(expiredSessionError);
 
                     clearUserStore();
@@ -187,14 +200,24 @@ export default class CreateStoreFormTest extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage(opsInternalError);
-                this.setState({loadingSubmit: false});
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 
     render() {
         const options = {
-            types: ['(cities)'],
+            types: ['address'],
             componentRestrictions: {'country': 'br'}
         };
 
@@ -241,14 +264,14 @@ export default class CreateStoreFormTest extends Component {
                             </p>
 
                             <p className="help">
-                                Conte-nos em qual cidade você encontrou essa promoção
+                                Diz aí! Em qual rua fica essa loja?
                             </p>
 
                             <div className="place-filter">
                                 <PlacesAutocomplete
-                                    value={this.state.city}
-                                    onChange={this.onChangeCity.bind(this)}
-                                    onSelect={this.onSelectCity.bind(this)} options={options}
+                                    value={this.state.address}
+                                    onChange={this.onChangeAddress.bind(this)}
+                                    onSelect={this.onSelectAddress.bind(this)} options={options}
                                     placeholder="&nbsp;" hideLabel>
 
                                     <Input s={12} label="Procurar por endereço" className="m-l-20 m-r-20"/>
@@ -256,28 +279,6 @@ export default class CreateStoreFormTest extends Component {
                             </div>
                         </Col>
                     </Row>
-
-                    {
-                        (this.state.cityId) &&
-                        <Row>
-                            <Input s={12} type="text" label="Bairro" onChange={this.onChangeNeighborhood.bind(this)}/>
-
-                            <p className="help">
-                                Em qual bairro fica essa loja/supermercado?
-                            </p>
-                        </Row>
-                    }
-
-                    {
-                        (this.state.cityId) &&
-                        <Row>
-                            <Input s={12} type="text" label="Rua" onChange={this.onChangeStreet.bind(this)}/>
-
-                            <p className="help">
-                                E qual rua?
-                            </p>
-                        </Row>
-                    }
 
                     <Row>
                         <Col s={12}>

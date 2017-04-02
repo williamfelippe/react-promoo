@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Button, Col, Icon, Input, Row} from "react-materialize";
-import PlacesAutocomplete from "react-places-autocomplete";
+import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
 import {browserHistory} from "react-router";
 import {validate} from "../../../utils/validator";
 import {getOfferCategories, postOffer} from "../../../services/offer-service";
@@ -90,29 +90,36 @@ export default class CreateOfferForm extends Component {
 
     onSelectCity(city, cityId) {
         this.setState({city, cityId, loadingStores: true});
-
         console.log(`PlaceId ${cityId}`);
 
-        getStoresByCity(cityId)
-            .then((response) => {
-                const statusCode = response.status;
+        geocodeByPlaceId(cityId, (error, {lat, lng}, results) => {
+            if (error) {
+                return
+            }
 
-                if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
-                    this.setState({stores: response.data});
-                }
-                else {
-                    throw new Error(response.data);
-                }
+            const location = results[0].address_components;
 
-                this.setState({loadingStores: false});
-            })
-            .catch((error) => {
-                console.log(error);
-                publishMessage(opsInternalError);
+            getStoresByCity(location[0].long_name)
+                .then((response) => {
+                    const statusCode = response.status;
 
-                this.setState({loadingStores: false});
-            });
+                    if (statusCode === REQUEST_SUCCESS) {
+                        console.log(response.data);
+                        this.setState({stores: response.data});
+                    }
+                    else {
+                        throw new Error(response.data);
+                    }
+
+                    this.setState({loadingStores: false});
+                })
+                .catch((error) => {
+                    console.log(error);
+                    publishMessage(opsInternalError);
+
+                    this.setState({loadingStores: false});
+                });
+        });
     }
 
     onChangeStore(event) {
@@ -195,14 +202,14 @@ export default class CreateOfferForm extends Component {
 
                 const status = error.response.status;
                 console.log(status);
-                if(status && status === UNAUTHORIZED) {
+                if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 
                     clearUserStore();
                     browserHistory.push('/');
                 }
                 else {
-                    publishMessage("Ops... Parece que estamos com alguns problemas");
+                    publishMessage(opsInternalError);
                     this.setState({loadingSubmit: false});
                 }
             });

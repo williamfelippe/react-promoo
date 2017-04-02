@@ -1,13 +1,15 @@
 import React, {Component} from "react";
-import {Row, Col} from "react-materialize";
+import {Col, Row} from "react-materialize";
+import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
+import {publishMessage} from "../../utils/messages-publisher";
+import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../utils/user-information-store";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../utils/constants";
+import {expiredSessionError, opsInternalError} from "../../utils/strings";
+import {browserHistory} from "react-router";
 import Loader from "../../components/util/loader/loader";
 import OfferDetailInfo from "../../components/offer-detail/offer-detail-info/offer-detail-info";
 import OfferDetailStore from "../../components/offer-detail/offer-detail-store/offer-detail-store";
 import OfferCommentBox from "../../components/offers/offer-comment-box/offer-comment-box";
-import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
-import {publishMessage} from "../../utils/messages-publisher";
-import {isLoggedIn, getLoggedUserId} from "../../utils/user-information-store";
-import {REQUEST_SUCCESS} from "../../utils/constants";
 import "./offer-detail.css";
 
 export default class OfferDetail extends Component {
@@ -42,7 +44,7 @@ export default class OfferDetail extends Component {
                 console.log('ERRO EM DETAIL');
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+                publishMessage(opsInternalError);
                 this.setState({loadingOffer: false});
             })
     }
@@ -107,12 +109,24 @@ export default class OfferDetail extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 
     countEvaluations() {
-        const evaluations = this.state.offer.evaluations;
+        const {evaluations} = this.state.offer;
 
         let likes = 0, dislikes = 0;
         evaluations.forEach((evaluation) => {

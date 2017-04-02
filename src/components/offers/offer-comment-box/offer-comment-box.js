@@ -1,12 +1,14 @@
 import React, {Component} from "react";
-import {Row, Col, Input, Button, Icon} from "react-materialize";
+import {Button, Col, Icon, Input, Row} from "react-materialize";
+import {getOfferComments, postOfferComment} from "../../../services/offer-service";
+import {publishMessage} from "../../../utils/messages-publisher";
+import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {browserHistory} from "react-router";
 import Loader from "../../util/loader/loader";
 import OfferCommentList from "../offer-comment-list/offer-comment-list";
-import {postOfferComment, getOfferComments} from "../../../services/offer-service";
-import {publishMessage} from "../../../utils/messages-publisher";
-import {getLoggedUserId} from "../../../utils/user-information-store";
 import "./offer-comment-box.css";
-import {REQUEST_SUCCESS} from "../../../utils/constants";
 
 class OfferCommentBox extends Component {
     constructor(props) {
@@ -21,7 +23,7 @@ class OfferCommentBox extends Component {
 
     componentDidMount() {
         const {offerId} = this.props;
-        if(offerId && offerId !== undefined) {
+        if (offerId && offerId !== undefined) {
             this.getComments(offerId);
         }
     }
@@ -37,8 +39,7 @@ class OfferCommentBox extends Component {
             .catch((error) => {
                 console.log(error);
 
-                publishMessage("Ops... Parece que estamos com alguns problemas");
-
+                publishMessage(opsInternalError);
                 this.setState({loadingComments: false});
             });
     }
@@ -49,7 +50,8 @@ class OfferCommentBox extends Component {
         if (statusCode === REQUEST_SUCCESS) {
             this.setState({comments: response.data});
             console.log(this.state.comments);
-        } else {
+        }
+        else {
             throw new Error(response.data);
         }
     }
@@ -82,7 +84,19 @@ class OfferCommentBox extends Component {
             })
             .catch((error) => {
                 this.setState({loadingSendComments: false});
-                publishMessage("Ops... Parece que estamos com alguns problemas");
+
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loadingSubmit: false});
+                }
             });
     }
 
@@ -114,7 +128,7 @@ class OfferCommentBox extends Component {
 }
 
 OfferCommentBox.propTypes = {
-    offerId: React.PropTypes.number
+    offerId: React.PropTypes.string
 };
 
 export default OfferCommentBox;

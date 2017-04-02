@@ -62,12 +62,16 @@
     margin: 0 7px;
 }
 
+.moo-offer-card ul li a {
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
 .moo-offer-card a {
     cursor: pointer;
 }
 
 .moo-offer-card a:not(.report) {
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .moo-offer-card a:hover:not(.report) {
