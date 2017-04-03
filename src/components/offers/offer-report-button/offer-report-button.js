@@ -18,7 +18,7 @@ export default class OfferReportButton extends Component {
         };
     }
 
-    componentDidMount() {
+    verifyIfIsLoggedIn() {
         if (isLoggedIn()) {
             browserHistory.push('entrar');
         }
@@ -39,7 +39,9 @@ export default class OfferReportButton extends Component {
 
     indicateExpiredOffer() {
         const data = {
-            'reason': (this.state.subject.localeCompare('Outro') === 0) ? this.state.message : this.state.subject,
+            'reason': (this.state.subject.localeCompare('Outro') === 0) 
+                ? this.state.message 
+                : this.state.subject,
             'report_by': getLoggedUserId(),
             'offer_id': this.props.offer._id
         };
@@ -75,7 +77,7 @@ export default class OfferReportButton extends Component {
     }
 
     render() {
-        const reportLink = <a className="report"><Icon>bug_report</Icon></a>;
+        const reportLink = <a className="report" onClick={this.verifyIfIsLoggedIn.bind(this)}><Icon>bug_report</Icon></a>;
 
         const message =
             this.state.subject.localeCompare('Outro') === 0 &&

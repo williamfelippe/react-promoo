@@ -107,6 +107,7 @@ class OfferCommentBox extends Component {
 
                 const status = error.response.status;
                 console.log(status);
+
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

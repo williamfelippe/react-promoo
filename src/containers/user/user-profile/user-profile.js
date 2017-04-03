@@ -146,14 +146,12 @@ export default class UserProfile extends Component {
                                 <NoContent message="Você ainda não divulgou nenhuma oferta =("/>
                             }
 
-                            <p className="center-align">
-                                {
-                                    /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                    (this.state.offers.length > 0) &&
-                                    <LoadMoreButton loading={this.state.loadingOffers}
-                                                    onClick={this.moreUserOffers.bind(this)}/>
-                                }
-                            </p>
+                            {
+                                /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
+                                (this.state.offers.length > 0) &&
+                                <LoadMoreButton loading={this.state.loadingOffers}
+                                                onClick={this.moreUserOffers.bind(this)}/>
+                            }
                         </Col>
                     </Row>
                 </div>
