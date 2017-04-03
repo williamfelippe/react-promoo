@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Button, Col, Icon, Input, Modal, Row} from "react-materialize";
 import {postOfferReport} from "../../../services/offer-service";
-import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 import {publishMessage} from "../../../utils/messages-publisher";
@@ -16,6 +16,12 @@ export default class OfferReportButton extends Component {
             subject: '',
             message: '',
         };
+    }
+
+    componentDidMount() {
+        if (isLoggedIn()) {
+            browserHistory.push('entrar');
+        }
     }
 
     onChangeSubject(event) {

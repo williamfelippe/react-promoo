@@ -10,7 +10,7 @@ export default class OfferCommentList extends Component {
             </li>
         );
 
-        const noComments = <h5 className="center-align">Seja o primeiro a comentar</h5>;
+        const noComments = <h6 className="center-align">Seja o primeiro a comentar</h6>;
         const list = <ul className="moo-offer-comments-list">{listComments}</ul>;
 
         return ((this.props.comments.length > 0) ? list : noComments)

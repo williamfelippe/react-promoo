@@ -2,17 +2,21 @@ import React, {Component} from "react";
 import {Button, Col, Icon, Input, Row} from "react-materialize";
 import {getOfferComments, postOfferComment} from "../../../services/offer-service";
 import {publishMessage} from "../../../utils/messages-publisher";
-import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 import {browserHistory} from "react-router";
 import Loader from "../../util/loader/loader";
 import OfferCommentList from "../offer-comment-list/offer-comment-list";
 import "./offer-comment-box.css";
+import * as PubSub from "pubsub-js";
+
+const TAG = "show-or-hide-comment-nav";
 
 class OfferCommentBox extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             comments: [],
             message: '',
@@ -23,8 +27,17 @@ class OfferCommentBox extends Component {
 
     componentDidMount() {
         const {offerId} = this.props;
+
         if (offerId && offerId !== undefined) {
             this.getComments(offerId);
+        }
+        else {
+            PubSub.subscribe(TAG, (subject, message) => {
+                if (subject.localeCompare(TAG) === 0) {
+                    this.getComments(message.offer._id);
+                }
+            });
+
         }
     }
 
@@ -58,6 +71,13 @@ class OfferCommentBox extends Component {
 
     onChangeMessage(event) {
         this.setState({message: event.target.value});
+    }
+
+    onFocusMessage(event) {
+        console.log('Focus');
+        if (!isLoggedIn()) {
+            browserHistory.push('entrar');
+        }
     }
 
     sendComment() {
@@ -108,7 +128,7 @@ class OfferCommentBox extends Component {
 
                     <form onSubmit={this.props.sendComment} className="moo-comments-form">
                         <Input s={12} type="textarea" label="Deixe seu comentário"
-                               onChange={this.onChangeMessage.bind(this)}/>
+                               onChange={this.onChangeMessage.bind(this)} onFocus={this.onFocusMessage.bind(this)}/>
 
                         <Button waves="light" className="right">
                             Enviar

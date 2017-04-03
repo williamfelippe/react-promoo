@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Row, Col, Icon} from "react-materialize";
-import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
+import {Col, Icon, Row} from "react-materialize";
 import {formatDate} from "../../../utils/date-format";
 import {formatCurrency} from "../../../utils/currency-format";
+import {isLoggedIn} from "../../../utils/user-information-store";
+import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
+import OfferReportButton from "../../offers/offer-report-button/offer-report-button";
 import "./offer-detail-info.css";
 
 export default class OfferDetailInfo extends Component {
@@ -51,6 +53,9 @@ export default class OfferDetailInfo extends Component {
                                     <a className={this.props.disliked ? 'active' : ''} onClick={this.props.dislike}>
                                         <Icon>thumb_down</Icon> {this.props.dislikes}
                                     </a>
+                                </li>
+                                <li>
+                                    {isLoggedIn() && <OfferReportButton/>}
                                 </li>
                             </ul>
                         </Col>

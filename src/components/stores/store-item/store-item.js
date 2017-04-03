@@ -1,19 +1,48 @@
 import React, {Component} from "react";
 import {CardPanel} from "react-materialize";
-import {Link} from "react-router";
-import ImageWrapper from "../../util/image-wrapper/image-wrapper";
+import {Link, browserHistory} from "react-router";
 import {postStoreReport} from "../../../services/store-service";
+import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {publishMessage} from "../../../utils/messages-publisher";
+import ImageWrapper from "../../util/image-wrapper/image-wrapper";
 import "./store-item.css";
 
 export default class StoreItem extends Component {
     reportStoreDoesNotExist() {
-        postStoreReport({})
-            .then((response) => {
+        if (!isLoggedIn()) {
+            browserHistory.push('entrar');
+        }
+        else {
+            postStoreReport({store_id: this.props.store._id, report_by: getLoggedUserId()})
+                .then((response) => {
+                    const status = response.status;
 
-            })
-            .catch((error) => {
+                    if (status === REQUEST_SUCCESS) {
+                        console.log(response);
+                    }
+                    else {
+                        throw new Error(response.data);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
 
-            });
+                    const status = error.response.status;
+                    console.log(status);
+                    if (status && status === UNAUTHORIZED) {
+                        publishMessage(expiredSessionError);
+
+                        clearUserStore();
+                        browserHistory.push('/');
+                    }
+                    else {
+                        publishMessage(opsInternalError);
+                        this.setState({loadingSubmit: false});
+                    }
+                });
+        }
     }
 
     render() {
@@ -34,8 +63,7 @@ export default class StoreItem extends Component {
 
                     <div className="image">
                         {
-                            store.logo &&
-                            <ImageWrapper src={store.logo} alt={store.name} className="circle"/>
+                            (store.logo) && <ImageWrapper src={store.logo} alt={store.name} className="circle"/>
                         }
                     </div>
 

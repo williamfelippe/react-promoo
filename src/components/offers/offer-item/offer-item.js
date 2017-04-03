@@ -89,7 +89,7 @@ export default class OfferItem extends Component {
     }
 
     countEvaluations() {
-        const evaluations = this.props.offer.evaluations;
+        const {evaluations} = this.props.offer;
 
         let likes = 0, dislikes = 0;
         evaluations.forEach((evaluation) => {
