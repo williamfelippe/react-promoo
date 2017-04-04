@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Row, Col, Button} from "react-materialize";
-import './add-bar.css';
+import "./add-bar.css";
 
 export default class AddBar extends Component {
     render() {

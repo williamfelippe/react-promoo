@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import OfferItem from '../offer-item/offer-item';
-import './offer-list.css';
+import OfferItem from "../offer-item/offer-item";
+import "./offer-list.css";
 
 export default class OfferList extends Component {
     render() {

@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
+import {getLoggedUserId} from "../../../utils/user-information-store";
 import ImageLoader from "../../util/image-wrapper/image-wrapper";
 import UserReportButton from "../user-report-button/user-report-button";
-import {getLoggedUserId} from "../../../utils/user-information-store";
 import avatar from "../../../../public/images/default_avatar.png";
 import "./user-info-header.css";
 

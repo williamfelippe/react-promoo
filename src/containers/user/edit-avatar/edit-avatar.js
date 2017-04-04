@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import FileProcessor from "react-file-processor";
-import Cropper from "react-cropper";
 import {Row, Col, Button} from "react-materialize";
 import {getLoggedUserAvatar} from "../../../utils/user-information-store";
-//import {REQUEST_SUCCESS} from "../../../utils/constants";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {putUserPhoto} from "../../../services/user-service";
+import FileProcessor from "react-file-processor";
+import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import "./edit-avatar.css";
 
@@ -54,8 +55,24 @@ export default class EditAvatar extends Component {
             return;
         }
 
-        this.setState({
-            cropResult: this.cropper.getCroppedCanvas().toDataURL(),
+        this.setState({cropResult: this.cropper.getCroppedCanvas().toDataURL()});
+        putUserPhoto()
+        .then((response) => {
+            console.log(response);
+
+            const status = response.status;
+            if(status === REQUEST_SUCCESS) {
+
+            }
+            else if(status === UNAUTHORIZED) {
+
+            }
+            else {
+                throw new Error(response.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
         });
     }
 

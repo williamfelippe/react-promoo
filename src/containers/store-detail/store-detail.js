@@ -1,15 +1,15 @@
 import React, {Component} from "react";
 import {Col, Row} from "react-materialize";
+import {getStoreById} from "../../services/store-service";
+import {getOfferCategories, getOffersByStore} from "../../services/offer-service";
+import {publishMessage} from "../../utils/messages-publisher";
+import {opsInternalError} from "../../utils/strings";
+import {REQUEST_SUCCESS} from "../../utils/constants";
 import GoogleMapReact from "google-map-react";
 import ImageWrapper from "../../components/util/image-wrapper/image-wrapper";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
-import {getStoreById} from "../../services/store-service";
-import {getOfferCategories, getOffersByStore} from "../../services/offer-service";
-import {publishMessage} from "../../utils/messages-publisher";
-import {REQUEST_SUCCESS} from "../../utils/constants";
 import "./store-detail.css";
-import {opsInternalError} from "../../utils/strings";
 
 export default class StoreDetail extends Component {
     constructor(props) {

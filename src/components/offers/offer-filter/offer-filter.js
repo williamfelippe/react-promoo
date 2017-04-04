@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import {Row, Col, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
+import {MAX_PRICE_VALUE} from "../../../utils/constants";
 import queryString from "query-string";
 import PlacesAutocomplete from "react-places-autocomplete";
-import {MAX_PRICE_VALUE} from "../../../utils/constants";
 import "./offer-filter.css";
 
 export default class OfferFilter extends Component {

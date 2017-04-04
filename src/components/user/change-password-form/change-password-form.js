@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import CryptoJS from "crypto-js";
 import {Button, Input, Row} from "react-materialize";
 import {putPassword} from "../../../services/user-service";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
@@ -7,6 +6,7 @@ import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {browserHistory} from "react-router";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import CryptoJS from "crypto-js";
 
 export default class ChangePasswordForm extends Component {
     constructor(props) {

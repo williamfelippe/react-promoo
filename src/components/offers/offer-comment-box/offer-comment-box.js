@@ -6,10 +6,10 @@ import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-i
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 import {browserHistory} from "react-router";
+import PubSub from "pubsub-js";
 import Loader from "../../util/loader/loader";
 import OfferCommentList from "../offer-comment-list/offer-comment-list";
 import "./offer-comment-box.css";
-import * as PubSub from "pubsub-js";
 
 const TAG = "show-or-hide-comment-nav";
 
@@ -73,13 +73,6 @@ class OfferCommentBox extends Component {
         this.setState({message: event.target.value});
     }
 
-    onFocusMessage(event) {
-        console.log('Focus');
-        if (!isLoggedIn()) {
-            browserHistory.push('entrar');
-        }
-    }
-
     sendComment() {
         const data = {
             message: this.state.message,
@@ -122,14 +115,17 @@ class OfferCommentBox extends Component {
     }
 
     render() {
+        const commentInput = (isLoggedIn()) 
+            ? <Input s={12} type="textarea" label="Deixe seu comentário" onChange={this.onChangeMessage.bind(this)}/>
+            : <Input s={12} type="textarea" disabled label="Faça login para comentar" />
+
         return (
             <Row>
                 <Col s={12}>
                     <h4>Comente aí ;)</h4>
 
                     <form onSubmit={this.props.sendComment} className="moo-comments-form">
-                        <Input s={12} type="textarea" label="Deixe seu comentário"
-                               onChange={this.onChangeMessage.bind(this)} onFocus={this.onFocusMessage.bind(this)}/>
+                        {commentInput}
 
                         <Button waves="light" className="right">
                             Enviar

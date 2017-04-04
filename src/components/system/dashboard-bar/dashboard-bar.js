@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {Row, Col, Icon} from 'react-materialize';
-import {isLoggedIn} from '../../../utils/user-information-store';
-import './dashboard-bar.css';
+import React, {Component} from "react";
+import {Link} from "react-router";
+import {Row, Col, Icon} from "react-materialize";
+import {isLoggedIn} from "../../../utils/user-information-store";
+import "./dashboard-bar.css";
 
 export default class DashboardBar extends Component {
     render() {

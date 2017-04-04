@@ -5,13 +5,13 @@ import {getOffers, getOfferCategories} from "../../services/offer-service";
 import {isLoggedIn} from "../../utils/user-information-store";
 import {publishMessage} from "../../utils/messages-publisher";
 import {REQUEST_SUCCESS} from "../../utils/constants";
+import {opsInternalError} from "../../utils/strings";
 import AddBar from "../../components/system/add-bar/add-bar";
 import OfferFilter from "../../components/offers/offer-filter/offer-filter";
 import OfferList from "../../components/offers/offer-list/offer-list";
 import Loader from "../../components/util/loader/loader";
 import LoadMoreButton from "../../components/util/load-more-button/load-more-button";
 import NoContent from "../../components/util/no-content/no-content";
-import {opsInternalError} from "../../utils/strings";
 
 export default class Offers extends Component {
     constructor(props) {
