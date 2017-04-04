@@ -117,7 +117,7 @@ class OfferCommentBox extends Component {
     render() {
         const commentInput = (isLoggedIn()) 
             ? <Input s={12} type="textarea" label="Deixe seu comentário" onChange={this.onChangeMessage.bind(this)}/>
-            : <Input s={12} type="textarea" disabled label="Faça login para comentar" />
+            : <Input s={12} type="textarea" disabled label="Faça login para comentar" />;
 
         return (
             <Row>
