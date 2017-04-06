@@ -136,7 +136,7 @@ export default class UserProfile extends Component {
                     <Row>
                         <Col s={12}>
                             <h5 className="center-align">
-                                Ofertas
+                                Minhas Ofertas
                             </h5>
 
                             <OfferList offers={this.state.offers}/>

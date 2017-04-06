@@ -12,7 +12,11 @@ export default class ChangePasswordForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {currentPassword: '', newPassword: ''};
+        this.state = {
+            currentPassword: '',
+             newPassword: '',
+             loading: false
+        };
     }
 
     onChangeCurrentPassword(event) {
@@ -34,6 +38,8 @@ export default class ChangePasswordForm extends Component {
 
         console.log(data);
 
+        this.setState({loading: true});
+
         putPassword(data)
             .then((response) => {
                 const statusCode = response.status;
@@ -45,6 +51,8 @@ export default class ChangePasswordForm extends Component {
                 else {
                     throw new Error(response.data);
                 }
+
+                this.setState({loading: false});
             })
             .catch((error) => {
                 console.log(error);
@@ -59,7 +67,7 @@ export default class ChangePasswordForm extends Component {
                 }
                 else {
                     publishMessage(opsInternalError);
-                    this.setState({loadingSubmit: false});
+                    this.setState({loading: false});
                 }
             });
     }

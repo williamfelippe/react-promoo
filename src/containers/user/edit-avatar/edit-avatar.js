@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Row, Col, Button} from "react-materialize";
-import {getLoggedUserAvatar} from "../../../utils/user-information-store";
+import {browserHistory} from "react-router";
+import {getLoggedUserAvatar, getLoggedUserId} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {putUserPhoto} from "../../../services/user-service";
 import FileProcessor from "react-file-processor";
@@ -14,6 +15,7 @@ export default class EditAvatar extends Component {
         this.state = {
             src: getLoggedUserAvatar(),
             cropResult: null,
+            loading: false
         };
     }
 
@@ -56,13 +58,25 @@ export default class EditAvatar extends Component {
         }
 
         this.setState({cropResult: this.cropper.getCroppedCanvas().toDataURL()});
-        putUserPhoto()
+
+        this.uploadImage({
+            base64_image: this.state.cropResult,
+            user_id: getLoggedUserId()
+        });
+    }
+
+    uploadImage(data) {
+        putUserPhoto(data)
         .then((response) => {
             console.log(response);
 
             const status = response.status;
             if(status === REQUEST_SUCCESS) {
+                const photo = response.data;
+                console.log(photo);
+                // Trocar foto no store
 
+                browserHistory.push('/dashboard/usuario');
             }
             else if(status === UNAUTHORIZED) {
 

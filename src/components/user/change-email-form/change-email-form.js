@@ -10,7 +10,10 @@ import {publishMessage} from "../../../utils/messages-publisher";
 export default class ChangeEmailForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {email: ''};
+        this.state = {
+            email: '',
+            loading: false
+        };
     }
 
     onChangeEmail(event) {
@@ -25,15 +28,21 @@ export default class ChangeEmailForm extends Component {
             email: this.state.email
         };
 
-        putEmail(data).then((response) => {
-            const statusCode = response.status;
-            if (statusCode === REQUEST_SUCCESS) {
-                console.log(response.data);
-            }
-            else {
-                throw new Error(response.data);
-            }
-        })
+        this.setState({loading: true});
+
+        putEmail(data)
+            .then((response) => {
+                const statusCode = response.status;
+                if (statusCode === REQUEST_SUCCESS) {
+                    console.log(response.data);
+                    browserHistory.push('/dashboard/usuario');
+                }
+                else {
+                    throw new Error(response.data);
+                }
+
+                this.setState({loading: false});
+            })
             .catch((error) => {
                 console.log(error);
 
@@ -47,7 +56,7 @@ export default class ChangeEmailForm extends Component {
                 }
                 else {
                     publishMessage(opsInternalError);
-                    this.setState({loadingSubmit: false});
+                    this.setState({loading: false});
                 }
             });
     }

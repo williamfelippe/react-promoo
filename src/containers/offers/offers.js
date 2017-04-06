@@ -55,10 +55,16 @@ export default class Offers extends Component {
         const statusCode = response.status;
 
         if (statusCode === REQUEST_SUCCESS) {
-            let offers = this.state.offers;
-            this.setState({
+            //let offers = this.state.offers;
+
+            // Ver se funcionará
+            this.setState((prevState, props) => ({
+                offers: prevState.offers.concat(response.data)
+            }));
+
+            /*this.setState({
                 offers: offers.concat(response.data)
-            });
+            });*/
         }
         else {
             throw new Error(response.data);
