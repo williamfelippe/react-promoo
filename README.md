@@ -7,7 +7,6 @@
 <p>
     <ul>
         <li>Criação de oferta e loja (inserção de imagem, deve ser feito em uma próxima versão)</li>
-        <li>Falta criar filtragem das ofertas e lojas</li>
         <li>Produzir textos</li>
         <li>Testar</li>
         <li>Renderização no servidor</li>

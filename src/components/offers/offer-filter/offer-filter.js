@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
 import {Row, Col, Input, Button} from "react-materialize";
 import {browserHistory} from "react-router";
+import {verifyPlaceType} from "../../../utils/place-types";
 import {MAX_PRICE_VALUE} from "../../../utils/constants";
 import queryString from "query-string";
 import "./offer-filter.css";
@@ -31,7 +32,7 @@ export default class OfferFilter extends Component {
         this.setState({name: event.target.value});
     }
 
-    onChangeCheck(event) {
+    /*onChangeCheck(event) {
         let checkedCategories = this.state.checkedCategories;
 
         const value = event.target.value;
@@ -40,7 +41,7 @@ export default class OfferFilter extends Component {
         (index) === -1 ? checkedCategories.push(value) : checkedCategories.splice(index, 1);
 
         this.setState({checkedCategories: checkedCategories});
-    }
+    }*/
 
     onChangeCategory(event) {
         console.log(event.target.value);
@@ -71,22 +72,16 @@ export default class OfferFilter extends Component {
             const location = results[0].address_components;
 
             location.forEach((item) => {
-                const placeType = this.verifyPlaceType(item.types);
-                if(placeType === 'city') this.setState({city: item.long_name});
+                const placeType = verifyPlaceType(item.types);
+                if(placeType === 'city') {
+                    this.setState({city: item.long_name});
+                }
             });
         });
     }
 
     cleanFilter() {
-        this.setState = {
-            name: '',
-            checkedCategories: [],
-            minPrice: 0,
-            maxPrice: MAX_PRICE_VALUE,
-            city: ''
-        };
-
-        // Descobrir como desmarcar os itens
+        this.setState = { name: '', category: '', minPrice: 0, maxPrice: MAX_PRICE_VALUE, city: '' };
     }
 
     filter() {
@@ -100,9 +95,9 @@ export default class OfferFilter extends Component {
 
         const query = queryString.stringify(parsed);
         const location = `${browserHistory.getCurrentLocation().pathname}?${query}`;
-        console.log(location);
-        //browserHistory.push(location);
-        browserHistory.replace(location);
+
+        browserHistory.push(location);
+        //browserHistory.replace(location);
     }
 
     render() {

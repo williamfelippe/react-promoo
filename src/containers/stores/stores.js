@@ -22,18 +22,32 @@ export default class Stores extends Component {
             offset: 0,
             loadingStores: false,
             loadingCategories: false,
+            query: {}
         };
     }
 
     componentDidMount() {
-        this.getAllStores();
+        const {search, query} = this.props.location;
+
+        this.setState({query: query});
+        this.getAllStores((search && query) ? search : null);
         this.getAllCategories();
     }
 
-    getAllStores() {
+    componentWillReceiveProps(nextProps) {
+        const {search, query} = nextProps.location;
+
+        this.setState({query: query});
+        if (search) {
+            this.setState({stores: [], offset: 0, limit: 30});
+            this.getAllStores(search);
+        }
+    }
+
+    getAllStores(search = null) {
         this.setState({loadingStores: true});
 
-        getStores(this.state.limit, this.state.offset)
+        getStores(this.state.limit, this.state.offset, search)
             .then((response) => {
                 this.treatStoresResponse(response);
                 this.setState({loadingStores: false});
@@ -102,8 +116,9 @@ export default class Stores extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.stores.length} redirectToPage={this.redirectToCreateStore}
-                            buttonName="Indicar"/>
+                <AddBar amount={this.state.stores.length}
+                        redirectToPage={this.redirectToCreateStore.bind(this)}
+                        buttonName="Indicar"/>
 
                 <Col s={12}>
                     <Row>
@@ -111,7 +126,7 @@ export default class Stores extends Component {
                             <Col s={12} m={3}>
                                 {
                                     (this.state.categories.length > 0) &&
-                                        <StoreFilter categories={this.state.categories}/>
+                                    <StoreFilter query={this.state.query} categories={this.state.categories}/>
                                 }
 
                                 {

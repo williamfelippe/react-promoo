@@ -1,12 +1,10 @@
 import axios from "axios";
 import {getLoggedUserToken} from "../utils/user-information-store";
 
-export const getStores = (limit, offset) => {
-    return axios.get(`store/${limit}/${offset}`);
-};
-
-export const getStoresByUser = (user, limit, offset) => {
-    return axios.get(`store/by_user/${user}/${limit}/${offset}`);
+export const getStores = (limit, offset, query = null) => {
+    return axios.get((query)
+        ? `store/${limit}/${offset}${query}`
+        : `store/${limit}/${offset}`);
 };
 
 export const getStoresByCity = (city) => {

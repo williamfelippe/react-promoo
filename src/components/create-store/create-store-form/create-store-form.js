@@ -6,6 +6,7 @@ import {validate} from "../../../utils/validator";
 import {getStoreCategories, postStore} from "../../../services/store-service";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
+import {verifyPlaceType} from "../../../utils/place-types";
 import {expiredSessionError, opsInternalError, thanksForHelpSuccess} from "../../../utils/strings";
 import {FORBIDDEN, REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import Loader from "../../util/loader/loader";
@@ -85,7 +86,7 @@ export default class CreateStoreFormTest extends Component {
             const location = results[0].address_components;
 
             location.forEach((item) => {
-                const placeType = this.verifyPlaceType(item.types);
+                const placeType = verifyPlaceType(item.types);
 
                 switch (placeType) {
                     case 'street':
@@ -105,15 +106,6 @@ export default class CreateStoreFormTest extends Component {
                 }
             });
         });
-    }
-
-    verifyPlaceType(types) {
-        if (types.indexOf('route') !== -1) return 'street';
-        else if (types.indexOf('sublocality') !== -1) return 'neighborhood';
-        else if (types.indexOf('administrative_area_level_2') !== -1) return 'city';
-        else if (types.indexOf('administrative_area_level_1') !== -1) return 'state';
-
-        return '';
     }
 
     submit(event) {

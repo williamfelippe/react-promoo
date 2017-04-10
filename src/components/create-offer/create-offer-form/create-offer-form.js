@@ -7,6 +7,7 @@ import {getOfferCategories, postOffer} from "../../../services/offer-service";
 import {getStoresByCity} from "../../../services/store-service";
 import {formatCurrency} from "../../../utils/currency-format";
 import {publishMessage} from "../../../utils/messages-publisher";
+import {verifyPlaceType} from "../../../utils/place-types";
 import {clearUserStore, getLoggedUser, getLoggedUserId} from "../../../utils/user-information-store";
 import {expiredSessionError, opsInternalError, thanksForHelpSuccess} from "../../../utils/strings";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
@@ -24,7 +25,7 @@ export default class CreateOfferForm extends Component {
             price: 0,
             category: '',
             city: '',
-            cityId: '',
+            address: '',
             store: '',
             description: '',
 
@@ -84,22 +85,29 @@ export default class CreateOfferForm extends Component {
         this.setState({category: event.target.value});
     }
 
-    onChangeCity(city) {
-        this.setState({city: city});
+    onChangeAddress(address) {
+        this.setState({address: address});
     }
 
-    onSelectCity(city, cityId) {
-        this.setState({city, cityId, loadingStores: true});
-        console.log(`PlaceId ${cityId}`);
+    onSelectCity(address, addressId) {
+        this.setState({address, loadingStores: true});
+        console.log(`PlaceId ${addressId}`);
 
-        geocodeByPlaceId(cityId, (error, {lat, lng}, results) => {
+        geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
             if (error) {
                 return
             }
 
             const location = results[0].address_components;
 
-            getStoresByCity(location[0].long_name)
+            location.forEach((item) => {
+                const placeType = verifyPlaceType(item.types);
+                if(placeType === 'city') {
+                    this.setState({city: item.long_name});
+                }
+            });
+
+            getStoresByCity(this.state.city)
                 .then((response) => {
                     const statusCode = response.status;
 

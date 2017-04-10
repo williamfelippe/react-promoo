@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Row, Col, Input, Button} from 'react-materialize';
+import React, {Component} from "react";
+import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
+import {Button, Col, Input, Row} from "react-materialize";
 import {browserHistory} from "react-router";
+import {verifyPlaceType} from "../../../utils/place-types";
 import queryString from "query-string";
-import PlacesAutocomplete from 'react-places-autocomplete';
 
 export default class StoreFilter extends Component {
     constructor(props) {
@@ -10,55 +11,77 @@ export default class StoreFilter extends Component {
 
         this.state = {
             name: '',
-            checkedCategories: [],
+            category: '',
             city: '',
-            cityId: ''
+            address: ''
         };
+    }
+
+    componentWillReceiveProps() {
+        const {name, category, city} = this.props;
+        this.setState({name, category, city});
+        console.log(this.state);
     }
 
     onChangeName(event) {
         this.setState({name: event.target.value});
     }
 
-    onChangeCheck(event) {
-        let checkedCategories = this.state.checkedCategories;
+    /*onChangeCheck(event) {
+     let checkedCategories = this.state.checkedCategories;
 
-        const value = event.target.value;
-        const index = checkedCategories.indexOf(value);
+     const value = event.target.value;
+     const index = checkedCategories.indexOf(value);
 
-        (index) === -1 ? checkedCategories.push(value) : checkedCategories.splice(index, 1);
+     (index) === -1 ? checkedCategories.push(value) : checkedCategories.splice(index, 1);
 
-        this.setState({checkedCategories: checkedCategories});
+     this.setState({checkedCategories: checkedCategories});
+     }*/
+
+    onChangeCategory(event) {
+        this.setState({category: event.target.value});
     }
 
-    onChangeCity(city) {
-        this.setState({city});
+    onChangeAddress(address) {
+        this.setState({address});
     }
 
-    onSelectCity(city, cityId) {
-        this.setState({ city, cityId });
+    onSelectAddress(address, addressId) {
+        console.log(`Cidade selecionada: ${address} - ${addressId}`);
+        this.setState({address});
+
+        geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
+            if (error) {
+                return
+            }
+
+            const location = results[0].address_components;
+
+            location.forEach((item) => {
+                const placeType = verifyPlaceType(item.types);
+                if (placeType === 'city') {
+                    this.setState({city: item.long_name});
+                }
+            });
+        });
     }
 
     cleanFilter() {
-        this.setState = {
-            name: '',
-            checkedCategories: [],
-            city: ''
-        };
-
-        // Descobrir como desmarcar os itens
+        this.setState = {name: '', category: '', city: ''};
     }
 
     filter() {
         const parsed = {
             name: this.state.name,
-            checkedCategories: this.state.checkedCategories,
+            category: this.state.category,
             city: this.state.cityId
         };
 
         const query = queryString.stringify(parsed);
         const location = `${browserHistory.getCurrentLocation().pathname}?${query}`;
+
         browserHistory.push(location);
+        //browserHistory.replace(location);
     }
 
     render() {
@@ -70,8 +93,8 @@ export default class StoreFilter extends Component {
         const listCategoriesFilter =
             this.props.categories.map((category) =>
                 <Row key={category._id}>
-                    <Input type='checkbox' s={12} value={category._id} label={category.name}
-                           onChange={this.onChangeCheck.bind(this)}/>
+                    <Input name="category" type='radio' s={12} value={category._id} label={category.name}
+                           onChange={this.onChangeCategory.bind(this)}/>
                 </Row>
             );
 
@@ -81,8 +104,9 @@ export default class StoreFilter extends Component {
         };
 
         const placeFilter =
-            <PlacesAutocomplete value={this.state.city} onChange={this.onChangeCity.bind(this)}
-                onSelect={this.onSelectCity.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
+            <PlacesAutocomplete value={this.state.city} onChange={this.onChangeAddress.bind(this)}
+                                onSelect={this.onSelectAddress.bind(this)} options={options} placeholder="&nbsp;"
+                                hideLabel>
                 <Input s={12} label="Procurar por endereço"/>
             </PlacesAutocomplete>;
 
