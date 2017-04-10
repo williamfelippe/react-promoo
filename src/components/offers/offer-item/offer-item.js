@@ -129,7 +129,7 @@ export default class OfferItem extends Component {
                 <Link to={`dashboard/oferta/${offer._id}`}>
                     <div className="right-align category">
                         {
-                            //Categoria
+                            /* Categoria */
                             offer.category.name 
                         }
                     </div>
@@ -139,6 +139,12 @@ export default class OfferItem extends Component {
                             /* Nome */
                             offer.name
                         }
+                        <sub className="brand">
+                            {
+                                /* Marca */
+                                offer.brand
+                            }
+                        </sub>
                     </div>
 
                     <div className="store center-align">

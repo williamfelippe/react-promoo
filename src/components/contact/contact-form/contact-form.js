@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Button, Col, Input, Row} from "react-materialize";
+import {browserHistory} from "react-router";
 import {sendMessage} from "../../../services/system-service";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {messageSendedSuccess, opsInternalError} from "../../../utils/strings";
@@ -66,7 +67,13 @@ export default class ContactForm extends Component {
         const validator = validate(data, rules);
 
         if(validator.passes()) {
-            this.sendMessage();
+            this.sendMessage({
+                name: this.state.name,
+                from: this.state.email,
+                subject: this.state.subject,
+                message: this.state.message,
+                captcha: this.state.responseCaptcha
+            });
         }
         else {
             //Inserir mensagem de erro
@@ -82,15 +89,20 @@ export default class ContactForm extends Component {
         }
     }
 
-    sendMessage() {
+    sendMessage(data) {
+        console.log(data);
+
         this.setState({loading: true});
 
-        sendMessage(this.state).then((response) => {
+        sendMessage(data)
+            .then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
+
                     publishMessage(messageSendedSuccess);
+                    browserHistory.push('/');
                 } 
                 else {
                     throw new Error(response.data);

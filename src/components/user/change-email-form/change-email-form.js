@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import {Button, Input, Row} from "react-materialize";
 import {putEmail} from "../../../services/user-service";
+import {validate} from "../../../utils/validator";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 import {browserHistory} from "react-router";
 import {publishMessage} from "../../../utils/messages-publisher";
+import Loader from "../../util/loader/loader";
 
 export default class ChangeEmailForm extends Component {
     constructor(props) {
@@ -24,10 +26,32 @@ export default class ChangeEmailForm extends Component {
         event.preventDefault();
 
         const data = {
-            user_id: getLoggedUserId(),
             email: this.state.email
         };
 
+        const rules = {
+            email: 'required|email'
+        };
+
+        const validator = validate(data, rules);
+
+        if(validator.passes())
+        {
+            this.submitChangeEmail({
+                user_id: getLoggedUserId(),
+                email: this.state.email
+            });
+        }
+        else {
+            const errors = validator.errors;
+            publishMessage(
+                ...errors.get('email'),
+                ...errors.get('senha')
+            );
+        }
+    }
+
+    submitChangeEmail(data) {
         this.setState({loading: true});
 
         putEmail(data)
@@ -62,15 +86,17 @@ export default class ChangeEmailForm extends Component {
     }
 
     render() {
+        const submitButton = (!this.state.loading)
+            ? <Button type="submit" waves="light" className="right">Alterar</Button>
+            : <Loader />;
+
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
                     <Input s={12} type="email" label="Novo e-mail" onChange={this.onChangeEmail.bind(this)}/>
                 </Row>
 
-                <Button type="submit" waves="light" className="right">
-                    Alterar
-                </Button>
+                {submitButton}
             </form>
         )
     }

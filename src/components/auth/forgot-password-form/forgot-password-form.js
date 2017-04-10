@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Row, Input, Button} from "react-materialize";
+import {browserHistory} from "react-router";
 import {validate} from "../../../utils/validator";
 import {forgotPassword} from "../../../services/auth-service";
 import {publishMessage} from "../../../utils/messages-publisher";
@@ -45,12 +46,15 @@ export default class ForgotPasswordForm extends Component {
     sendEmail(data) {
         this.setState({loading: true});
 
-        forgotPassword(data).then((response) => {
+        forgotPassword(data)
+            .then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
                     console.log(response.data);
+
                     publishMessage(passwordChangedSuccess);
+                    browserHistory.push('entrar');
                 } 
                 else {
                     throw new Error(response.data);

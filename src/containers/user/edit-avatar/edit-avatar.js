@@ -1,9 +1,11 @@
 import React, {Component} from "react";
 import {Row, Col, Button} from "react-materialize";
 import {browserHistory} from "react-router";
-import {getLoggedUserAvatar, getLoggedUserId} from "../../../utils/user-information-store";
-import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {clearUserStore, getLoggedUserAvatar, getLoggedUserId} from "../../../utils/user-information-store";
 import {putUserPhoto} from "../../../services/user-service";
+import {publishMessage} from "../../../utils/messages-publisher";
+import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import FileProcessor from "react-file-processor";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -59,35 +61,46 @@ export default class EditAvatar extends Component {
 
         this.setState({cropResult: this.cropper.getCroppedCanvas().toDataURL()});
 
-        this.uploadImage({
-            base64_image: this.state.cropResult,
-            user_id: getLoggedUserId()
-        });
+        this.uploadImage({ base64_image: this.state.cropResult, user_id: getLoggedUserId() });
     }
 
     uploadImage(data) {
+        this.setState({loading: true});
+
         putUserPhoto(data)
-        .then((response) => {
-            console.log(response);
+            .then((response) => {
+                console.log(response);
 
-            const status = response.status;
-            if(status === REQUEST_SUCCESS) {
-                const photo = response.data;
-                console.log(photo);
-                // Trocar foto no store
+                const status = response.status;
+                if(status === REQUEST_SUCCESS) {
+                    const photo = response.data;
+                    console.log(photo);
+                    // Trocar foto no store
 
-                browserHistory.push('/dashboard/usuario');
-            }
-            else if(status === UNAUTHORIZED) {
+                    browserHistory.push('/dashboard/usuario');
+                }
+                else {
+                    throw new Error(response.data);
+                }
 
-            }
-            else {
-                throw new Error(response.data);
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+                this.setState({loading: false});
+            })
+            .catch((error) => {
+                console.log(error);
+
+                const status = error.response.status;
+                console.log(status);
+                if (status && status === UNAUTHORIZED) {
+                    publishMessage(expiredSessionError);
+
+                    clearUserStore();
+                    browserHistory.push('/');
+                }
+                else {
+                    publishMessage(opsInternalError);
+                    this.setState({loading: false});
+                }
+            });
     }
 
     useDefaultImage() {
@@ -116,13 +129,13 @@ export default class EditAvatar extends Component {
                                 </FileProcessor>
                             </li>
                             <li>
-                                <Button onClick={this.useDefaultImage.bind(this)} waves="light" flat>
-                                    Usar imagem padrão
+                                <Button onClick={this.cropImage.bind(this)} waves="light" flat>
+                                    Cortar
                                 </Button>
                             </li>
                             <li>
-                                <Button onClick={this.cropImage.bind(this)} waves="light" flat>
-                                    Cortar
+                                <Button onClick={this.useDefaultImage.bind(this)} waves="light" flat>
+                                    Usar imagem padrão
                                 </Button>
                             </li>
                         </ul>

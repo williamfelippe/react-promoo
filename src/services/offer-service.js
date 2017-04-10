@@ -4,8 +4,13 @@
 import axios from "axios";
 import {getLoggedUserToken} from "../utils/user-information-store";
 
-export const getOffers = (limit, offset) => {
-    return axios.get(`offer/${limit}/${offset}`);
+/**
+ * Get offers
+ */
+export const getOffers = (limit, offset, query = null) => {
+    return axios.get((query) 
+        ? `offer/${limit}/${offset}${query}`
+        : `offer/${limit}/${offset}`);
 };
 
 /**

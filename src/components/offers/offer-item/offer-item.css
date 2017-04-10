@@ -32,6 +32,16 @@
     font-size: 32px;
     font-weight: 300;
     color: rgba(0, 0, 0, 0.5);
+
+    transition: width 0.2s;
+    margin-bottom: 10px
+}
+
+.moo-offer-card .brand {
+    font-weight: 500;
+    font-size: 13px;
+    margin-left: 2px;
+    color: #26a69a;
 }
 
 .moo-offer-card .store {

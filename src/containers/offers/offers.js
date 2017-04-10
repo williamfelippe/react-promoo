@@ -23,22 +23,33 @@ export default class Offers extends Component {
             offset: 0,
             limit: 30,
             loadingOffers: false,
-            loadingCategories: false
+            loadingCategories: false,
+            query: {}
         };
     }
 
     componentDidMount() {
-        this.getAllOffers();
-        this.getAllOffersCategories();
+        const {search, query} = this.props.location;
 
-        console.log(this.props.location);
+        this.setState({query: query});
+        this.getAllOffers((search && query) ? search : null);
+        this.getAllOffersCategories();
     }
 
-    getAllOffers() {
+    componentWillReceiveProps(nextProps) {
+        const {search, query} = nextProps.location;
+
+        this.setState({query: query});
+        if (search) {
+            this.setState({offers: [], offset: 0, limit: 30});
+            this.getAllOffers(search);
+        }
+    }
+
+    getAllOffers(search = null) {
         this.setState({loadingOffers: true});
 
-
-        getOffers(this.state.limit, this.state.offset)
+        getOffers(this.state.limit, this.state.offset, search)
             .then((response) => {
                 this.treatOffersResponse(response);
                 this.setState({loadingOffers: false});
@@ -63,8 +74,8 @@ export default class Offers extends Component {
             }));
 
             /*this.setState({
-                offers: offers.concat(response.data)
-            });*/
+             offers: offers.concat(response.data)
+             });*/
         }
         else {
             throw new Error(response.data);
@@ -112,17 +123,17 @@ export default class Offers extends Component {
     render() {
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.offers.length} redirectToPage={this.redirectToCreateOfferPage}
+                <AddBar amount={this.state.offers.length}
+                        redirectToPage={this.redirectToCreateOfferPage.bind(this)}
                         buttonName="Divulgar"/>
 
                 <Col s={12}>
                     <Row>
                         <div className="container">
-
                             <Col s={12} m={3}>
                                 {
                                     (this.state.categories.length > 0) &&
-                                    <OfferFilter categories={this.state.categories}/>
+                                    <OfferFilter query={this.state.query} categories={this.state.categories}/>
                                 }
 
                                 {

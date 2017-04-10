@@ -1,12 +1,14 @@
 import React, {Component} from "react";
 import {Button, Input, Row} from "react-materialize";
 import {putPassword} from "../../../services/user-service";
+import {validate} from "../../../utils/validator";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {browserHistory} from "react-router";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
 import CryptoJS from "crypto-js";
+import Loader from "../../util/loader/loader";
 
 export default class ChangePasswordForm extends Component {
     constructor(props) {
@@ -31,13 +33,35 @@ export default class ChangePasswordForm extends Component {
         event.preventDefault();
 
         const data = {
-            user_id: getLoggedUserId(),
-            current_password: CryptoJS.MD5(this.state.currentPassword).toString(),
-            new_password: CryptoJS.MD5(this.state.newPassword).toString()
+            "senha atual": CryptoJS.MD5(this.state.currentPassword).toString(),
+            "nova senha": CryptoJS.MD5(this.state.newPassword).toString()
         };
 
-        console.log(data);
+        const rules = {
+            "senha atual": 'required|min:6',
+            "nova senha": 'required|min:6'
+        };
 
+        const validator = validate(data, rules);
+
+        if(validator.passes())
+        {
+            this.submitChangePassword({
+                user_id: getLoggedUserId(),
+                current_password: CryptoJS.MD5(this.state.currentPassword).toString(),
+                new_password: CryptoJS.MD5(this.state.newPassword).toString()
+            });
+        }
+        else {
+            const errors = validator.errors;
+            publishMessage(
+                ...errors.get('senha atual'),
+                ...errors.get('nova senha')
+            );
+        }
+    }
+
+    submitChangePassword(data) {
         this.setState({loading: true});
 
         putPassword(data)
@@ -73,6 +97,10 @@ export default class ChangePasswordForm extends Component {
     }
 
     render() {
+        const submitButton = (!this.state.loading)
+            ? <Button type="submit" waves="light" className="right">Alterar</Button>
+            : <Loader />;
+
         return (
             <form onSubmit={this.submit.bind(this)} className="col s12">
                 <Row>
@@ -85,9 +113,7 @@ export default class ChangePasswordForm extends Component {
                            onChange={this.onChangeNewPassword.bind(this)}/>
                 </Row>
 
-                <Button type="submit" waves="light" className="right">
-                    Alterar
-                </Button>
+                {submitButton}
             </form>
         )
     }

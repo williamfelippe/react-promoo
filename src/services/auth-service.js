@@ -9,5 +9,5 @@ export const signup = (data) => {
 };
 
 export const forgotPassword = (data) => {
-    return axios.post('authentication/forgot_password', data);
+    return axios.post('authentication/forgot-password', data);
 };
