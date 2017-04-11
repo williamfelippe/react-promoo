@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
-import {Row, Col, Input, Button} from "react-materialize";
+import {Row, Col, Input, Button, Icon} from "react-materialize";
 import {browserHistory} from "react-router";
 import {verifyPlaceType} from "../../../utils/place-types";
 import {MAX_PRICE_VALUE} from "../../../utils/constants";
@@ -18,7 +18,8 @@ export default class OfferFilter extends Component {
             minPrice: 0,
             maxPrice: 0,
             address: '',
-            city: ''
+            city: '',
+            filterOpen: false
         };
     }
 
@@ -98,26 +99,40 @@ export default class OfferFilter extends Component {
         browserHistory.push('dashboard/ofertas');
     }
 
+    closeFilter() {
+        this.setState({filterOpen: false});
+    }
+
+    openFilter() {
+        this.setState({filterOpen: true});
+    }
+
     render() {
         const nameFilter =
             <Row className="n-margin-bottom">
-                <Input s={12} label="Nome" defaultValue={this.state.name} onChange={this.onChangeName.bind(this)}/>
+                <Input s={12} label="Nome" defaultValue={this.state.name}
+                       onChange={this.onChangeName.bind(this)}/>
             </Row>;
 
         const listCategoriesFilter =
             this.props.categories.map((category) =>
                 <Row key={category._id}>
-                    <Input name="category" type="radio" s={12} value={category._id} label={category.name}
-                           onChange={this.onChangeCategory.bind(this)}/>
+                    <Input name="category" type="radio" s={12} value={category._id}
+                           label={category.name} onChange={this.onChangeCategory.bind(this)}/>
                 </Row>
             );
 
         const priceFilter =
             <Row>
-                <Input s={12} m={5} type="number" defaultValue={this.state.minPrice} label="Min" onChange={this.onChangeMinPrice.bind(this)} min="0"
+                <Input s={12} m={5} type="number"
+                       defaultValue={this.state.minPrice} label="Min"
+                       onChange={this.onChangeMinPrice.bind(this)} min="0"
                        step="5"/>
 
-                <Input s={12} m={5} type="number" defaultValue={this.state.minPrice} label="Máx" onChange={this.onChangeMaxPrice.bind(this)} min={this.state.minPrice}
+                <Input s={12} m={5} type="number"
+                       defaultValue={this.state.maxPrice} label="Máx"
+                       onChange={this.onChangeMaxPrice.bind(this)}
+                       min={this.state.minPrice}
                        step="5"/>
             </Row>;
 
@@ -132,46 +147,66 @@ export default class OfferFilter extends Component {
                 <Input s={12} label="Procurar por endereço"/>
             </PlacesAutocomplete>;
 
+        const status = (this.state.filterOpen) ? '' : 'hide';
+
         return (
-            <Row>
-                <Col s={12}>
-                    <strong>Nome da oferta</strong>
+            <div>
+                <a onClick={this.openFilter.bind(this)}
+                   className={`moo-open-filter-button hide-on-med-and-up ${!status}`}>
+                    <Icon>
+                        filter_list
+                    </Icon>
 
-                    {nameFilter}
-                </Col>
+                    Filtrar
+                </a>
 
-                <Col s={12} className="m-b-20">
-                    <p>
-                        <strong>Categorias</strong>
-                    </p>
+                <Row className={`hide-on-med-and-up ${status}`}>
+                    <Col s={12}>
+                        <a onClick={this.closeFilter.bind(this)}
+                           className="moo-close-filter-button">
+                            <Icon>close</Icon>
+                        </a>
+                    </Col>
 
-                    {listCategoriesFilter}
-                </Col>
+                    <Col s={12}>
+                        <strong>Nome da oferta</strong>
 
-                <Col s={12}>
-                    <strong>Preço</strong>
+                        {nameFilter}
+                    </Col>
 
-                    {priceFilter}
-                </Col>
+                    <Col s={12} className="m-b-20">
+                        <p>
+                            <strong>Categorias</strong>
+                        </p>
 
-                <Col s={12} className="n-padding">
-                    <strong className="place">Cidade</strong>
+                        {listCategoriesFilter}
+                    </Col>
 
-                    <div className="place-filter">
-                        {placeFilter}
-                    </div>
-                </Col>
+                    <Col s={12}>
+                        <strong>Preço</strong>
 
-                <Col s={12}>
-                    <Button waves='light' className="w-100 m-b-20" onClick={this.filter.bind(this)}>
-                        Filtrar
-                    </Button>
+                        {priceFilter}
+                    </Col>
 
-                    <Button flat waves='light' className="w-100" onClick={this.cleanFilter.bind(this)}>
-                        Limpar filtro
-                    </Button>
-                </Col>
-            </Row>
+                    <Col s={12} className="n-padding">
+                        <strong className="place">Cidade</strong>
+
+                        <div className="place-filter">
+                            {placeFilter}
+                        </div>
+                    </Col>
+
+                    <Col s={12}>
+                        <Button waves='light' className="w-100 m-b-20" onClick={this.filter.bind(this)}>
+                            Filtrar
+                        </Button>
+
+                        <Button flat waves='light' className="w-100" onClick={this.cleanFilter.bind(this)}>
+                            Limpar filtro
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
         )
     }
 }
