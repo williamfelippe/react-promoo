@@ -18,25 +18,18 @@ export default class StoreFilter extends Component {
     }
 
     componentWillReceiveProps() {
-        const {name, category, city} = this.props;
-        this.setState({name, category, city});
-        console.log(this.state);
+        const {query} = this.props;
+
+        const name = (query.name && query.name !== undefined) ? query.name : '';
+        const category = (query.category && query.category !== undefined) ? query.category : '';
+        const city = (query.city && query.city !== undefined) ? query.city : '';
+
+        this.setState({name, category, city, address: ''});
     }
 
     onChangeName(event) {
         this.setState({name: event.target.value});
     }
-
-    /*onChangeCheck(event) {
-     let checkedCategories = this.state.checkedCategories;
-
-     const value = event.target.value;
-     const index = checkedCategories.indexOf(value);
-
-     (index) === -1 ? checkedCategories.push(value) : checkedCategories.splice(index, 1);
-
-     this.setState({checkedCategories: checkedCategories});
-     }*/
 
     onChangeCategory(event) {
         this.setState({category: event.target.value});
@@ -50,16 +43,19 @@ export default class StoreFilter extends Component {
         console.log(`Cidade selecionada: ${address} - ${addressId}`);
         this.setState({address});
 
+        //noinspection JSUnusedLocalSymbols
         geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
             if (error) {
                 return
             }
 
+            //noinspection JSUnresolvedVariable
             const location = results[0].address_components;
 
             location.forEach((item) => {
                 const placeType = verifyPlaceType(item.types);
                 if (placeType === 'city') {
+                    //noinspection JSUnresolvedVariable
                     this.setState({city: item.long_name});
                 }
             });
@@ -67,7 +63,8 @@ export default class StoreFilter extends Component {
     }
 
     cleanFilter() {
-        this.setState = {name: '', category: '', city: ''};
+        this.setState = {name: '', category: '', city: '', address: '' };
+        browserHistory.push('dashboard/lojas');
     }
 
     filter() {
@@ -81,7 +78,6 @@ export default class StoreFilter extends Component {
         const location = `${browserHistory.getCurrentLocation().pathname}?${query}`;
 
         browserHistory.push(location);
-        //browserHistory.replace(location);
     }
 
     render() {

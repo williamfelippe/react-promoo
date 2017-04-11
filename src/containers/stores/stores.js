@@ -107,6 +107,7 @@ export default class Stores extends Component {
         this.getAllStores();
     }
 
+    //noinspection JSMethodCanBeStatic
     redirectToCreateStore() {
         browserHistory.push((isLoggedIn())
             ? 'dashboard/criar-loja'
@@ -148,8 +149,8 @@ export default class Stores extends Component {
 
                                 {
                                     /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                    (this.state.stores.length > 0) &&
-                                    <LoadMoreButton loading={this.state.loadingStores} onClick={this.moreStores.bind(this)}/>
+                                    <LoadMoreButton loading={this.state.loadingStores}
+                                                    onClick={this.moreStores.bind(this)}/>
                                 }
                             </Col>
                         </div>

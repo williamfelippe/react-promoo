@@ -32,6 +32,10 @@ export default class Offers extends Component {
         const {search, query} = this.props.location;
 
         this.setState({query: query});
+
+        console.log('QUERY');
+        console.log(query);
+
         this.getAllOffers((search && query) ? search : null);
         this.getAllOffersCategories();
     }
@@ -66,16 +70,9 @@ export default class Offers extends Component {
         const statusCode = response.status;
 
         if (statusCode === REQUEST_SUCCESS) {
-            //let offers = this.state.offers;
-
-            // Ver se funcionará
             this.setState((prevState, props) => ({
                 offers: prevState.offers.concat(response.data)
             }));
-
-            /*this.setState({
-             offers: offers.concat(response.data)
-             });*/
         }
         else {
             throw new Error(response.data);
@@ -156,7 +153,6 @@ export default class Offers extends Component {
 
                                 {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                    (this.state.offers.length > 0) &&
                                     <LoadMoreButton loading={this.state.loadingOffers}
                                                     onClick={this.moreOffers.bind(this)}/>
                                 }

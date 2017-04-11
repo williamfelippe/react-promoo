@@ -23,25 +23,20 @@ export default class OfferFilter extends Component {
     }
 
     componentWillReceiveProps() {
-        const {name, category, minPrice, maxPrice, city} = this.props;
-        this.setState({name, category, minPrice, maxPrice, city});
-        console.log(this.state);
+        const {query} = this.props;
+
+        const name = (query.name && query.name !== undefined) ? query.name : '';
+        const category = (query.category && query.category !== undefined) ? query.category : '';
+        const city = (query.city && query.city !== undefined) ? query.city : '';
+
+        const {minPrice, maxPrice} = query;
+
+        this.setState({name, category, minPrice, maxPrice, city, address: ''});
     }
 
     onChangeName(event) {
         this.setState({name: event.target.value});
     }
-
-    /*onChangeCheck(event) {
-        let checkedCategories = this.state.checkedCategories;
-
-        const value = event.target.value;
-        const index = checkedCategories.indexOf(value);
-
-        (index) === -1 ? checkedCategories.push(value) : checkedCategories.splice(index, 1);
-
-        this.setState({checkedCategories: checkedCategories});
-    }*/
 
     onChangeCategory(event) {
         console.log(event.target.value);
@@ -64,24 +59,23 @@ export default class OfferFilter extends Component {
         console.log(`Cidade selecionada: ${address} - ${addressId}`);
         this.setState({address});
 
+        //noinspection JSUnusedLocalSymbols
         geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
             if (error) {
                 return
             }
 
+            //noinspection JSUnresolvedVariable
             const location = results[0].address_components;
 
             location.forEach((item) => {
                 const placeType = verifyPlaceType(item.types);
                 if(placeType === 'city') {
+                    //noinspection JSUnresolvedVariable
                     this.setState({city: item.long_name});
                 }
             });
         });
-    }
-
-    cleanFilter() {
-        this.setState = { name: '', category: '', minPrice: 0, maxPrice: MAX_PRICE_VALUE, city: '' };
     }
 
     filter() {
@@ -97,7 +91,11 @@ export default class OfferFilter extends Component {
         const location = `${browserHistory.getCurrentLocation().pathname}?${query}`;
 
         browserHistory.push(location);
-        //browserHistory.replace(location);
+    }
+
+    cleanFilter() {
+        this.setState = { name: '', category: '', minPrice: 0, maxPrice: MAX_PRICE_VALUE, city: '', address: '' };
+        browserHistory.push('dashboard/ofertas');
     }
 
     render() {
