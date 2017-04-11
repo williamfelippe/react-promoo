@@ -1,60 +1,70 @@
 /* NAVBAR */
 .moo-nav-bar {
-  width: 100%;
-  padding: 10px 0;
-  overflow-y: hidden;
-  border-bottom: solid thin rgba(90, 95, 190, 0.1) !important;
+    width: 100%;
+    padding: 10px 0;
+    overflow-y: hidden;
+    border-bottom: solid thin rgba(90, 95, 190, 0.1) !important;
 }
 
 .moo-nav-bar div {
-  height: 100%;
+    height: 100%;
 }
 
 .moo-nav-bar .btn,
 .moo-nav-bar .btn:hover {
-  background-color: rgba(255, 83, 83, 1) !important;
-  color: white !important;
-  display: inline-block !important;
+    background-color: rgba(255, 83, 83, 1) !important;
+    color: white !important;
+    display: inline-block !important;
 }
 
 /* MENU */
 .moo-menu {
-  float: right;
-  list-style: none;
+    float: right;
+    list-style: none;
 }
 
 .moo-menu > li {
-  display: inline-block;
-  margin: 0 10px;
-  font-size: 16px;
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 16px;
 }
 
 .moo-menu > li a {
-  color: rgba(0, 0, 0, 0.7);
-  display: block;
+    color: rgba(0, 0, 0, 0.7);
+    display: block;
 }
 
 .moo-menu > li a:hover {
-  color: rgba(0, 0, 0, 1);
+    color: rgba(0, 0, 0, 1);
 }
 
 .moo-menu > li:last-child a,
 .moo-menu > li:last-child a:hover {
-  padding-bottom: 0 !important;
-  color: white;
-  display: inline-block;
+    padding-bottom: 0 !important;
+    color: white;
+    display: inline-block;
 }
 
 .moo-menu > li a:after {
-  display: block;
-  content: '';
-  padding-top: 7px !important;
-  border-bottom: solid 3px rgba(27, 28, 57, 1);
-  transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
+    display: block;
+    content: '';
+    padding-top: 7px !important;
+    border-bottom: solid 3px rgba(27, 28, 57, 1);
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
 }
 
 .moo-menu > li a:hover:after,
 .moo-menu > li a.active:after {
-  transform: scaleX(1.1);
+    transform: scaleX(1.1);
+}
+
+/* MENU MOBILE */
+.moo-mobile-menu-icon {
+    cursor: pointer;
+    color: rgba(25, 25, 25, 1);
+}
+
+.moo-mobile-menu-icon:hover {
+    color: rgba(255, 83, 83, 1);
 }

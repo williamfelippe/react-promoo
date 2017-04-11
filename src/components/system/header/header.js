@@ -1,14 +1,25 @@
 import React, {Component} from "react";
-import {Link} from "react-router";
-import {browserHistory} from "react-router";
-import {Row, Col, Button} from "react-materialize";
+import {browserHistory, Link} from "react-router";
+import {Button, Col, Icon, Row} from "react-materialize";
 import {clearUserStore, isLoggedIn} from "../../../utils/user-information-store";
+import PubSub from "pubsub-js";
 import "./header.css";
 
+const TAG = "show-or-hide-menu-mobile";
+
 export default class Header extends Component {
+    //noinspection JSMethodCanBeStatic
     signout() {
         clearUserStore();
         browserHistory.push('/');
+    }
+
+    //noinspection JSMethodCanBeStatic
+    openMenuMobile() {
+        console.log('Abrir o menu');
+
+        const message = {status: true};
+        PubSub.publish(TAG, message);
     }
 
     render() {
@@ -16,6 +27,15 @@ export default class Header extends Component {
             <section className="moo-nav-bar">
                 <div className="container">
                     <Row className="n-margin-bottom">
+
+                        <Col s={12} className="hide-on-med-and-up">
+                            <a onClick={this.openMenuMobile.bind(this)}>
+                                <Icon className="moo-mobile-menu-icon">
+                                    menu
+                                </Icon>
+                            </a>
+                        </Col>
+
                         <Col s={12} m={4} l={3}>
                             <div className="valign-wrapper">
                                 <Link to="/" className="moo-logo-text">
@@ -38,7 +58,8 @@ export default class Header extends Component {
                                     <Link activeClassName="active" to="contato">Contato</Link>
                                 </li>
                                 <li className={isLoggedIn() ? 'hide' : ''}>
-                                    <Link activeClassName="active" to="registrar" className="signup-button">Registrar</Link>
+                                    <Link activeClassName="active" to="registrar"
+                                          className="signup-button">Registrar</Link>
                                 </li>
                                 <li className={isLoggedIn() ? 'hide' : ''}>
                                     <Link to="entrar" className="waves-effect waves-light btn">

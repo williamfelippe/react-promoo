@@ -182,6 +182,12 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
+@media all and (max-width: 768px) {
+    .moo-logo-text h4 {
+        margin: 0 0 10px;
+    }
+}
+
 .moo-logo-text h4 {
     font-family: 'Yellowtail', cursive;
     color: rgba(0, 0, 0, 0.8);

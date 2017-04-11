@@ -1,52 +1,61 @@
-/*
-<Col s={12} className="hide-on-med-and-up moo-mobile-menu">
-                <button className='dropdown-button' data-activates='menu'>
-                    <Icon>menu</Icon>
-                </button>
-
-                <ul id='menu' className='dropdown-content content'>
-                    <li>
-                        <Link to="dashboard">Meu Promoo</Link>
-                    </li>
-
-                    <li>
-                        <Link to="about">Sobre</Link>
-                    </li>
-
-                    <li>
-                        <Link to="contact">Fale conosco</Link>
-                    </li>
-
-                    <li className={this.props.isLoggedIn ? 'hide' : ''}>
-                        <Link to="signup">Registrar</Link>
-                    </li>
-
-                    <li className={this.props.isLoggedIn ? 'hide' : ''}>
-                        <Link to="signin">Entrar</Link>
-                    </li>
-
-                    <li className={!this.props.isLoggedIn ? 'hide' : ''}>
-                        <a onClick={this.props.signout}>
-                            Sair
-                        </a>
-                    </li>
-                </ul>
-            </Col>
-*/
-
-.moo-mobile-menu .content {
-    width: auto !important;
-    max-width: 130px !important;
-    right: 20px !important;
+/* The side navigation menu */
+.moo-mobile-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba(47, 47, 47, 0.95);
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
 }
 
-.moo-mobile-menu button,
-.moo-mobile-menu button:hover {
-    background: none;
-    border: none;
-    box-shadow: none;
+.moo-mobile-menu.increase {
+    width: 100%;
 }
 
-.moo-mobile-menu button i {
-    color: rgba(0, 0, 0, 0.7);
+.moo-mobile-menu.decrease {
+    width: 0;
+}
+
+.moo-mobile-menu .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    color: rgba(156, 159, 216, 1);
+}
+
+.moo-mobile-menu .close:hover {
+    color: rgba(122, 126, 203, 1);
+}
+
+.moo-mobile-menu ul {
+    width: 100%;
+    text-align: center;
+}
+
+.moo-mobile-menu ul li {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+.moo-mobile-menu ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: ease-in-out all 0.3s;
+}
+
+.moo-mobile-menu ul li:last-child a {
+    color: rgba(90, 95, 190, 0.8);
+}
+
+.moo-mobile-menu ul li a:hover,
+.moo-mobile-menu ul li a.active {
+    color: rgba(255, 83, 83, 1);
+    transition: ease-in-out all 0.3s;
 }

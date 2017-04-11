@@ -139,6 +139,7 @@ export default class OfferItem extends Component {
                             /* Nome */
                             offer.name
                         }
+
                         <sub className="brand">
                             {
                                 /* Marca */
@@ -162,10 +163,10 @@ export default class OfferItem extends Component {
                     </div>
 
                     <div className="date center-align">
-                        {/* Data */}
-                        <small>
-                            { formatDate(offer.created_at) }
-                        </small>
+                        {
+                            /* Data */
+                            formatDate(offer.created_at)
+                        }
                     </div>
                 </Link>
 

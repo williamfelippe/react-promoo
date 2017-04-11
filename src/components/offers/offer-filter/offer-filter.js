@@ -16,7 +16,7 @@ export default class OfferFilter extends Component {
             checkedCategories: [],
             category: '',
             minPrice: 0,
-            maxPrice: MAX_PRICE_VALUE,
+            maxPrice: 0,
             address: '',
             city: ''
         };
@@ -101,7 +101,7 @@ export default class OfferFilter extends Component {
     render() {
         const nameFilter =
             <Row className="n-margin-bottom">
-                <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
+                <Input s={12} label="Nome" defaultValue={this.state.name} onChange={this.onChangeName.bind(this)}/>
             </Row>;
 
         const listCategoriesFilter =
@@ -114,10 +114,10 @@ export default class OfferFilter extends Component {
 
         const priceFilter =
             <Row>
-                <Input s={12} m={5} type="number" label="Min" onChange={this.onChangeMinPrice.bind(this)} min="0"
+                <Input s={12} m={5} type="number" defaultValue={this.state.minPrice} label="Min" onChange={this.onChangeMinPrice.bind(this)} min="0"
                        step="5"/>
 
-                <Input s={12} m={5} type="number" label="Máx" onChange={this.onChangeMaxPrice.bind(this)} min="0"
+                <Input s={12} m={5} type="number" defaultValue={this.state.minPrice} label="Máx" onChange={this.onChangeMaxPrice.bind(this)} min={this.state.minPrice}
                        step="5"/>
             </Row>;
 

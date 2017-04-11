@@ -23,7 +23,7 @@ export default class Footer extends Component {
                         <Col s={7} m={9}>
                             <Row className="row">
                                 <Col s={12} m={4} l={3} offset="l3">
-                                    <strong className="white-text">Links</strong>
+                                    <strong className="white-text first">Links</strong>
                                     <ul>
                                         <li>
                                             <Link to="sobre">Sobre nós</Link>

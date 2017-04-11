@@ -9,10 +9,7 @@ const TAG = "show-or-hide-comment-nav";
 export default class OfferCommentNav extends Component {
     constructor() {
         super();
-        this.state = {
-            offer: {},
-            openNav: false
-        }
+        this.state = { offer: {}, openNav: false }
     }
 
     componentDidMount() {
