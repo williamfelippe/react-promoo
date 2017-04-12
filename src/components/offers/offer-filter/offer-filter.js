@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
-import {Row, Col, Input, Button, Icon} from "react-materialize";
+import {Button, Col, Icon, Input, Row} from "react-materialize";
 import {browserHistory} from "react-router";
 import {verifyPlaceType} from "../../../utils/place-types";
 import {MAX_PRICE_VALUE} from "../../../utils/constants";
@@ -19,7 +19,7 @@ export default class OfferFilter extends Component {
             maxPrice: 0,
             address: '',
             city: '',
-            filterOpen: false
+            filterOpen: true
         };
     }
 
@@ -71,7 +71,7 @@ export default class OfferFilter extends Component {
 
             location.forEach((item) => {
                 const placeType = verifyPlaceType(item.types);
-                if(placeType === 'city') {
+                if (placeType === 'city') {
                     //noinspection JSUnresolvedVariable
                     this.setState({city: item.long_name});
                 }
@@ -95,7 +95,7 @@ export default class OfferFilter extends Component {
     }
 
     cleanFilter() {
-        this.setState = { name: '', category: '', minPrice: 0, maxPrice: MAX_PRICE_VALUE, city: '', address: '' };
+        this.setState = {name: '', category: '', minPrice: 0, maxPrice: MAX_PRICE_VALUE, city: '', address: ''};
         browserHistory.push('dashboard/ofertas');
     }
 
@@ -108,60 +108,31 @@ export default class OfferFilter extends Component {
     }
 
     render() {
-        const nameFilter =
-            <Row className="n-margin-bottom">
-                <Input s={12} label="Nome" defaultValue={this.state.name}
-                       onChange={this.onChangeName.bind(this)}/>
-            </Row>;
-
-        const listCategoriesFilter =
-            this.props.categories.map((category) =>
-                <Row key={category._id}>
-                    <Input name="category" type="radio" s={12} value={category._id}
-                           label={category.name} onChange={this.onChangeCategory.bind(this)}/>
-                </Row>
-            );
-
-        const priceFilter =
-            <Row>
-                <Input s={12} m={5} type="number"
-                       defaultValue={this.state.minPrice} label="Min"
-                       onChange={this.onChangeMinPrice.bind(this)} min="0"
-                       step="5"/>
-
-                <Input s={12} m={5} type="number"
-                       defaultValue={this.state.maxPrice} label="Máx"
-                       onChange={this.onChangeMaxPrice.bind(this)}
-                       min={this.state.minPrice}
-                       step="5"/>
-            </Row>;
+        const statusFilterButton = (this.state.filterOpen) ? 'hide' : '';
+        const statusFilterComponent = (this.state.filterOpen) ? '' : 'hide';
 
         const options = {
             types: ['(cities)'],
             componentRestrictions: {'country': 'br'}
         };
 
-        const placeFilter =
-            <PlacesAutocomplete value={this.state.address} onChange={this.onChangeAddress.bind(this)}
-                onSelect={this.onSelectAddress.bind(this)} options={options} placeholder="&nbsp;" hideLabel>
-                <Input s={12} label="Procurar por endereço"/>
-            </PlacesAutocomplete>;
-
-        const status = (this.state.filterOpen) ? '' : 'hide';
+        const listCategoriesFilter =
+            this.props.categories.map((category) =>
+                <Row key={category._id}>
+                    <Input className="with-gap" name="category" type="radio" s={12} value={category._id}
+                           label={category.name} onChange={this.onChangeCategory.bind(this)}/>
+                </Row>
+            );
 
         return (
             <div>
                 <a onClick={this.openFilter.bind(this)}
-                   className={`moo-open-filter-button hide-on-med-and-up ${!status}`}>
-                    <Icon>
-                        filter_list
-                    </Icon>
-
-                    Filtrar
+                   className={`moo-open-filter-button hide-on-med-and-up ${statusFilterButton}`}>
+                    <Icon>filter_list</Icon> <span>Filtro</span>
                 </a>
 
-                <Row className={`hide-on-med-and-up ${status}`}>
-                    <Col s={12}>
+                <Row className={`${statusFilterComponent} moo-filter`}>
+                    <Col s={12} className="hide-on-med-and-up">
                         <a onClick={this.closeFilter.bind(this)}
                            className="moo-close-filter-button">
                             <Icon>close</Icon>
@@ -171,7 +142,10 @@ export default class OfferFilter extends Component {
                     <Col s={12}>
                         <strong>Nome da oferta</strong>
 
-                        {nameFilter}
+                        <Row className="n-margin-bottom">
+                            <Input s={12} label="Nome" defaultValue={this.state.name}
+                                   onChange={this.onChangeName.bind(this)}/>
+                        </Row>
                     </Col>
 
                     <Col s={12} className="m-b-20">
@@ -185,14 +159,30 @@ export default class OfferFilter extends Component {
                     <Col s={12}>
                         <strong>Preço</strong>
 
-                        {priceFilter}
+                        <Row>
+                            <Input s={12} m={5} type="number"
+                                   defaultValue={this.state.minPrice} label="Min"
+                                   onChange={this.onChangeMinPrice.bind(this)} min="0"
+                                   step="5"/>
+
+                            <Input s={12} m={5} type="number"
+                                   defaultValue={this.state.maxPrice} label="Máx"
+                                   onChange={this.onChangeMaxPrice.bind(this)}
+                                   min={this.state.minPrice}
+                                   step="5"/>
+                        </Row>
                     </Col>
 
                     <Col s={12} className="n-padding">
                         <strong className="place">Cidade</strong>
 
                         <div className="place-filter">
-                            {placeFilter}
+                            <PlacesAutocomplete
+                                value={this.state.address} onChange={this.onChangeAddress.bind(this)}
+                                onSelect={this.onSelectAddress.bind(this)} options={options}
+                                placeholder="&nbsp;" hideLabel>
+                                <Input s={12} label="Procurar por endereço"/>
+                            </PlacesAutocomplete>
                         </div>
                     </Col>
 

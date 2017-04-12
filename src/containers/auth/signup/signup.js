@@ -10,7 +10,7 @@ export default class Signup extends Component {
         return (
             <div className="container h-100">
                 <Row className="h-100">
-                    <Col s={8} offset="s2" className="h-100">
+                    <Col s={10} offset="s1" className="h-100">
                         <div className="moo-login-screen">
                             <Link to="/">
                                 <img alt="Promoo" src={logo} className="responsive-img"/>

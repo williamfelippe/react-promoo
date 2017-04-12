@@ -5,6 +5,12 @@
     padding: 15px 0;
 }
 
+@media all and (max-width: 768px) {
+    .moo-add-bar {
+        margin-bottom: 20px;
+    }
+}
+
 .moo-add-bar b {
     font-weight: 700;
     color: rgba(0, 0, 0, 1);

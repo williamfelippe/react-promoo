@@ -3,6 +3,13 @@
     border: rgba(0, 0, 0, 0.2) solid thin;
 }
 
+@media all and (max-width: 768px) {
+    .moo-filter {
+        padding-bottom: 25px;
+        border-bottom: rgba(156, 159, 216, 0.2) solid thin;
+    }
+}
+
 .place {
     padding: 10px;
 }
@@ -12,9 +19,37 @@
 }
 
 .moo-open-filter-button {
+    transition: ease-in-out all 0.3s;
+    color: rgba(27, 28, 57, 0.8);
+    font-size: 16px;
+    float: right;
+}
 
+.moo-open-filter-button:hover {
+    color: rgba(27, 28, 57, 1);
+}
+
+.moo-open-filter-button span,
+.moo-open-filter-button i {
+    float: left;
+}
+
+.moo-open-filter-button span {
+    margin: 0 0 0 15px;
+    font-weight: 700;
+}
+
+.moo-open-filter-button i {
+    color: rgba(90, 95, 190, 0.8);
+}
+
+.moo-open-filter-button:hover i,
+.moo-open-filter-button:hover i:hover {
+    color: rgba(90, 95, 190, 1);
 }
 
 .moo-close-filter-button {
-
+    float: right;
+    color: rgba(90, 95, 190, 0.8);
+    transition: ease-in-out all 0.3s;
 }

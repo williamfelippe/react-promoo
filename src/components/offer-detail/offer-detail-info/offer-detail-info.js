@@ -15,15 +15,14 @@ export default class OfferDetailInfo extends Component {
             <Col s={12} className="moo-offer-detail-info">
                 <div className="container">
                     <Row className="n-margin-bottom">
-                        <Col s={6}>
+                        <Col s={12} m={6} className="push-m6">
+                            <OfferUserAvatar user={offer.user} className="avatar"/>
+                        </Col>
+
+                        <Col s={12} m={6} className="pull-m6">
                             <p className="date">
                                 <span>{formatDate(offer.created_at)}</span>
                             </p>
-
-                        </Col>
-                        <Col s={6}>
-                            <OfferUserAvatar user={offer.user} className="avatar"/>
-                            <div className="clearfix"/>
                         </Col>
                     </Row>
 
