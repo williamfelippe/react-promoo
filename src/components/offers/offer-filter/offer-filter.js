@@ -13,7 +13,6 @@ export default class OfferFilter extends Component {
 
         this.state = {
             name: '',
-            checkedCategories: [],
             category: '',
             minPrice: 0,
             maxPrice: 0,

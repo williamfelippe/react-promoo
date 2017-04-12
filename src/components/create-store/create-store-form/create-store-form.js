@@ -8,7 +8,7 @@ import {publishMessage} from "../../../utils/messages-publisher";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
 import {verifyPlaceType} from "../../../utils/place-types";
 import {expiredSessionError, opsInternalError, thanksForHelpSuccess} from "../../../utils/strings";
-import {FORBIDDEN, REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
+import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import Loader from "../../util/loader/loader";
 import "../create-store-form/create-store-form.css";
 
@@ -177,12 +177,6 @@ export default class CreateStoreFormTest extends Component {
                     publishMessage(thanksForHelpSuccess);
                     browserHistory.push('/dashboard/lojas');
                 }
-                else if (statusCode === FORBIDDEN) {
-                    publishMessage(expiredSessionError);
-
-                    clearUserStore();
-                    browserHistory.push('/');
-                }
                 else {
                     throw new Error(response.data);
                 }
@@ -251,19 +245,16 @@ export default class CreateStoreFormTest extends Component {
 
                     <Row>
                         <Col s={12} className="n-padding">
-                            <p className="icon">
-                                <Icon>place</Icon>
-                            </p>
-
                             <p className="help">
-                                Diz aí! Em qual rua fica essa loja?
+                                Em qual rua fica essa loja?
                             </p>
 
                             <div className="place-filter">
                                 <PlacesAutocomplete
                                     value={this.state.address}
                                     onChange={this.onChangeAddress.bind(this)}
-                                    onSelect={this.onSelectAddress.bind(this)} options={options}
+                                    onSelect={this.onSelectAddress.bind(this)}
+                                    options={options}
                                     placeholder="&nbsp;" hideLabel>
 
                                     <Input s={12} label="Procurar por endereço" className="m-l-20 m-r-20"/>

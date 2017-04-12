@@ -89,20 +89,23 @@ export default class CreateOfferForm extends Component {
         this.setState({address: address});
     }
 
-    onSelectCity(address, addressId) {
+    onSelectAddress(address, addressId) {
         this.setState({address, loadingStores: true});
         console.log(`PlaceId ${addressId}`);
 
+        //noinspection JSUnusedLocalSymbols
         geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
             if (error) {
                 return
             }
 
+            //noinspection JSUnresolvedVariable
             const location = results[0].address_components;
 
             location.forEach((item) => {
                 const placeType = verifyPlaceType(item.types);
-                if(placeType === 'city') {
+                if (placeType === 'city') {
+                    //noinspection JSUnresolvedVariable
                     this.setState({city: item.long_name});
                 }
             });
@@ -295,18 +298,14 @@ export default class CreateOfferForm extends Component {
 
                     <Row>
                         <Col s={12} className="n-padding">
-                            <p className="icon">
-                                <Icon>pin_drop</Icon>
-                            </p>
-
                             <p className="help">
-                                Conte-nos em qual cidade você encontrou essa promoção
+                                Em qual cidade você encontrou essa promoção
                             </p>
 
                             <div className="place-filter">
                                 <PlacesAutocomplete
-                                    value={this.state.city} onChange={this.onChangeCity.bind(this)}
-                                    onSelect={this.onSelectCity.bind(this)} options={options}
+                                    value={this.state.address} onChange={this.onChangeAddress.bind(this)}
+                                    onSelect={this.onSelectAddress.bind(this)} options={options}
                                     placeholder="&nbsp;" hideLabel>
                                     <Input s={12} label="Procurar por endereço"/>
                                 </PlacesAutocomplete>
