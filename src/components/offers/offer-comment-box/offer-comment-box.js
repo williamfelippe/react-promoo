@@ -28,8 +28,6 @@ class OfferCommentBox extends Component {
     componentDidMount() {
         const {offerId} = this.props;
 
-        console.log(`Comments ${offerId}`);
-
         if (offerId && offerId !== undefined) {
             this.getComments(offerId);
         }

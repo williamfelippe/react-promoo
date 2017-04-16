@@ -29,7 +29,6 @@ export default class StoreFilter extends Component {
 
     threatQueryParams() {
         const {query} = this.props;
-        console.log(query);
 
         const name = (query.name && query.name !== undefined) ? query.name : '';
         const category = (query.category && query.category !== undefined) ? query.category : '';

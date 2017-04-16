@@ -1,11 +1,12 @@
 .moo-no-match {
     text-align: center;
     color: rgba(0, 0, 0, 0.5);
-    padding-bottom: 50px;
+    width: 100%;
+    margin: 30px auto 0;
+    padding-bottom: 60px;
 }
 
 .moo-no-match h1 {
-    font-family: 'Yellowtail', cursive;
     font-size: 120px;
     color: rgba(255, 83, 83, 0.8);
     margin-bottom: 50px;
@@ -15,6 +16,17 @@
     color: rgba(0, 0, 0, 0.8);
     font-size: 40px;
     margin-bottom: 20px;
+}
+
+.moo-no-match img {
+  height: 70px !important;
+  margin: 0 auto 30px;
+  opacity: 0.7;
+  display: block;
+}
+
+.moo-no-match img:hover {
+  opacity: 0.8;
 }
 
 .moo-no-match ul {
