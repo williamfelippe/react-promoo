@@ -62,12 +62,6 @@ export default class Stores extends Component {
         const statusCode = response.status;
 
         if (statusCode === REQUEST_SUCCESS) {
-            /*let stores = this.state.stores;
-            response.data.forEach((item) => {
-                stores.push(item);
-            });
-
-            this.setState({stores: stores});*/
             this.setState((prevState, props) => ({
                 stores: prevState.stores.concat(response.data)
             }));

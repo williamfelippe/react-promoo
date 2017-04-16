@@ -7,7 +7,7 @@
     flex-flow: row wrap;
 }
 
-.moo-store-list > li {
+.moo-store-list li {
     float: left;
     margin: 10px;
 }

@@ -130,7 +130,7 @@ export default class StoreFilter extends Component {
                     </Col>
 
                     <Col s={12}>
-                        <strong>Nome da oferta</strong>
+                        <strong>Nome da loja</strong>
 
                         <Row className="n-margin-bottom">
                             <Input s={12} value={this.state.name} onChange={this.onChangeName.bind(this)}/>

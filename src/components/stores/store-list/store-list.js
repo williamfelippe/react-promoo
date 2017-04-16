@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import StoreItem from "../store-item/store-item";
 import "./store-list.css";
 
@@ -12,7 +13,10 @@ export default class StoreList extends Component {
 
         return (
             <ul className="moo-store-list">
-                {listStores}
+                <ReactCSSTransitionGroup transitionName="list-animations"
+                    transitionEnterTimeout={400} transitionLeaveTimeout={300}>
+                    {listStores}
+                </ReactCSSTransitionGroup>
             </ul>
         )
     }

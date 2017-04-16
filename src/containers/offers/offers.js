@@ -142,8 +142,7 @@ export default class Offers extends Component {
                             <Col s={12} m={9}>
                                 {
                                     /* Listagem das ofertas */
-                                    (this.state.offers.length > 0) &&
-                                    <OfferList offers={this.state.offers}/>
+                                    (this.state.offers.length > 0) && <OfferList offers={this.state.offers}/>
                                 }
 
                                 {
