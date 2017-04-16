@@ -19,9 +19,9 @@ export default class OfferCommentItem extends Component {
                     <p className="message">
                         {comment.message}
                     </p>
-                    <small className="date">
+                    <p className="date">
                         { formatDate(comment.created_at) }
-                    </small>
+                    </p>
                 </Col>
             </Row>
         );

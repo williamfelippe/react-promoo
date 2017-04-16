@@ -58,20 +58,15 @@ export default class ChangeEmailForm extends Component {
             .then((response) => {
                 const statusCode = response.status;
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
                     browserHistory.push('/dashboard/usuario');
                 }
                 else {
                     throw new Error(response.data);
                 }
-
-                this.setState({loading: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

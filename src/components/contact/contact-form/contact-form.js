@@ -90,8 +90,6 @@ export default class ContactForm extends Component {
     }
 
     sendMessage(data) {
-        console.log(data);
-
         this.setState({loading: true});
 
         sendMessage(data)
@@ -99,8 +97,6 @@ export default class ContactForm extends Component {
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
-
                     publishMessage(messageSendedSuccess);
                     browserHistory.push('/');
                 } 
@@ -111,8 +107,6 @@ export default class ContactForm extends Component {
                 this.setState({loading: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 this.setState({loading: false});
                 publishMessage(opsInternalError);
             });

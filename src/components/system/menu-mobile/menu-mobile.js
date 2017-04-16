@@ -64,23 +64,22 @@ export default class MenuMobile extends Component {
                         </Link>
                     </li>
 
-                    <li>
-                        <Link className={isLoggedIn() ? 'hide' : ''} activeClassName="active"
+                    <li className={isLoggedIn() ? 'hide' : ''}>
+                        <Link activeClassName="active"
                               to="registrar" onClick={this.close.bind(this)}>
                             Registrar
                         </Link>
                     </li>
 
-                    <li>
-                        <Link className={isLoggedIn() ? 'hide' : ''} activeClassName="active"
+                    <li className={isLoggedIn() ? 'hide' : ''}>
+                        <Link activeClassName="active"
                               to="entrar" onClick={this.close.bind(this)}>
                             Entrar
                         </Link>
                     </li>
 
-                    <li>
-                        <a className={!isLoggedIn() ? 'hide' : ''}
-                           onClick={this.signout.bind(this)}>
+                    <li className={!isLoggedIn() ? 'hide' : ''}>
+                        <a onClick={this.signout.bind(this)}>
                             Sair
                         </a>
                     </li>

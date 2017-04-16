@@ -17,17 +17,12 @@ export default class UserInfoHeader extends Component {
                                      className="circle responsive-img center-block"/>
                     </div>
 
-                    <h2 className="name">
+                    <h1 className="name">
                         {user.name}
-                    </h2>
+                    </h1>
 
                     {
-                        (getLoggedUserId() === user._id) &&
-                        <p className="email">
-                            <small>
-                                {user.email}
-                            </small>
-                        </p>
+                        (getLoggedUserId() === user._id) && <p className="email">{user.email}</p>
                     }
                 </Col>
 

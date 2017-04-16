@@ -4878,9 +4878,9 @@ sshpk@^1.7.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
 
-store@^1.3.20:
-  version "1.3.20"
-  resolved "https://registry.yarnpkg.com/store/-/store-1.3.20.tgz#13ea7e3fb2d6c239868265d686b1d84e99c5be3e"
+store@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/store/-/store-2.0.4.tgz#6c6819602a5497166ade85db2442cc64ebcc5761"
 
 stream-browserify@^2.0.1:
   version "2.0.1"
@@ -5244,9 +5244,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-validatorjs@^3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/validatorjs/-/validatorjs-3.11.0.tgz#d8177e62e663e4e06a6517540dfe1beabba2dfe5"
+validatorjs@^3.12.0:
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/validatorjs/-/validatorjs-3.12.0.tgz#6319f4ea872a323dd459000e2cbe9e632fd4816b"
 
 vary@~1.1.0:
   version "1.1.0"

@@ -6,5 +6,29 @@
 
 .moo-edit-avatar .list-buttons > li {
     display: inline-block;
-    margin: 10px;
+    margin: 20px;
+}
+
+.moo-edit-avatar .list-buttons > li a {
+    cursor: pointer;
+}
+
+.moo-edit-avatar .list-buttons > li a:not(.crop) {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.moo-edit-avatar .list-buttons > li a:hover:not(.crop) {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.moo-edit-avatar .list-buttons > li a.crop {
+    color: rgba(255, 83, 83, 0.8);
+}
+
+.moo-edit-avatar .list-buttons > li a.crop:hover {
+    color: rgba(255, 83, 83, 1);
+}
+
+.moo-edit-avatar .list-buttons > li a i {
+    font-size: 30px !important;
 }

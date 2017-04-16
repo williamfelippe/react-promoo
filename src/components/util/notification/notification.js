@@ -44,7 +44,8 @@ export default class Notification extends Component {
 
     render() {
         return (
-            <NotificationStack notifications={this.state.notifications.toArray()}
+            <NotificationStack 
+                notifications={this.state.notifications.toArray()}
                 onDismiss={
                     notification => this.setState({
                         notifications: this.state.notifications.delete(notification)

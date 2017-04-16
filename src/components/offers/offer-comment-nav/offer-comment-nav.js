@@ -16,7 +16,6 @@ export default class OfferCommentNav extends Component {
         PubSub.subscribe(TAG, (subject, message) => {
             if (subject.localeCompare(TAG) === 0) {
                 this.setState({offer: message.offer, openNav: message.openNav});
-                console.log(this.state.offer);
             }
         });
     }

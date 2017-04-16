@@ -65,9 +65,6 @@ export default class SignupForm extends Component {
             //Inserir mensagem de erro
             const errors = validator.errors;
 
-            console.log("SIGNUP ERROR");
-            console.log(errors);
-
             publishMessage(
                 ...errors.get('nome'),
                 ...errors.get('email'),
@@ -97,8 +94,6 @@ export default class SignupForm extends Component {
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loading: false});
             });

@@ -3,7 +3,7 @@ import {Button, Col, Icon, Input, Modal, Row} from "react-materialize";
 import {postOfferReport} from "../../../services/offer-service";
 import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
-import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {expiredSessionError, opsInternalError, reportSendedSuccess} from "../../../utils/strings";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {browserHistory} from "react-router";
 import "./offer-report-button.css";
@@ -46,23 +46,19 @@ export default class OfferReportButton extends Component {
             'offer_id': this.props.offer._id
         };
 
-        console.log(this.state);
-
         postOfferReport(data)
             .then((response) => {
                 const statusCode = response.status;
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
+                    publishMessage(reportSendedSuccess);
                 }
                 else {
                     throw new Error(response.data);
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

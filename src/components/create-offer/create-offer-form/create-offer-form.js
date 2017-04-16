@@ -8,7 +8,7 @@ import {getStoresByCity} from "../../../services/store-service";
 import {formatCurrency} from "../../../utils/currency-format";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {verifyPlaceType} from "../../../utils/place-types";
-import {clearUserStore, getLoggedUser, getLoggedUserId} from "../../../utils/user-information-store";
+import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
 import {expiredSessionError, opsInternalError, thanksForHelpSuccess} from "../../../utils/strings";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import Loader from "../../util/loader/loader";
@@ -36,8 +36,6 @@ export default class CreateOfferForm extends Component {
             loadingCategories: false,
             loadingStores: false
         };
-
-        console.log(getLoggedUser());
     }
 
     componentDidMount() {
@@ -49,7 +47,6 @@ export default class CreateOfferForm extends Component {
 
         getOfferCategories()
             .then((response) => {
-                console.log(response);
                 const status = response.status;
 
                 if (status === REQUEST_SUCCESS) {
@@ -62,7 +59,6 @@ export default class CreateOfferForm extends Component {
                 this.setState({loadingCategories: false});
             })
             .catch((error) => {
-                console.log(error);
                 publishMessage(opsInternalError);
 
                 this.setState({loadingCategories: false});
@@ -91,7 +87,6 @@ export default class CreateOfferForm extends Component {
 
     onSelectAddress(address, addressId) {
         this.setState({address, loadingStores: true});
-        console.log(`PlaceId ${addressId}`);
 
         //noinspection JSUnusedLocalSymbols
         geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
@@ -115,7 +110,6 @@ export default class CreateOfferForm extends Component {
                     const statusCode = response.status;
 
                     if (statusCode === REQUEST_SUCCESS) {
-                        console.log(response.data);
                         this.setState({stores: response.data});
                     }
                     else {
@@ -125,7 +119,6 @@ export default class CreateOfferForm extends Component {
                     this.setState({loadingStores: false});
                 })
                 .catch((error) => {
-                    console.log(error);
                     publishMessage(opsInternalError);
 
                     this.setState({loadingStores: false});
@@ -135,7 +128,6 @@ export default class CreateOfferForm extends Component {
 
     onChangeStore(event) {
         this.setState({store: event.target.value});
-        console.log(`Loja: ${this.state.store}`);
     }
 
     onChangeDescription(event) {
@@ -144,8 +136,6 @@ export default class CreateOfferForm extends Component {
 
     submit(event) {
         event.preventDefault();
-
-        console.log(this.state);
 
         const data = {
             nome: this.state.name,
@@ -177,9 +167,6 @@ export default class CreateOfferForm extends Component {
         else {
             const errors = validator.errors;
 
-            console.log("CREATE OFFER ERROR");
-            console.log(errors);
-
             publishMessage(
                 ...errors.get('nome'),
                 ...errors.get('valor'),
@@ -192,12 +179,8 @@ export default class CreateOfferForm extends Component {
     divulgeOffer(data) {
         this.setState({loadingSubmit: true});
 
-        console.log(data);
-
         postOffer(data)
             .then((response) => {
-                console.log(response);
-
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
@@ -209,10 +192,8 @@ export default class CreateOfferForm extends Component {
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

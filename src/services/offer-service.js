@@ -66,6 +66,7 @@ export const getOfferComments = (_id) => {
  * Post offer comment
  */
 
+
 export const postOfferComment = (data) => {
     return axios.post('offer_comment', data);
 };
@@ -85,7 +86,17 @@ export const postOfferReport = (data) => {
 
 export const postOfferEvaluation = (data) => {
     axios.defaults.headers.common['Authorization'] = getLoggedUserToken();
-    return axios.post('offer_evaluation', data);
+    return axios.post('offer/evaluate', data);
+};
+
+/**
+ * Get count of offer evaluations
+ */
+
+export const getOfferEvaluationsCount = (offerId, userId = null) => {
+    return axios.get((userId) 
+        ? `offer/evaluate/count/${offerId}?${userId}`
+        : `offer/evaluate/count/${offerId}`);
 };
 
 /**

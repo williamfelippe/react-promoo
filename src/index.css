@@ -52,12 +52,6 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     color: rgba(90, 95, 190, 0.8);
 }
 
-/*
-.select-dropdown li.disabled, .select-dropdown li.disabled>span, .select-dropdown li.optgroup {
-    color: rgba(0, 0, 0, 0.3);
-}
-*/
-
 /* HELPERS */
 .w-100 {
     width: 100%;
@@ -174,6 +168,10 @@ main {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto Slab', serif;
+}
+
+h2 {
+    margin: 40px 0 60px;
 }
 
 /* LOGO TEXT */

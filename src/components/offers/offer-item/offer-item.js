@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {Icon, CardPanel} from "react-materialize";
-import {postOfferEvaluation} from "../../../services/offer-service";
+import {browserHistory} from "react-router";
+import {postOfferEvaluation, getOfferEvaluationsCount} from "../../../services/offer-service";
 import {formatDate} from "../../../utils/date-format";
 import {formatCurrency} from "../../../utils/currency-format";
 import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {expiredSessionError, opsInternalError} from "../../../utils/strings";
-import {browserHistory} from "react-router";
 import PubSub from "pubsub-js";
 import ReactTooltip from "react-tooltip";
 import OfferUserAvatar from "../../offers/offer-user-avatar/offer-user-avatar";
@@ -58,24 +58,20 @@ export default class OfferItem extends Component {
             offer_id: this.props.offer._id
         };
 
-        console.log(`Evaluate ${data}`);
-
         postOfferEvaluation(data)
             .then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
+                    this.countEvaluations();
                 }
                 else {
                     throw new Error(response.data);
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 
@@ -90,33 +86,28 @@ export default class OfferItem extends Component {
     }
 
     countEvaluations() {
-        const {evaluations} = this.props.offer;
+        const {offer} = this.props;
 
-        let likes = 0, dislikes = 0;
-        evaluations.forEach((evaluation) => {
-            if (getLoggedUserId()) {
-                if (evaluation.user === getLoggedUserId() && evaluation.like) {
-                    this.setState({liked: true});
+        getOfferEvaluationsCount(offer._id, (isLoggedIn()) ? getLoggedUserId() : null)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === REQUEST_SUCCESS) {
+                    const {likes, dislikes, status} = response.data;
+
+                    if(status) this.setState({liked: status.liked, disliked: status.disliked});
+                    this.setState({likes, dislikes});
                 }
-                else if (evaluation.user === getLoggedUserId() && evaluation.dislike) {
-                    this.setState({disliked: true});
+                else {
+                    throw new Error(response.data);
                 }
-            }
-
-            if (evaluation.like) {
-                likes++;
-            }
-            else if (evaluation.dislike) {
-                dislikes++;
-            }
-        });
-
-        this.setState({likes: likes, dislikes: dislikes});
+            })
+            .catch((error) => {
+                publishMessage(opsInternalError);
+            });
     }
 
     openComments() {
-        console.log('Abrir os comentários');
-
         const message = {openNav: true, offer: this.props.offer};
         PubSub.publish(TAG, message);
     }

@@ -3,7 +3,7 @@ import {CardPanel} from "react-materialize";
 import {Link, browserHistory} from "react-router";
 import {postStoreReport} from "../../../services/store-service";
 import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../../utils/user-information-store";
-import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {expiredSessionError, opsInternalError, reportSendedSuccess} from "../../../utils/strings";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
 import {publishMessage} from "../../../utils/messages-publisher";
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
@@ -20,17 +20,15 @@ export default class StoreItem extends Component {
                     const status = response.status;
 
                     if (status === REQUEST_SUCCESS) {
-                        console.log(response);
+                        publishMessage(reportSendedSuccess);
                     }
                     else {
                         throw new Error(response.data);
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
-
                     const status = error.response.status;
-                    console.log(status);
+
                     if (status && status === UNAUTHORIZED) {
                         publishMessage(expiredSessionError);
 

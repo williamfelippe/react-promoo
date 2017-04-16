@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {Col, Row} from "react-materialize";
-import {getOfferById, postOfferEvaluation} from "../../services/offer-service";
+import {browserHistory} from "react-router";
 import {publishMessage} from "../../utils/messages-publisher";
+import {getOfferById, postOfferEvaluation, getOfferEvaluationsCount} from "../../services/offer-service";
 import {clearUserStore, getLoggedUserId, isLoggedIn} from "../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../utils/constants";
 import {expiredSessionError, opsInternalError} from "../../utils/strings";
-import {browserHistory} from "react-router";
 import Loader from "../../components/util/loader/loader";
 import OfferDetailInfo from "../../components/offer-detail/offer-detail-info/offer-detail-info";
 import OfferDetailStore from "../../components/offer-detail/offer-detail-store/offer-detail-store";
@@ -126,28 +126,25 @@ export default class OfferDetail extends Component {
     }
 
     countEvaluations() {
-        const {evaluations} = this.state.offer;
+        const {offer} = this.state;
 
-        let likes = 0, dislikes = 0;
-        evaluations.forEach((evaluation) => {
-            if (isLoggedIn()) {
-                if (evaluation.user === getLoggedUserId() && evaluation.like) {
-                    this.setState({liked: true});
+        getOfferEvaluationsCount(offer._id, (isLoggedIn()) ? getLoggedUserId() : null)
+            .then((response) => {
+                const statusCode = response.status;
+
+                if (statusCode === REQUEST_SUCCESS) {
+                    const {likes, dislikes, status} = response.data;
+
+                    if(status) this.setState({liked: status.liked, disliked: status.disliked});
+                    this.setState({likes, dislikes});
                 }
-                else if (evaluation.user === getLoggedUserId() && evaluation.dislike) {
-                    this.setState({disliked: true});
+                else {
+                    throw new Error(response.data);
                 }
-            }
-
-            if (evaluation.like) {
-                likes++;
-            }
-            else if (evaluation.dislike) {
-                dislikes++;
-            }
-        });
-
-        this.setState({likes: likes, dislikes: dislikes});
+            })
+            .catch((error) => {
+                publishMessage(opsInternalError);
+            });
     }
 
     render() {
@@ -173,9 +170,7 @@ export default class OfferDetail extends Component {
 
                 <Col s={10} offset="s1">
                     <div className="container">
-                        {
-                            (this.state.offer) && <OfferCommentBox offerId={this.state.offer._id}/>
-                        }
+                        {(Object.keys(this.state.offer).length !== 0) && <OfferCommentBox offerId={this.state.offer._id}/>}
                     </div>
                 </Col>
             </Row>

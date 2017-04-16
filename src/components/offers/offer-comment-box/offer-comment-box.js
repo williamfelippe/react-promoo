@@ -28,6 +28,8 @@ class OfferCommentBox extends Component {
     componentDidMount() {
         const {offerId} = this.props;
 
+        console.log(`Comments ${offerId}`);
+
         if (offerId && offerId !== undefined) {
             this.getComments(offerId);
         }
@@ -50,8 +52,6 @@ class OfferCommentBox extends Component {
                 this.setState({loadingComments: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingComments: false});
             });
@@ -62,7 +62,6 @@ class OfferCommentBox extends Component {
 
         if (statusCode === REQUEST_SUCCESS) {
             this.setState({comments: response.data});
-            console.log(this.state.comments);
         }
         else {
             throw new Error(response.data);
@@ -99,7 +98,6 @@ class OfferCommentBox extends Component {
                 this.setState({loadingSendComments: false});
 
                 const status = error.response.status;
-                console.log(status);
 
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);

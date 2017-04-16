@@ -18,14 +18,24 @@ export default class StoreFilter extends Component {
         };
     }
 
-    componentWillReceiveProps() {
+    componentDidMount() {
         const {query} = this.props;
+        if(query.length > 0) browserHistory.push('dashboard/lojas');
+    }
+
+    componentWillReceiveProps() {
+        this.threatQueryParams();
+    }
+
+    threatQueryParams() {
+        const {query} = this.props;
+        console.log(query);
 
         const name = (query.name && query.name !== undefined) ? query.name : '';
         const category = (query.category && query.category !== undefined) ? query.category : '';
         const city = (query.city && query.city !== undefined) ? query.city : '';
 
-        this.setState({name, category, city, address: ''});
+        this.setState({name, category, city, address: ''});        
     }
 
     onChangeName(event) {
@@ -41,7 +51,6 @@ export default class StoreFilter extends Component {
     }
 
     onSelectAddress(address, addressId) {
-        console.log(`Cidade selecionada: ${address} - ${addressId}`);
         this.setState({address});
 
         //noinspection JSUnusedLocalSymbols
@@ -125,7 +134,7 @@ export default class StoreFilter extends Component {
                         <strong>Nome da oferta</strong>
 
                         <Row className="n-margin-bottom">
-                            <Input s={12} label="Nome" onChange={this.onChangeName.bind(this)}/>
+                            <Input s={12} value={this.state.name} onChange={this.onChangeName.bind(this)}/>
                         </Row>
                     </Col>
 

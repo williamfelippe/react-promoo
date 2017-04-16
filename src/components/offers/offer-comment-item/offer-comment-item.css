@@ -10,6 +10,7 @@
 .moo-offer-comment .date {
     color: rgba(90, 95, 190, 0.7);
     font-weight: 700;
+    font-size: small;
     margin-bottom: 20px;
     display: block;
     text-align: right;

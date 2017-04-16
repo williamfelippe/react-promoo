@@ -3,3 +3,4 @@ export const expiredSessionError = "Sua sessão expirou =|. Faça login novament
 export const thanksForHelpSuccess = "=) Obrigado pela ajuda";
 export const messageSendedSuccess = "Mensagem enviada com sucesso ;)";
 export const passwordChangedSuccess = "Senha alterada com sucesso";
+export const reportSendedSuccess = "Denúncia enviada. Obrigado por nos ajudar";

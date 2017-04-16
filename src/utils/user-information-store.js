@@ -1,6 +1,9 @@
-import Store from "store";
+import store from "store";
+import updatePlugin from "store/plugins/update";
 
-export const createUserStore = (_id, name, email, photo, token, settings) => {
+store.addPlugin(updatePlugin);
+
+export const createUserstore = (_id, name, email, photo, token, settings) => {
     const data = {
         _id: _id,
         name: name,
@@ -9,47 +12,64 @@ export const createUserStore = (_id, name, email, photo, token, settings) => {
         token: token,
         settings: settings
     };
-
-    Store.set('user', data);
+    
+    store.set('user', data);
 };
 
 export const getLoggedUserId = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (verifyIfExistUserInformationSaved(user)) ? user._id : -1;
 };
 
+export const setLoggedUserAvatar = (photo) => {
+    store.update('user', (user) => {
+        user.photo = photo
+    });
+
+    console.log(store.get('user'));
+};
+
 export const getLoggedUserAvatar = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (verifyIfExistUserInformationSaved(user)) ? user.photo : null;
 };
 
 export const getLoggedUserName = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (verifyIfExistUserInformationSaved(user)) ? user.name : "";
 };
 
+
+export const setLoggedUserEmail = (email) => {
+    store.update('user', (user) => {
+        user.email = email
+    });
+
+    console.log(store.get('user'));
+};
+
 export const getLoggedUserEmail = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (verifyIfExistUserInformationSaved(user)) ? user.email : "";
 };
 
 export const getLoggedUserToken = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (verifyIfExistUserInformationSaved(user)) ? user.token : "";
 };
 
 export const getLoggedUser = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (verifyIfExistUserInformationSaved(user)) ? user : null;
 };
 
 export const isLoggedIn = () => {
-    const user = Store.get('user');
+    const user = store.get('user');
     return (user && user !== undefined);
 };
 
-export const clearUserStore = () => {
-    Store.clear();
+export const clearUserstore = () => {
+    store.clear();
 };
 
 function verifyIfExistUserInformationSaved(user) {

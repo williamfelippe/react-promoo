@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
+import "./about.css";
 
 export default class About extends Component {
     render() {
@@ -9,7 +10,7 @@ export default class About extends Component {
                     <Col s={10} m={8} offset="s1 m2" className="center-align">
                         <h2>Sobre</h2>
 
-                        <p>
+                        <p className="moo-about-text">
                             Sed rhoncus dui metus, sit amet lobortis mauris lobortis ut. Etiam pretium dolor
                             eget elit facilisis ullamcorper. In varius imperdiet velit, sit amet bibendum
                             libero malesuada a. Nulla consectetur fermentum lacus, vitae venenatis purus
@@ -18,7 +19,7 @@ export default class About extends Component {
                             dui a vulputate vehicula. Fusce viverra mattis nisl, vitae malesuada nisl dictum
                             sed. Nulla ut laoreet lacus.
                         </p>
-                        <p>
+                        <p className="moo-about-text">
                             Nam a congue nulla, consectetur dignissim odio. Nunc ante quam, volutpat
                             tincidunt tortor a, venenatis molestie nibh. Ut molestie velit ac nulla rutrum
                             interdum. Nullam non molestie dolor. Donec hendrerit a diam nec molestie. Proin

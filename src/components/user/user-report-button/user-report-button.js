@@ -3,7 +3,7 @@ import {Button, Modal, Col, Row, Input} from "react-materialize";
 import {postUserReport} from "../../../services/user-service";
 import {clearUserStore, getLoggedUserId} from "../../../utils/user-information-store";
 import {REQUEST_SUCCESS, UNAUTHORIZED} from "../../../utils/constants";
-import {expiredSessionError, opsInternalError} from "../../../utils/strings";
+import {expiredSessionError, opsInternalError, reportSendedSuccess} from "../../../utils/strings";
 import {publishMessage} from "../../../utils/messages-publisher";
 import {browserHistory} from "react-router";
 
@@ -38,17 +38,15 @@ export default class UserReportButton extends Component {
                 const statusCode = response.status;
                 
                 if(statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
+                    publishMessage(reportSendedSuccess);
                 }
                 else {
                     throw new Error(response.data);
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

@@ -16,8 +16,8 @@ export default class ChangePasswordForm extends Component {
 
         this.state = {
             currentPassword: '',
-             newPassword: '',
-             loading: false
+            newPassword: '',
+            loading: false
         };
     }
 
@@ -33,8 +33,8 @@ export default class ChangePasswordForm extends Component {
         event.preventDefault();
 
         const data = {
-            "senha atual": CryptoJS.MD5(this.state.currentPassword).toString(),
-            "nova senha": CryptoJS.MD5(this.state.newPassword).toString()
+            "senha atual": this.state.currentPassword,
+            "nova senha": this.state.newPassword
         };
 
         const rules = {
@@ -67,10 +67,9 @@ export default class ChangePasswordForm extends Component {
         putPassword(data)
             .then((response) => {
                 const statusCode = response.status;
-                console.log(response);
 
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
+                    browserHistory.push('/dashboard/usuario');
                 }
                 else {
                     throw new Error(response.data);
@@ -79,10 +78,8 @@ export default class ChangePasswordForm extends Component {
                 this.setState({loading: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

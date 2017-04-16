@@ -86,8 +86,6 @@ export default class SigninForm extends Component {
                 this.setState({loading: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loading: false});
             });

@@ -41,7 +41,6 @@ export default class CreateStoreFormTest extends Component {
 
         getStoreCategories()
             .then((response) => {
-                console.log(response);
                 const status = response.status;
 
                 if (status === REQUEST_SUCCESS) {
@@ -54,8 +53,6 @@ export default class CreateStoreFormTest extends Component {
                 this.setState({loadingCategories: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingCategories: false});
             });
@@ -74,7 +71,6 @@ export default class CreateStoreFormTest extends Component {
     }
 
     onSelectAddress(address, addressId) {
-        console.log(`Cidade selecionada: ${address} - ${addressId}`);
         this.setState({address});
 
         geocodeByPlaceId(addressId, (error, {lat, lng}, results) => {
@@ -110,8 +106,6 @@ export default class CreateStoreFormTest extends Component {
 
     submit(event) {
         event.preventDefault();
-
-        console.log(this.state);
 
         const data = {
             nome: this.state.name,
@@ -149,9 +143,6 @@ export default class CreateStoreFormTest extends Component {
         else {
             const errors = validator.errors;
 
-            console.log("CREATE STORE ERROR");
-            console.log(errors);
-
             publishMessage(
                 ...errors.get('nome'),
                 ...errors.get('categoria'),
@@ -165,12 +156,8 @@ export default class CreateStoreFormTest extends Component {
     indicateStore(data) {
         this.setState({loadingSubmit: true});
 
-        console.log(data);
-
         postStore(data)
             .then((response) => {
-                console.log(response);
-
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
@@ -184,10 +171,8 @@ export default class CreateStoreFormTest extends Component {
                 this.setState({loadingSubmit: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

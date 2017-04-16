@@ -22,7 +22,16 @@ export default class OfferFilter extends Component {
         };
     }
 
+    componentDidMount() {
+        const {query} = this.props;
+        if(query.length > 0) browserHistory.push('dashboard/ofertas');
+    }
+
     componentWillReceiveProps() {
+        this.threatQueryParams();
+    }
+
+    threatQueryParams() {
         const {query} = this.props;
 
         const name = (query.name && query.name !== undefined) ? query.name : '';
@@ -39,7 +48,6 @@ export default class OfferFilter extends Component {
     }
 
     onChangeCategory(event) {
-        console.log(event.target.value);
         this.setState({category: event.target.value});
     }
 
@@ -56,7 +64,6 @@ export default class OfferFilter extends Component {
     }
 
     onSelectAddress(address, addressId) {
-        console.log(`Cidade selecionada: ${address} - ${addressId}`);
         this.setState({address});
 
         //noinspection JSUnusedLocalSymbols
@@ -118,8 +125,9 @@ export default class OfferFilter extends Component {
         const listCategoriesFilter =
             this.props.categories.map((category) =>
                 <Row key={category._id}>
-                    <Input className="with-gap" name="category" type="radio" s={12} value={category._id}
-                           label={category.name} onChange={this.onChangeCategory.bind(this)}/>
+                    <Input className="with-gap" checked={(this.state.category === category._id)} 
+                        name="category" type="radio" s={12} value={category._id}
+                        label={category.name} onChange={this.onChangeCategory.bind(this)}/>
                 </Row>
             );
 
@@ -140,9 +148,8 @@ export default class OfferFilter extends Component {
 
                     <Col s={12}>
                         <strong>Nome da oferta</strong>
-
                         <Row className="n-margin-bottom">
-                            <Input s={12} label="Nome" defaultValue={this.state.name}
+                            <Input s={12} value={this.state.name}
                                    onChange={this.onChangeName.bind(this)}/>
                         </Row>
                     </Col>
@@ -155,20 +162,23 @@ export default class OfferFilter extends Component {
                         {listCategoriesFilter}
                     </Col>
 
-                    <Col s={12}>
-                        <strong>Preço</strong>
-
+                    <Col s={12} m={6}>
+                        <strong>Mínimo</strong>
                         <Row>
-                            <Input s={12} m={5} type="number"
-                                   defaultValue={this.state.minPrice} label="Min"
-                                   onChange={this.onChangeMinPrice.bind(this)} min="0"
-                                   step="5"/>
-
-                            <Input s={12} m={5} type="number"
-                                   defaultValue={this.state.maxPrice} label="Máx"
-                                   onChange={this.onChangeMaxPrice.bind(this)}
-                                   min={this.state.minPrice}
-                                   step="5"/>
+                            <Input s={12} type="number" 
+                                defaultValue={this.state.minPrice} 
+                                onChange={this.onChangeMinPrice.bind(this)} 
+                                min="0" step="5"/>
+                        </Row>
+                    </Col>
+                            
+                    <Col s={12} m={6}>
+                        <strong>Máximo</strong>
+                        <Row>
+                            <Input s={12} type="number"
+                                defaultValue={this.state.maxPrice}
+                                onChange={this.onChangeMaxPrice.bind(this)}
+                                min={this.state.minPrice} step="5"/>
                         </Row>
                     </Col>
 

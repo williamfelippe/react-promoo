@@ -51,8 +51,6 @@ export default class ForgotPasswordForm extends Component {
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
-
                     publishMessage(passwordChangedSuccess);
                     browserHistory.push('entrar');
                 } 
@@ -61,8 +59,6 @@ export default class ForgotPasswordForm extends Component {
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 this.setState({loading: false});
                 publishMessage(opsInternalError);
             });

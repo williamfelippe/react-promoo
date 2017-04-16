@@ -3,12 +3,12 @@
     margin: 0;
     padding: 40px 0 !important;
     text-align: center;
-    background-color: rgba(90, 95, 190, 0.05);
+    background-color: rgba(90, 95, 190, 0.2);
 }
 
 .moo-user-header .user-photo-container {
-    width: 125px;
-    height: 125px;
+    width: 150px;
+    height: 150px;
 
     padding: 5px;
     margin: 0 auto 20px;
@@ -27,6 +27,7 @@
 }
 
 .moo-user-header .email {
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(90, 95, 190, 0.8);
     font-weight: 700;
+    font-size: small;
 }

@@ -16,8 +16,6 @@ export default class Header extends Component {
 
     //noinspection JSMethodCanBeStatic
     openMenuMobile() {
-        console.log('Abrir o menu');
-
         const message = {status: true};
         PubSub.publish(TAG, message);
     }

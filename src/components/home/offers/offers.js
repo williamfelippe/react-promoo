@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
-import {getOffers} from "../../../services/offer-service";
+import {getOffers} from "../../../services/offer-service"
+import {publishMessage} from "../../../utils/messages-publisher";
+import {opsInternalError} from "../../../utils/strings";;
 import {REQUEST_SUCCESS} from "../../../utils/constants";
 import OfferList from "../../offers/offer-list/offer-list";
 import Loader from "../../util/loader/loader";
@@ -36,8 +38,8 @@ export default class Offers extends Component {
                 this.setState({loading: false});
             })
             .catch((error) => {
-                console.log(error);
                 this.setState({loading: false});
+                publishMessage(opsInternalError);
             });
     }
 
