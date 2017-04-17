@@ -14,15 +14,15 @@ export default class Contact extends Component {
                         </h2>
 
                         <p className="moo-contact-text">
-                            O Promoo chegou com a intenção de ajudar a diminuir os gastos da família brasileira. 
-                            Porém para isso necessitamos da ajuda de vocês. Seja postando promoções, compartilhando,
-                            indicando problemas, mudanças ou ainda sendo nosso parceiro para fazer com que essa iniciativa
+                            O Promoo chegou com a intenção de ajudar a diminuir seus gastos nas compras de supermercado.
+                            Porém para isso necessitamos da ajuda de vocês. Então você pode usar esse formulário aí e nos
+                            indicar problemas, sugerir mudanças ou ainda propondo uma parceria para fazer com que essa iniciativa
                             se espalhe por todo o Brasil.
                         </p>
 
                         <p className="moo-contact-text">
                             <strong className="highlight">
-                                Deixe um recado. Responderemos rapidamente.
+                                Deixe um recado aí! Responderemos rapidamente.
                             </strong>
                         </p>
 
