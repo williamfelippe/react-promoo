@@ -13,7 +13,7 @@
 }
 
 @media all and (max-width: 760px) {
-    .moo-store-list {
+    .moo-store-list span {
         justify-content: center;
     }    
 }

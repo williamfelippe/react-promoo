@@ -30,6 +30,13 @@ export default class OfferDetailInfo extends Component {
                         <Col s={12}>
                             <h1 className="title">
                                 {offer.name}
+
+                                <sub className="brand">
+                                    {
+                                        /* Marca */
+                                        offer.brand
+                                    }
+                                </sub>
                             </h1>
 
                             <p className="category">

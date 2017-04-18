@@ -13,9 +13,13 @@ export default class StoreList extends Component {
 
         return (
             <ul className="moo-store-list">
-                <ReactCSSTransitionGroup transitionName="list-animations"
-                    transitionEnterTimeout={400} transitionLeaveTimeout={300}>
-                    {listStores}
+                <ReactCSSTransitionGroup 
+                    transitionName="list-animations"
+                    transitionAppear={true}
+                    transitionAppearTimeout={500}
+                    transitionEnterTimeout={400} 
+                    transitionLeaveTimeout={300}>
+                {listStores}
                 </ReactCSSTransitionGroup>
             </ul>
         )

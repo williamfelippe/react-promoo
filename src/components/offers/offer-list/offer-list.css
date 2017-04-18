@@ -1,7 +1,9 @@
 .moo-offer-list {
     list-style: none;
     padding: 0;
+}
 
+.moo-offer-list span {
     justify-content: flex-start;
     display: flex;
     flex-flow: row wrap;
@@ -13,7 +15,7 @@
 }
 
 @media all and (max-width: 760px) {
-    .moo-offer-list {
+    .moo-offer-list span {
         justify-content: center;
     }
 }

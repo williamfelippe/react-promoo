@@ -183,11 +183,13 @@ h2 {
     background-color: rgba(204, 66, 66, 1) !important;
 }
 
-.list-animations-enter {
+.list-animations-enter,
+.list-animations-appear {
   opacity: 0.01;
 }
 
-.list-animations-enter.list-animations-enter-active {
+.list-animations-enter.list-animations-enter-active,
+.list-animations-appear.list-animations-appear-active {
   opacity: 1;
   transition: opacity 400ms ease-in;
   animation: scale-up-hor-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
