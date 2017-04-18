@@ -8,6 +8,10 @@ export default class NoContent extends Component {
                 <p>
                     {this.props.message}
                 </p>
+
+                <span onClick={this.props.tryAgain}>
+                    Carregar de novo
+                </span>
             </div>
         );
     }

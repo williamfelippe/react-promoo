@@ -3,6 +3,7 @@ import {browserHistory, Link} from "react-router";
 import {Button, Col, Icon, Row} from "react-materialize";
 import {clearUserStore, isLoggedIn} from "../../../utils/user-information-store";
 import PubSub from "pubsub-js";
+import Brand from "../brand/brand";
 import "./header.css";
 
 const TAG = "show-or-hide-menu-mobile";
@@ -35,13 +36,7 @@ export default class Header extends Component {
                         </Col>
 
                         <Col s={12} m={4} l={3}>
-                            <div className="valign-wrapper">
-                                <Link to="/" className="moo-logo-text">
-                                    <h4 className="center-align valign">
-                                        pro<span>MOO</span>
-                                    </h4>
-                                </Link>
-                            </div>
+                            <Brand />
                         </Col>
 
                         <Col s={12} m={8} l={9} className="hide-on-small-and-down">

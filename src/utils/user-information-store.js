@@ -68,8 +68,8 @@ export const isLoggedIn = () => {
     return (user && user !== undefined);
 };
 
-export const clearUserstore = () => {
-    store.clear();
+export const clearUserStore = () => {
+    store.remove('user');
 };
 
 function verifyIfExistUserInformationSaved(user) {

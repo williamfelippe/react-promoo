@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {Row, Col} from "react-materialize";
 import {browserHistory} from "react-router";
 import {getStores, getStoreCategories} from "../../services/store-service";
-import {isLoggedIn} from "../../utils/user-information-store";
 import {REQUEST_SUCCESS} from "../../utils/constants";
 import AddBar from "../../components/system/add-bar/add-bar";
 import StoreFilter from "../../components/stores/store-filter/store-filter";
@@ -103,15 +102,20 @@ export default class Stores extends Component {
 
     //noinspection JSMethodCanBeStatic
     redirectToCreateStore() {
-        browserHistory.push((isLoggedIn())
-            ? 'dashboard/criar-loja'
-            : 'entrar');
+        browserHistory.push('dashboard/criar-loja');
     }
 
     render() {
+        const {
+            stores,
+            loadingStores,
+            categories,
+            loadingCategories
+        } = this.state;
+
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.stores.length}
+                <AddBar amount={stores.length}
                         redirectToPage={this.redirectToCreateStore.bind(this)}
                         buttonName="Indicar"/>
 
@@ -120,31 +124,35 @@ export default class Stores extends Component {
                         <div className="container">
                             <Col s={12} m={3}>
                                 {
-                                    (this.state.categories.length > 0) &&
-                                    <StoreFilter query={this.state.query} categories={this.state.categories}/>
+                                    (categories.length > 0 && stores.length > 0) &&
+                                        <StoreFilter 
+                                            query={this.state.query} 
+                                            categories={categories}/>
                                 }
 
                                 {
                                     /* Exibe uma imagem de "loading" */
-                                    (this.state.loadingCategories) && <Loader />
+                                    (loadingCategories) && <Loader />
                                 }
                             </Col>
 
                             <Col s={12} m={9}>
                                 {
                                     /* Listagem das ofertas */
-                                    this.state.stores.length > 0 && <StoreList stores={this.state.stores}/>
-                                }
-
-                                {
-                                    (this.state.stores.length <= 0 && !this.state.loadingStores) &&
-                                    <NoContent message="Nenhuma loja até o momento" />
+                                    stores.length > 0 && <StoreList stores={stores}/>
                                 }
 
                                 {
                                     /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                    <LoadMoreButton loading={this.state.loadingStores}
+                                    stores.length > 0 && <LoadMoreButton loading={loadingStores}
                                                     onClick={this.moreStores.bind(this)}/>
+                                }
+                            </Col>
+
+                            <Col s={12}>
+                                {
+                                    (stores.length <= 0 && !loadingStores) &&
+                                    <NoContent message="Nenhuma loja até o momento =(" />
                                 }
                             </Col>
                         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
 
 // Layouts
@@ -28,44 +28,56 @@ import EditAvatar from './containers/user/edit-avatar/edit-avatar';
 import EditEmail from './containers/user/edit-email/edit-email';
 import EditPassword from './containers/user/edit-password/edit-password';
 
-export default(
-    <Router history={browserHistory}>
-        <Route component={MainLayout}>
-            <Route path="/" component={Home}/>
-            <Route path="sobre" component={About}/>
-            <Route path="contato" component={Contact}/>
-            <Route path="registrar" component={Signup}/>
-            <Route path="entrar" component={Signin}/>
-            <Route path="esqueci-a-senha" component={ForgotPassword}/>
-            <Route path="termos-de-uso" component={Terms}/>
-            <Route path="detalhes-usuario/:userId" component={UserProfile}/>
+import {isLoggedIn} from './utils/user-information-store';
 
-            <Route path="dashboard">
-                <Route component={DashboardLayout}>
+export default class App extends Component {
+    requireAuth(nextState, replace) {
+        if(!isLoggedIn()) {
+            replace('/entrar');
+        }
+    }
 
-                    <IndexRoute component={Offers}/>
+    render() {
+        return (
+            <Router history={browserHistory}>
+                <Route component={MainLayout}>
+                    <Route path="/" component={Home}/>
+                    <Route path="sobre" component={About}/>
+                    <Route path="contato" component={Contact}/>
+                    <Route path="registrar" component={Signup}/>
+                    <Route path="entrar" component={Signin}/>
+                    <Route path="esqueci-a-senha" component={ForgotPassword}/>
+                    <Route path="termos-de-uso" component={Terms}/>
+                    <Route path="detalhes-usuario/:userId" component={UserProfile}/>
 
-                    <Route path="ofertas" component={Offers}/>
-                    <Route path="oferta/:offerId" component={OfferDetail}/>
-                    <Route path="lojas" component={Stores}/>
-                    <Route path="loja/:storeId" component={StoreDetail}/>
-                    <Route path="criar-oferta" component={CreateOffer}/>
-                    <Route path="criar-loja" component={CreateStore}/>
+                    <Route path="dashboard">
+                        <Route component={DashboardLayout}>
 
-                    <Route path="usuario">
-                        <Route component={UserLayout}>
-                            <IndexRoute component={UserProfile}/>
+                            <IndexRoute component={Offers}/>
 
-                            <Route path="perfil-usuario" component={UserProfile}/>
-                            <Route path="editar-avatar" component={EditAvatar}/>
-                            <Route path="editar-email" component={EditEmail}/>
-                            <Route path="editar-senha" component={EditPassword}/>
+                            <Route path="ofertas" component={Offers}/>
+                            <Route path="oferta/:offerId" component={OfferDetail}/>
+                            <Route path="lojas" component={Stores}/>
+                            <Route path="loja/:storeId" component={StoreDetail}/>
+                            <Route path="criar-oferta" component={CreateOffer} onEnter={this.requireAuth} />
+                            <Route path="criar-loja" component={CreateStore} onEnter={this.requireAuth} />
+
+                            <Route path="usuario">
+                                <Route component={UserLayout}>
+                                    <IndexRoute component={UserProfile} />
+
+                                    <Route path="perfil-usuario" component={UserProfile} onEnter={this.requireAuth} />
+                                    <Route path="editar-avatar" component={EditAvatar} onEnter={this.requireAuth} />
+                                    <Route path="editar-email" component={EditEmail} onEnter={this.requireAuth} />
+                                    <Route path="editar-senha" component={EditPassword} onEnter={this.requireAuth} />
+                                </Route>
+                            </Route>
                         </Route>
                     </Route>
-                </Route>
-            </Route>
 
-            <Route path="*" component={NoMatch}/>
-        </Route>
-    </Router>
-);
+                    <Route path="*" component={NoMatch}/>
+                </Route>
+            </Router>
+        )
+    }
+}

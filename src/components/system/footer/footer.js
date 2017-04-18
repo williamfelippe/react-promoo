@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {Row, Col} from 'react-materialize';
-import {isLoggedIn} from '../../../utils/user-information-store';
-import './footer.css';
+import React, {Component} from "react";
+import {Link} from "react-router";
+import {Row, Col} from "react-materialize";
+import {isLoggedIn} from "../../../utils/user-information-store";
+import Brand from "../brand/brand";
+import "./footer.css";
 
 export default class Footer extends Component {
     render() {
@@ -11,13 +12,7 @@ export default class Footer extends Component {
                 <div className="container">
                     <Row>
                         <Col s={5} m={3}>
-                            <div className="valign-wrapper">
-                                <Link to="/" className="moo-logo-text">
-                                    <h4 className="center-align valign">
-                                        pro<span>MOO</span>
-                                    </h4>
-                                </Link>
-                            </div>
+                            <Brand />
                         </Col>
 
                         <Col s={7} m={9}>

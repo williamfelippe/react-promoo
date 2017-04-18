@@ -174,35 +174,6 @@ h2 {
     margin: 40px 0 60px;
 }
 
-/* LOGO TEXT */
-.moo-logo-text {
-    display: block;
-    width: 100%;
-}
-
-@media all and (max-width: 768px) {
-    .moo-logo-text h4 {
-        margin: 0 0 10px;
-    }
-}
-
-.moo-logo-text h4 {
-    font-family: 'Yellowtail', cursive;
-    color: rgba(0, 0, 0, 0.8);
-}
-
-.moo-logo-text h4 span {
-    color: rgba(255, 83, 83, 0.8);
-}
-
-.moo-logo-text h4:hover {
-    color: rgba(0, 0, 0, 1);
-}
-
-.moo-logo-text h4:hover span {
-    color: rgba(255, 83, 83, 1);
-}
-
 .moo-scroll-up-button {
     background-color: rgba(255, 83, 83, 1) !important;
     z-index: 10;

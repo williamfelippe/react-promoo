@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {browserHistory} from "react-router";
 import {Row, Col} from "react-materialize";
 import {getOffers, getOfferCategories} from "../../services/offer-service";
-import {isLoggedIn} from "../../utils/user-information-store";
 import {publishMessage} from "../../utils/messages-publisher";
 import {REQUEST_SUCCESS} from "../../utils/constants";
 import {opsInternalError} from "../../utils/strings";
@@ -45,7 +44,12 @@ export default class Offers extends Component {
 
         this.setState({query: query});
         if (search) {
-            this.setState({offers: [], offset: 0, limit: 30});
+            this.setState({
+                offers: [],
+                offset: 0,
+                limit: 30
+            });
+
             this.getAllOffers(search);
         }
     }
@@ -112,15 +116,20 @@ export default class Offers extends Component {
     }
 
     redirectToCreateOfferPage() {
-        browserHistory.push((isLoggedIn())
-            ? 'dashboard/criar-oferta'
-            : 'entrar');
+        browserHistory.push('dashboard/criar-oferta');
     }
 
     render() {
+        const {
+            offers,
+            loadingOffers,
+            categories,
+            loadingCategories
+        } = this.state;
+
         return (
             <Row className="m-b-40">
-                <AddBar amount={this.state.offers.length}
+                <AddBar amount={offers.length}
                         redirectToPage={this.redirectToCreateOfferPage.bind(this)}
                         buttonName="Divulgar"/>
 
@@ -129,31 +138,32 @@ export default class Offers extends Component {
                         <div className="container">
                             <Col s={12} m={3}>
                                 {
-                                    (this.state.categories.length > 0) &&
-                                    <OfferFilter query={this.state.query} categories={this.state.categories}/>
+                                    (categories.length > 0 && offers.length > 0) &&
+                                        <OfferFilter query={this.state.query} categories={categories}/>
                                 }
 
                                 {
                                     /* Exibe uma imagem de "loading" */
-                                    (this.state.loadingCategories) && <Loader />
+                                    (loadingCategories) && <Loader />
                                 }
                             </Col>
 
                             <Col s={12} m={9}>
                                 {
                                     /* Listagem das ofertas */
-                                    (this.state.offers.length > 0) && <OfferList offers={this.state.offers}/>
-                                }
-
-                                {
-                                    (this.state.offers.length <= 0 && !this.state.loadingOffers) &&
-                                    <NoContent message="Nenhuma oferta no momento =/"/>
+                                    (offers.length > 0) && <OfferList offers={offers}/>
                                 }
 
                                 {
                                     /* Permite a busca de mais ofertas ou exibe uma imagem de "loading" */
-                                    <LoadMoreButton loading={this.state.loadingOffers}
-                                                    onClick={this.moreOffers.bind(this)}/>
+                                    <LoadMoreButton loading={loadingOffers} onClick={this.moreOffers.bind(this)}/>
+                                }
+                            </Col>
+
+                            <Col s={12}>
+                                {
+                                    (offers.length <= 0 && !loadingOffers) &&
+                                        <NoContent message="Nenhuma oferta no momento =/"/>
                                 }
                             </Col>
                         </div>
