@@ -3,6 +3,7 @@ import PlacesAutocomplete, {geocodeByPlaceId} from "react-places-autocomplete";
 import {Button, Col, Icon, Input, Row} from "react-materialize";
 import {browserHistory} from "react-router";
 import {verifyPlaceType} from "../../../utils/place-types";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import queryString from "query-string";
 
 export default class StoreFilter extends Component {
@@ -116,58 +117,66 @@ export default class StoreFilter extends Component {
 
         return (
             <div>
-                <a onClick={this.openFilter.bind(this)}
-                   className={`moo-open-filter-button hide-on-med-and-up ${statusFilterButton}`}>
-                    <Icon>filter_list</Icon> <span>Filtro</span>
-                </a>
+                <ReactCSSTransitionGroup 
+                    transitionName="list-animations"
+                    transitionAppear={true}
+                    transitionAppearTimeout={400}
+                    transitionEnterTimeout={400} 
+                    transitionLeaveTimeout={300}>
 
-                <Row className={`${statusFilterComponent} moo-filter`}>
-                    <Col s={12} className="hide-on-med-and-up">
-                        <a onClick={this.closeFilter.bind(this)}
-                           className="moo-close-filter-button">
-                            <Icon>close</Icon>
-                        </a>
-                    </Col>
+                    <a onClick={this.openFilter.bind(this)}
+                    className={`moo-open-filter-button hide-on-med-and-up ${statusFilterButton}`}>
+                        <Icon>filter_list</Icon> <span>Filtro</span>
+                    </a>
 
-                    <Col s={12}>
-                        <strong>Nome da loja</strong>
+                    <Row className={`${statusFilterComponent} moo-filter`}>
+                        <Col s={12} className="hide-on-med-and-up">
+                            <a onClick={this.closeFilter.bind(this)}
+                            className="moo-close-filter-button">
+                                <Icon>close</Icon>
+                            </a>
+                        </Col>
 
-                        <Row className="n-margin-bottom">
-                            <Input s={12} value={this.state.name} onChange={this.onChangeName.bind(this)}/>
-                        </Row>
-                    </Col>
+                        <Col s={12}>
+                            <strong>Nome da loja</strong>
 
-                    <Col s={12} className="m-b-20">
-                        <p>
-                            <strong>Categorias</strong>
-                        </p>
+                            <Row className="n-margin-bottom">
+                                <Input s={12} value={this.state.name} onChange={this.onChangeName.bind(this)}/>
+                            </Row>
+                        </Col>
 
-                        {listCategoriesFilter}
-                    </Col>
+                        <Col s={12} className="m-b-20">
+                            <p>
+                                <strong>Categorias</strong>
+                            </p>
 
-                    <Col s={12} className="n-padding">
-                        <strong className="place">Cidade</strong>
+                            {listCategoriesFilter}
+                        </Col>
 
-                        <div className="place-filter">
-                            <PlacesAutocomplete
-                                value={this.state.city} onChange={this.onChangeAddress.bind(this)}
-                                onSelect={this.onSelectAddress.bind(this)} options={options} placeholder="&nbsp;"
-                                hideLabel>
-                                <Input s={12} label="Procurar por endereço"/>
-                            </PlacesAutocomplete>
-                        </div>
-                    </Col>
+                        <Col s={12} className="n-padding">
+                            <strong className="place">Cidade</strong>
 
-                    <Col s={12}>
-                        <Button waves='light' className="w-100 m-b-20" onClick={this.filter.bind(this)}>
-                            Filtrar
-                        </Button>
+                            <div className="place-filter">
+                                <PlacesAutocomplete
+                                    value={this.state.city} onChange={this.onChangeAddress.bind(this)}
+                                    onSelect={this.onSelectAddress.bind(this)} options={options} placeholder="&nbsp;"
+                                    hideLabel>
+                                    <Input s={12} label="Procurar por endereço"/>
+                                </PlacesAutocomplete>
+                            </div>
+                        </Col>
 
-                        <Button flat waves='light' className="w-100" onClick={this.cleanFilter.bind(this)}>
-                            Limpar filtro
-                        </Button>
-                    </Col>
-                </Row>
+                        <Col s={12}>
+                            <Button waves='light' className="w-100 m-b-20" onClick={this.filter.bind(this)}>
+                                Filtrar
+                            </Button>
+
+                            <Button flat waves='light' className="w-100" onClick={this.cleanFilter.bind(this)}>
+                                Limpar filtro
+                            </Button>
+                        </Col>
+                    </Row>
+                </ReactCSSTransitionGroup>
             </div>
         )
     }

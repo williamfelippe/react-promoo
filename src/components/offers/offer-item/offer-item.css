@@ -65,6 +65,7 @@
 .moo-offer-card ul {
     list-style: none;
     text-align: center;
+    display: inline-block;
 }
 
 .moo-offer-card ul li {

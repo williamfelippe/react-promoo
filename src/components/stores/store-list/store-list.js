@@ -16,7 +16,7 @@ export default class StoreList extends Component {
                 <ReactCSSTransitionGroup 
                     transitionName="list-animations"
                     transitionAppear={true}
-                    transitionAppearTimeout={500}
+                    transitionAppearTimeout={400}
                     transitionEnterTimeout={400} 
                     transitionLeaveTimeout={300}>
                 {listStores}

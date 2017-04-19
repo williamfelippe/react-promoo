@@ -144,7 +144,7 @@ export default class Stores extends Component {
 
                                 {
                                     /* Permite a busca de mais lojas ou exibe uma imagem de "loading" */
-                                    stores.length > 0 && <LoadMoreButton loading={loadingStores}
+                                    <LoadMoreButton loading={loadingStores}
                                                     onClick={this.moreStores.bind(this)}/>
                                 }
                             </Col>
