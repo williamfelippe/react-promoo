@@ -32,9 +32,6 @@ export default class Offers extends Component {
 
         this.setState({query: query});
 
-        console.log('QUERY');
-        console.log(query);
-
         this.getAllOffers((search && query) ? search : null);
         this.getAllOffersCategories();
     }
@@ -63,8 +60,6 @@ export default class Offers extends Component {
                 this.setState({loadingOffers: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingOffers: false});
             });
@@ -92,8 +87,6 @@ export default class Offers extends Component {
                 this.setState({loadingCategories: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingCategories: false});
             });

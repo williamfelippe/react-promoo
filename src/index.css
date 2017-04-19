@@ -223,8 +223,8 @@ h2 {
 .logo-enter.logo-enter-active,
 .logo-appear.logo-appear-active {
   opacity: 1;
-  transition: opacity 400ms ease-in;
-  animation: scale-up-ver-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  transition: opacity 200ms ease-in;
+  animation: scale-up-ver-center 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 .logo-leave {
@@ -233,8 +233,8 @@ h2 {
 
 .logo-leave.logo-leave-active {
   opacity: 0.01;
-  transition: opacity 300ms ease-in;
-  animation: scale-down-top 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  transition: opacity 100ms ease-in;
+  animation: scale-down-top 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 @keyframes scale-down-top {

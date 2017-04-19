@@ -26,7 +26,7 @@ export default class Footer extends Component {
                                         <li>
                                             <Link to="contato">Fale conosco</Link>
                                         </li>
-                                        <li>
+                                        <li className="hide">
                                             <Link to="termos-de-uso">Termos de uso</Link>
                                         </li>
                                         <li className={isLoggedIn() ? 'hide' : ''}>

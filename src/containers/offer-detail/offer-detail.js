@@ -41,9 +41,6 @@ export default class OfferDetail extends Component {
                 this.setState({loadingOffer: false});
             })
             .catch((error) => {
-                console.log('ERRO EM DETAIL');
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingOffer: false});
             })
@@ -54,8 +51,7 @@ export default class OfferDetail extends Component {
 
         if (statusCode === REQUEST_SUCCESS) {
             const offer = response.data;
-            console.log("OFERTA");
-            console.log(offer);
+            
             this.setState({
                 offer: offer,
                 center: {
@@ -93,14 +89,11 @@ export default class OfferDetail extends Component {
             offer_id: this.props.offer._id
         };
 
-        console.log(`Evaluate ${data}`);
-
         postOfferEvaluation(data)
             .then((response) => {
                 const statusCode = response.status;
 
                 if (statusCode === REQUEST_SUCCESS) {
-                    console.log(response.data);
                     this.countEvaluations();
                 }
                 else {
@@ -108,10 +101,8 @@ export default class OfferDetail extends Component {
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

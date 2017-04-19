@@ -19,9 +19,9 @@ export default class Banner extends Component {
                         <ReactCSSTransitionGroup
                             transitionName="logo"
                             transitionAppear={true}
-                            transitionAppearTimeout={400}
-                            transitionEnterTimeout={400}
-                            transitionLeaveTimeout={300}>
+                            transitionAppearTimeout={200}
+                            transitionEnterTimeout={200}
+                            transitionLeaveTimeout={100}>
 
                             <img alt="Promoo" src={logo} className="responsive-img logo"/>
 

@@ -25,8 +25,6 @@ export const setLoggedUserAvatar = (photo) => {
     store.update('user', (user) => {
         user.photo = photo
     });
-
-    console.log(store.get('user'));
 };
 
 export const getLoggedUserAvatar = () => {
@@ -44,8 +42,6 @@ export const setLoggedUserEmail = (email) => {
     store.update('user', (user) => {
         user.email = email
     });
-
-    console.log(store.get('user'));
 };
 
 export const getLoggedUserEmail = () => {
