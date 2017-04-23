@@ -45,10 +45,8 @@ export default class UserProfile extends Component {
                 this.setState({loadingUser: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 
@@ -67,8 +65,6 @@ export default class UserProfile extends Component {
 
         if (statusCode === REQUEST_SUCCESS) {
             this.setState({user: response.data});
-            console.log("USER");
-            console.log(this.state.user);
         }
         else {
             throw new Error(response.data);
@@ -85,10 +81,8 @@ export default class UserProfile extends Component {
                 this.setState({loadingOffers: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 
@@ -107,7 +101,6 @@ export default class UserProfile extends Component {
 
         if (statusCode === REQUEST_SUCCESS) {
             this.setState({offers: response.data});
-            console.log(this.state.offers);
         }
         else {
             throw new Error(response.data);

@@ -58,17 +58,11 @@ export default class EditAvatar extends Component {
     uploadImage(data) {
         this.setState({loading: true});
 
-        console.log("DATA");
-        console.log(data);
-
         putUserPhoto(data)
             .then((response) => {
-                console.log(response);
-
                 const status = response.status;
                 if (status === REQUEST_SUCCESS) {
                     const {photo} = response.data;
-                    console.log(`Photo: ${photo}`);
 
                     // Trocar foto no store
                     setLoggedUserAvatar(photo);
@@ -80,10 +74,8 @@ export default class EditAvatar extends Component {
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 const status = error.response.status;
-                console.log(status);
+                
                 if (status && status === UNAUTHORIZED) {
                     publishMessage(expiredSessionError);
 

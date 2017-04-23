@@ -52,8 +52,6 @@ export default class StoreDetail extends Component {
                 this.setState({loadingOffers: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingOffers: false});
             })
@@ -82,8 +80,6 @@ export default class StoreDetail extends Component {
                 this.setState({loadingStores: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingStores: false});
             })
@@ -102,7 +98,6 @@ export default class StoreDetail extends Component {
                     lng: store.address.longitude
                 }
             });
-            console.log(this.state.store);
         }
         else {
             throw new Error(response.data);
@@ -118,8 +113,6 @@ export default class StoreDetail extends Component {
                 this.setState({loadingCategories: false});
             })
             .catch((error) => {
-                console.log(error);
-
                 publishMessage(opsInternalError);
                 this.setState({loadingCategories: false});
             })

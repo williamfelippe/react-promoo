@@ -52,7 +52,6 @@ export default class Stores extends Component {
                 this.setState({loadingStores: false});
             })
             .catch((error) => {
-                console.log(error);
                 this.setState({loadingStores: false});
             })
     }
@@ -79,7 +78,6 @@ export default class Stores extends Component {
                 this.setState({loadingCategories: false});
             })
             .catch((error) => {
-                console.log(error);
                 this.setState({loadingCategories: false});
             })
     }
