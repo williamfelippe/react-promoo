@@ -3,7 +3,7 @@ import updatePlugin from "store/plugins/update";
 
 store.addPlugin(updatePlugin);
 
-export const createUserstore = (_id, name, email, photo, token, settings) => {
+export const createUserStore = (_id, name, email, photo, token, settings) => {
     const data = {
         _id: _id,
         name: name,

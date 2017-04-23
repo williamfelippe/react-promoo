@@ -19,7 +19,7 @@ export default class StoreList extends Component {
                     transitionAppearTimeout={400}
                     transitionEnterTimeout={400} 
                     transitionLeaveTimeout={300}>
-                {listStores}
+                    {listStores}
                 </ReactCSSTransitionGroup>
             </ul>
         )

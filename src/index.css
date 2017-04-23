@@ -179,7 +179,8 @@ h2 {
     z-index: 10;
 }
 
-.moo-scroll-up-button:hover {
+.moo-scroll-up-button:hover,
+.moo-scroll-up-button:focus {
     background-color: rgba(204, 66, 66, 1) !important;
 }
 

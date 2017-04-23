@@ -181,7 +181,7 @@ export default class OfferItem extends Component {
                         <li data-tip="Denúnciar" className={(isLoggedIn()) ? '' : 'hide'}>
                             {isLoggedIn() && <OfferReportButton/>}
                         </li>
-                        <ReactTooltip place="bottom" type="dark" effect="solid"/>
+                        <ReactTooltip className="hide-on-small-and-down" place="bottom" type="dark" effect="solid"/>
                     </ul>
                 </div>
 

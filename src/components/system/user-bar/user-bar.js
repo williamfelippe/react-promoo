@@ -29,7 +29,7 @@ export default class UserBar extends Component {
                         <Icon>vpn_key</Icon>
                     </Link>
                 </li>
-                <ReactTooltip place="bottom" type="dark" effect="solid"/>
+                <ReactTooltip className="hide-on-small-and-down" place="bottom" type="dark" effect="solid"/>
             </ul>
         )
     }

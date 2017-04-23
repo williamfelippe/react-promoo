@@ -9,6 +9,17 @@ import Notification from "../components/util/notification/notification";
 
 export default class MainLayout extends Component {
     render() {
+        const style = {
+            position: 'fixed',
+            zIndex: 2,
+            bottom: 50,
+            right: 15,
+            cursor: 'pointer',
+            transitionDuration: '0.2s',
+            transitionTimingFunction: 'linear',
+            transitionDelay: '0s'
+        };
+
         return (
             <div className="moo-app">
                 <MenuMobile />
@@ -22,7 +33,7 @@ export default class MainLayout extends Component {
                     {this.props.children}
                 </main>
 
-                <ScrollUp showUnder={160}>
+                <ScrollUp showUnder={160} style={style}>
                     <Button floating className='moo-scroll-up-button'
                         waves='light' icon='keyboard_arrow_up'/>
                 </ScrollUp>
