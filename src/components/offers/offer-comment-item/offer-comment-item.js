@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Row, Col, Chip} from "react-materialize";
 import {formatDate} from "../../../utils/date-format";
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
-import avatar from "../../../../public/images/default_avatar.png";
+import avatar from "../../../images/default_avatar.png";
 import "./offer-comment-item.css";
 
 export default class OfferCommentItem extends Component {

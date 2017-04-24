@@ -3,12 +3,6 @@
     width: 100%;
 }
 
-@media all and (max-width: 768px) {
-    .moo-logo-text h4 {
-        margin: 0 0 10px;
-    }
-}
-
 .moo-logo-text h4 {
     font-family: 'Yellowtail', cursive;
     color: rgba(0, 0, 0, 0.8);
@@ -24,4 +18,17 @@
 
 .moo-logo-text h4:hover span {
     color: rgba(255, 83, 83, 1);
+}
+
+@media all and (max-width: 768px) {
+    .moo-logo-text {
+        display: inline-block;
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .moo-logo-text h4 {
+        margin: 0 0 10px;
+        display: inline-block !important;
+    }
 }

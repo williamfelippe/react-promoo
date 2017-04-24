@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import ImageWrapper from "../../util/image-wrapper/image-wrapper";
-import avatar from "../../../../public/images/default_avatar.png";
+import avatar from "../../../images/default_avatar.png";
 
 export default class OfferUserAvatar extends Component {
     render() {

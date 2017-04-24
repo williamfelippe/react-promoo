@@ -31,19 +31,19 @@
 }
 
 .moo-home-apps ul > li .play {
-  background: url("../../../../public/images/play-store-line.png") no-repeat;
+  background: url("../../../images/play-store-line.png") no-repeat;
 }
 
 .moo-home-apps ul > li .play:hover {
-  background: url("../../../../public/images/play-store.png") no-repeat;
+  background: url("../../../images/play-store.png") no-repeat;
 }
 
 .moo-home-apps ul > li .app {
-  background: url("../../../../public/images/app-store-line.png") no-repeat;
+  background: url("../../../images/app-store-line.png") no-repeat;
 }
 
 .moo-home-apps ul > li .app:hover {
-  background: url("../../../../public/images/app-store.png") no-repeat;
+  background: url("../../../images/app-store.png") no-repeat;
 }
 
 .moo-home-apps ul > li span {
@@ -74,6 +74,6 @@
 .moo-home-apps .phone {
   width: 100%;
   height: 400px;
-  background: url("../../../../public/images/mockup.png") center bottom no-repeat;
+  background: url("../../../images/mockup.png") center bottom no-repeat;
   background-size: contain;
 }

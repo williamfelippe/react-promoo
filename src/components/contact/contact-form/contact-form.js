@@ -150,7 +150,7 @@ export default class ContactForm extends Component {
                         <Col s={12}>
                             <ReCAPTCHA ref="recaptcha" sitekey={reCaptchaKey}
                                 onChange={this.onChangeCaptcha.bind(this)}
-                                className="right"/>
+                                className="right g-recaptcha"/>
                         </Col>
                     </Row>
 

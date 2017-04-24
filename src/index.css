@@ -248,3 +248,9 @@ h2 {
     transform-origin: 50% 0%;
   }
 }
+
+@media screen and (max-width: 760px){
+    .g-recaptcha div {
+        width: 253px !important;
+    }
+}
