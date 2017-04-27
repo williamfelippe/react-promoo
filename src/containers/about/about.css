@@ -1,3 +1,28 @@
 .moo-about-text {
-    font-size: 16px;
+    font-size: 17px;
+}
+
+.moo-about-text p {
+    margin-bottom: 40px;
+}
+
+.moo-about-text h5 {
+    font-weight: 300;
+    font-size: 28px;
+    margin-bottom: 35px;
+}
+
+.moo-about-text h4:after {
+    display: block;
+    content: '';
+    height: 2px;
+    width: 40px;
+    margin: 15px auto;
+    background-color:rgba(255, 83, 83, 1);
+}
+
+.moo-about-text h4 {
+    font-size: 35px;
+    margin-top: 40px;
+    font-weight: 300;
 }

@@ -889,12 +889,6 @@ babel-runtime@6.22.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtim
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-runtime@^5.8.0:
-  version "5.8.38"
-  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-5.8.38.tgz#1c0b02eb63312f5f087ff20450827b425c9d4c19"
-  dependencies:
-    core-js "^1.0.0"
-
 babel-template@^6.16.0, babel-template@^6.22.0, babel-template@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.23.0.tgz#04d4f270adbb3aa704a8143ae26faa529238e638"
@@ -1384,7 +1378,7 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
-create-react-class@^15.5.1:
+create-react-class@^15.5.1, create-react-class@^15.5.2:
   version "15.5.2"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.2.tgz#6a8758348df660b88326a0e764d569f274aad681"
   dependencies:
@@ -4197,7 +4191,7 @@ promise@7.1.1, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
+prop-types@>=15.5.0, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -4291,11 +4285,11 @@ react-addons-test-utils@^15.5.1:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-async-script@~0.5.0:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/react-async-script/-/react-async-script-0.5.1.tgz#e25d1a3fd8b52e5852ad9a1d6f7c19c50426fee2"
+react-async-script@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-async-script/-/react-async-script-0.9.1.tgz#d4a496c726fab0c6ef05998ab16e50c742820b60"
   dependencies:
-    babel-runtime "^5.8.0"
+    prop-types ">=15.5.0"
 
 react-cropper@^0.10.1:
   version "0.10.1"
@@ -4328,12 +4322,11 @@ react-file-processor@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/react-file-processor/-/react-file-processor-0.0.2.tgz#ff09e6123a5531816ad3738d4fa016bff6a4b65f"
 
-react-google-recaptcha@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/react-google-recaptcha/-/react-google-recaptcha-0.5.4.tgz#03ee8443b2fdda5e86ea70660af62b94135af81b"
+react-google-recaptcha@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/react-google-recaptcha/-/react-google-recaptcha-0.9.3.tgz#d5cef8c593a7dfe2c988ffc775cf67786b4f0211"
   dependencies:
-    babel-runtime "^5.8.0"
-    react-async-script "~0.5.0"
+    prop-types ">=15.5.0"
 
 react-materialize@^0.18.1:
   version "0.18.1"
@@ -4417,10 +4410,11 @@ react-scripts@0.8.5:
   optionalDependencies:
     fsevents "1.0.14"
 
-react-scroll-up@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-scroll-up/-/react-scroll-up-1.2.1.tgz#6fffff6e2b78a741d1cc1d3983384502dbef3c1c"
+react-scroll-up@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-scroll-up/-/react-scroll-up-1.2.2.tgz#335347c39ee5202844d7249aac53cfcb12294dd5"
   dependencies:
+    create-react-class "^15.5.2"
     detect-passive-events "^1.0.0"
     object-assign "^4.0.1"
     tween-functions "^1.1.0"
