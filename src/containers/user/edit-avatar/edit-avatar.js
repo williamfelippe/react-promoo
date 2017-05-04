@@ -94,7 +94,6 @@ export default class EditAvatar extends Component {
     }
 
     render() {
-
         let renderButtonsOrLoader = null;
 
         if (this.state.loading) {

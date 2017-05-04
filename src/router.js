@@ -40,13 +40,14 @@ export default class App extends Component {
     render() {
         return (
             <Router history={browserHistory}>
+                <Route path="registrar" component={Signup}/>
+                <Route path="entrar" component={Signin}/>
+                <Route path="esqueci-a-senha" component={ForgotPassword}/>
+
                 <Route component={MainLayout}>
                     <Route path="/" component={Home}/>
                     <Route path="sobre" component={About}/>
                     <Route path="contato" component={Contact}/>
-                    <Route path="registrar" component={Signup}/>
-                    <Route path="entrar" component={Signin}/>
-                    <Route path="esqueci-a-senha" component={ForgotPassword}/>
                     <Route path="termos-de-uso" component={Terms}/>
                     <Route path="detalhes-usuario/:userId" component={UserProfile}/>
 
