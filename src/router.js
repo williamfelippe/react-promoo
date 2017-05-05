@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
 
 // Layouts
+import AppLayout from './layouts/app-layout';
 import MainLayout from './layouts/main-layout';
 import DashboardLayout from './layouts/dashboard-layout';
 import UserLayout from './layouts/user-layout';
@@ -40,6 +41,7 @@ export default class App extends Component {
     render() {
         return (
             <Router history={browserHistory}>
+                <Route component={AppLayout}>
                 <Route path="registrar" component={Signup}/>
                 <Route path="entrar" component={Signin}/>
                 <Route path="esqueci-a-senha" component={ForgotPassword}/>
@@ -75,8 +77,8 @@ export default class App extends Component {
                             </Route>
                         </Route>
                     </Route>
-
-                    <Route path="*" component={NoMatch}/>
+                </Route>
+                <Route path="*" component={NoMatch}/>
                 </Route>
             </Router>
         )

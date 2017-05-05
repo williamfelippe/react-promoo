@@ -5,7 +5,6 @@ import OfferCommentNav from "../components/offers/offer-comment-nav/offer-commen
 import MenuMobile from "../components/system/menu-mobile/menu-mobile";
 import Header from "../components/system/header/header";
 import Footer from "../components/system/footer/footer";
-import Notification from "../components/util/notification/notification";
 
 export default class MainLayout extends Component {
     render() {
@@ -29,7 +28,6 @@ export default class MainLayout extends Component {
                 <Header/>
 
                 <main>
-                    <Notification/>
                     {this.props.children}
                 </main>
 

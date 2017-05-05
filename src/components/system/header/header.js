@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {browserHistory, Link} from "react-router";
-import {Button, Col, Icon, Row} from "react-materialize";
-import {clearUserStore, isLoggedIn} from "../../../utils/user-information-store";
+import {Col, Icon, Row} from "react-materialize";
+import {clearUserStore, isLoggedIn, getLoggedUserName} from "../../../utils/user-information-store";
 import PubSub from "pubsub-js";
 import Brand from "../brand/brand";
 import "./header.css";
@@ -59,10 +59,13 @@ export default class Header extends Component {
                                         Entrar
                                     </Link>
                                 </li>
-                                <li className={!isLoggedIn() ? 'hide' : ''}>
-                                    <Button onClick={this.signout.bind(this)} waves="light" className="btn">
-                                        Sair
-                                    </Button>
+                                <li className={`${!isLoggedIn() ? 'hide' : ''} exit`}>
+                                    Olá {getLoggedUserName()}
+                                    <sub>
+                                        <a onClick={this.signout.bind(this)}>
+                                            Sair
+                                        </a>
+                                    </sub>
                                 </li>
                             </ul>
                         </Col>

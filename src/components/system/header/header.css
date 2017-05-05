@@ -25,7 +25,7 @@
 
 .moo-menu > li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 11px;
     font-size: 16px;
 }
 
@@ -38,14 +38,30 @@
     color: rgba(0, 0, 0, 1);
 }
 
-.moo-menu > li:last-child a,
-.moo-menu > li:last-child a:hover {
-    padding-bottom: 0 !important;
-    color: white;
-    display: inline-block;
+.moo-menu > li.exit {
+    display: inline-table;
+    color: rgba(0,0,0,1);
+    font-weight: 500;
 }
 
-.moo-menu > li a:after {
+.moo-menu > li.exit a {
+    padding-bottom: 0 !important;
+    color: rgba(255, 83, 83, 0.7);
+    display: block;
+    font-size: small;
+    font-weight: 700;
+    cursor: pointer;
+    transition: ease-in-out all 0.3s;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.moo-menu > li.exit a:hover {
+    color: rgba(255, 83, 83, 1);
+    transition: ease-in-out all 0.3s;
+}
+
+.moo-menu > li:not(.exit) a:after {
     display: block;
     content: '';
     padding-top: 7px !important;
@@ -54,8 +70,8 @@
     transition: transform 250ms ease-in-out;
 }
 
-.moo-menu > li a:hover:after,
-.moo-menu > li a.active:after {
+.moo-menu > li:not(.exit) a:hover:after,
+.moo-menu > li:not(.exit) a.active:after {
     transform: scaleX(1.1);
 }
 
