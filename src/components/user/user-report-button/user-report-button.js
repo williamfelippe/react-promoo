@@ -67,8 +67,9 @@ export default class UserReportButton extends Component {
             <Modal header='O que esse usuário fez?' trigger={reportButton}
                    actions="&nbsp;">
                 <p className="m-t-40">
-                    Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et
-                    eleifend.
+                    Esse usuário está realizando ações que podem prejudicar vocês ou outros usuários?
+                    Está atrapalhando o funcionamento do aplicativo? Está passando informações falsas?
+                    Então nos avise. Agradeceremos muito =)
                 </p>
                 <form onSubmit={this.submit.bind(this)} className="col s12">
                     <Row>
