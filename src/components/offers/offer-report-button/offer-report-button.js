@@ -85,8 +85,7 @@ export default class OfferReportButton extends Component {
                    actions={null}>
 
                 <p className="m-t-40">
-                    Maecenas consequat posuere blandit. Curabitur quis interdum tortor. Nulla sagittis molestie ante et
-                    eleifend.
+                    Encontrou algum problema nessa oferta? Nos informe para que possamos melhorar a experiência de todos.
                 </p>
 
                 <form onSubmit={this.submit.bind(this)} className="col s12">
